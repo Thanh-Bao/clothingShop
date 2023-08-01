@@ -1,15 +1,15 @@
 sap.ui.require(
     [
         'sap/fe/test/JourneyRunner',
-        'product/test/integration/FirstJourney',
-		'product/test/integration/pages/ProductList',
-		'product/test/integration/pages/ProductObjectPage'
+        'project1/test/integration/FirstJourney',
+		'project1/test/integration/pages/ProductList',
+		'project1/test/integration/pages/ProductObjectPage'
     ],
     function(JourneyRunner, opaJourney, ProductList, ProductObjectPage) {
         'use strict';
         var JourneyRunner = new JourneyRunner({
             // start index.html in web folder
-            launchUrl: sap.ui.require.toUrl('product') + '/index.html'
+            launchUrl: sap.ui.require.toUrl('project1') + '/index.html'
         });
 
        

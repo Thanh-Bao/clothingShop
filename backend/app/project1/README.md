@@ -1,15 +1,15 @@
 ## Application Details
 |               |
 | ------------- |
-|**Generation Date and Time**<br>Tue Aug 01 2023 07:06:20 GMT+0700 (Indochina Time)|
+|**Generation Date and Time**<br>Tue Aug 01 2023 09:29:38 GMT+0700 (Indochina Time)|
 |**App Generator**<br>@sap/generator-fiori-elements|
 |**App Generator Version**<br>1.9.7|
 |**Generation Platform**<br>Visual Studio Code|
 |**Template Used**<br>List Report Page V4|
 |**Service Type**<br>Local Cap|
 |**Service URL**<br>http://localhost:4004/api/
-|**Module Name**<br>product|
-|**Application Title**<br>product|
+|**Module Name**<br>project1|
+|**Application Title**<br>App Title|
 |**Namespace**<br>|
 |**UI5 Theme**<br>sap_horizon|
 |**UI5 Version**<br>1.116.0|
@@ -19,7 +19,7 @@
 |**Main Entity**<br>Product|
 |**Navigation Entity**<br>None|
 
-## product
+## project1
 
 A Fiori application.
 
@@ -27,7 +27,7 @@ A Fiori application.
 
 -   This app has been generated using the SAP Fiori tools - App Generator, as part of the SAP Fiori tools suite.  In order to launch the generated app, simply start your CAP project and navigate to the following location in your browser:
 
-http://localhost:4004/product/webapp/index.html
+http://localhost:4004/project1/webapp/index.html
 
 #### Pre-requisites:
 

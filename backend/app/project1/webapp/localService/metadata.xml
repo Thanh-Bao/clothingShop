@@ -17,30 +17,27 @@
             <EntityContainer Name="EntityContainer">
                 <EntitySet Name="SaleOrder" EntityType="APIService.SaleOrder">
                     <NavigationPropertyBinding Path="SaleOrderItems" Target="SaleOrderItem"/>
+                    <NavigationPropertyBinding Path="User" Target="User"/>
                     <NavigationPropertyBinding Path="SiblingEntity" Target="SaleOrder"/>
                 </EntitySet>
                 <EntitySet Name="SaleOrderItem" EntityType="APIService.SaleOrderItem">
-                    <NavigationPropertyBinding Path="product" Target="Product"/>
                     <NavigationPropertyBinding Path="SiblingEntity" Target="SaleOrderItem"/>
                 </EntitySet>
                 <EntitySet Name="Product" EntityType="APIService.Product">
-                    <NavigationPropertyBinding Path="category" Target="Category"/>
-                    <NavigationPropertyBinding Path="Image" Target="Image"/>
                     <NavigationPropertyBinding Path="Album" Target="Album"/>
                     <NavigationPropertyBinding Path="SiblingEntity" Target="Product"/>
                 </EntitySet>
                 <EntitySet Name="Category" EntityType="APIService.Category">
                     <NavigationPropertyBinding Path="products" Target="Product"/>
-                    <NavigationPropertyBinding Path="SiblingEntity" Target="Category"/>
                 </EntitySet>
                 <EntitySet Name="Image" EntityType="APIService.Image">
                     <NavigationPropertyBinding Path="product" Target="Product"/>
-                    <NavigationPropertyBinding Path="SiblingEntity" Target="Image"/>
                 </EntitySet>
                 <EntitySet Name="Album" EntityType="APIService.Album">
                     <NavigationPropertyBinding Path="product" Target="Product"/>
                     <NavigationPropertyBinding Path="SiblingEntity" Target="Album"/>
                 </EntitySet>
+                <EntitySet Name="User" EntityType="APIService.User"/>
             </EntityContainer>
             <EntityType Name="SaleOrder">
                 <Key>
@@ -59,7 +56,10 @@
                     <OnDelete Action="Cascade"/>
                 </NavigationProperty>
                 <Property Name="SaleOrderItems_SaleOrderID" Type="Edm.Guid"/>
-                <Property Name="SaleOrderItems_product_ID" Type="Edm.String"/>
+                <Property Name="SaleOrderItems_productID" Type="Edm.String"/>
+                <NavigationProperty Name="User" Type="APIService.User">
+                    <ReferentialConstraint Property="User_phone" ReferencedProperty="phone"/>
+                </NavigationProperty>
                 <Property Name="User_phone" Type="Edm.String"/>
                 <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
                 <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
@@ -70,14 +70,11 @@
             <EntityType Name="SaleOrderItem">
                 <Key>
                     <PropertyRef Name="SaleOrderID"/>
-                    <PropertyRef Name="product_ID"/>
+                    <PropertyRef Name="productID"/>
                     <PropertyRef Name="IsActiveEntity"/>
                 </Key>
                 <Property Name="SaleOrderID" Type="Edm.Guid" Nullable="false"/>
-                <NavigationProperty Name="product" Type="APIService.Product">
-                    <ReferentialConstraint Property="product_ID" ReferencedProperty="ID"/>
-                </NavigationProperty>
-                <Property Name="product_ID" Type="Edm.String" Nullable="false"/>
+                <Property Name="productID" Type="Edm.String" Nullable="false"/>
                 <Property Name="quantity" Type="Edm.Int32"/>
                 <Property Name="price" Type="Edm.Int32"/>
                 <Property Name="color" Type="Edm.String"/>
@@ -103,18 +100,6 @@
                 <Property Name="size" Type="Edm.String"/>
                 <Property Name="shortDesc" Type="Edm.String"/>
                 <Property Name="longDesc" Type="Edm.String"/>
-                <NavigationProperty Name="category" Type="APIService.Category">
-                    <OnDelete Action="Cascade"/>
-                    <ReferentialConstraint Property="category_ID" ReferencedProperty="ID"/>
-                </NavigationProperty>
-                <Property Name="category_ID" Type="Edm.String"/>
-                <NavigationProperty Name="Image" Type="APIService.Image">
-                    <OnDelete Action="Cascade"/>
-                    <ReferentialConstraint Property="Image_ID" ReferencedProperty="ID"/>
-                    <ReferentialConstraint Property="Image_product_ID" ReferencedProperty="product_ID"/>
-                </NavigationProperty>
-                <Property Name="Image_ID" Type="Edm.Guid"/>
-                <Property Name="Image_product_ID" Type="Edm.String"/>
                 <NavigationProperty Name="Album" Type="Collection(APIService.Album)">
                     <OnDelete Action="Cascade"/>
                 </NavigationProperty>
@@ -129,7 +114,6 @@
             <EntityType Name="Category">
                 <Key>
                     <PropertyRef Name="ID"/>
-                    <PropertyRef Name="IsActiveEntity"/>
                 </Key>
                 <Property Name="ID" Type="Edm.String" Nullable="false"/>
                 <Property Name="name" Type="Edm.String"/>
@@ -138,17 +122,11 @@
                     <OnDelete Action="Cascade"/>
                 </NavigationProperty>
                 <Property Name="products_ID" Type="Edm.String"/>
-                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
-                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
-                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
-                <NavigationProperty Name="DraftAdministrativeData" Type="APIService.DraftAdministrativeData" ContainsTarget="true"/>
-                <NavigationProperty Name="SiblingEntity" Type="APIService.Category"/>
             </EntityType>
             <EntityType Name="Image">
                 <Key>
                     <PropertyRef Name="ID"/>
                     <PropertyRef Name="product_ID"/>
-                    <PropertyRef Name="IsActiveEntity"/>
                 </Key>
                 <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
                 <NavigationProperty Name="product" Type="APIService.Product">
@@ -159,11 +137,6 @@
                 <Property Name="thumbnail_alt" Type="Edm.String"/>
                 <Property Name="hoverImageURL" Type="Edm.String"/>
                 <Property Name="hoverImage_alt" Type="Edm.String"/>
-                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
-                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
-                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
-                <NavigationProperty Name="DraftAdministrativeData" Type="APIService.DraftAdministrativeData" ContainsTarget="true"/>
-                <NavigationProperty Name="SiblingEntity" Type="APIService.Image"/>
             </EntityType>
             <EntityType Name="Album">
                 <Key>
@@ -183,6 +156,17 @@
                 <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
                 <NavigationProperty Name="DraftAdministrativeData" Type="APIService.DraftAdministrativeData" ContainsTarget="true"/>
                 <NavigationProperty Name="SiblingEntity" Type="APIService.Album"/>
+            </EntityType>
+            <EntityType Name="User">
+                <Key>
+                    <PropertyRef Name="phone"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="phone" Type="Edm.String" Nullable="false"/>
+                <Property Name="name" Type="Edm.String"/>
+                <Property Name="note" Type="Edm.String"/>
+                <Property Name="password" Type="Edm.String"/>
             </EntityType>
             <EntityType Name="DraftAdministrativeData">
                 <Key>
@@ -211,16 +195,6 @@
                 <Parameter Name="in" Type="APIService.Product"/>
                 <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
                 <ReturnType Type="APIService.Product"/>
-            </Action>
-            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
-                <Parameter Name="in" Type="APIService.Category"/>
-                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
-                <ReturnType Type="APIService.Category"/>
-            </Action>
-            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
-                <Parameter Name="in" Type="APIService.Image"/>
-                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
-                <ReturnType Type="APIService.Image"/>
             </Action>
             <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
                 <Parameter Name="in" Type="APIService.Album"/>
@@ -466,44 +440,6 @@
             <Annotations Target="APIService.Product/DraftAdministrativeData">
                 <Annotation Term="UI.Hidden" Bool="true"/>
             </Annotations>
-            <Annotations Target="APIService.EntityContainer/Category">
-                <Annotation Term="Common.DraftNode">
-                    <Record Type="Common.DraftNodeType">
-                        <PropertyValue Property="PreparationAction" String="APIService.draftPrepare"/>
-                    </Record>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="APIService.Category/IsActiveEntity">
-                <Annotation Term="UI.Hidden" Bool="true"/>
-            </Annotations>
-            <Annotations Target="APIService.Category/HasActiveEntity">
-                <Annotation Term="UI.Hidden" Bool="true"/>
-            </Annotations>
-            <Annotations Target="APIService.Category/HasDraftEntity">
-                <Annotation Term="UI.Hidden" Bool="true"/>
-            </Annotations>
-            <Annotations Target="APIService.Category/DraftAdministrativeData">
-                <Annotation Term="UI.Hidden" Bool="true"/>
-            </Annotations>
-            <Annotations Target="APIService.EntityContainer/Image">
-                <Annotation Term="Common.DraftNode">
-                    <Record Type="Common.DraftNodeType">
-                        <PropertyValue Property="PreparationAction" String="APIService.draftPrepare"/>
-                    </Record>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="APIService.Image/IsActiveEntity">
-                <Annotation Term="UI.Hidden" Bool="true"/>
-            </Annotations>
-            <Annotations Target="APIService.Image/HasActiveEntity">
-                <Annotation Term="UI.Hidden" Bool="true"/>
-            </Annotations>
-            <Annotations Target="APIService.Image/HasDraftEntity">
-                <Annotation Term="UI.Hidden" Bool="true"/>
-            </Annotations>
-            <Annotations Target="APIService.Image/DraftAdministrativeData">
-                <Annotation Term="UI.Hidden" Bool="true"/>
-            </Annotations>
             <Annotations Target="APIService.EntityContainer/Album">
                 <Annotation Term="Common.DraftNode">
                     <Record Type="Common.DraftNodeType">
@@ -522,6 +458,12 @@
             </Annotations>
             <Annotations Target="APIService.Album/DraftAdministrativeData">
                 <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.User/createdAt">
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.User/modifiedAt">
+                <Annotation Term="Core.Computed" Bool="true"/>
             </Annotations>
             <Annotations Target="APIService.DraftAdministrativeData">
                 <Annotation Term="Common.Label" String="{i18n>Draft_DraftAdministrativeData}"/>

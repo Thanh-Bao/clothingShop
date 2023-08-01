@@ -15,7 +15,7 @@ entity SaleOrder : common {
 
 entity SaleOrderItem {
     key SaleOrderID : UUID;
-    key product     : Association to one Product;
+    key productID   : String;
         quantity    : Integer;
         price       : Integer;
         color       : Color;
@@ -33,8 +33,8 @@ entity Product : common {
         size      : Size;
         shortDesc : String;
         longDesc  : String;
-        category  : Composition of one Category;
-        Image     : Composition of one Image;
+        // category  : Composition of one Category;
+        // Image     : Composition of one Image;
         Album     : Composition of many Album;
 }
 
@@ -64,11 +64,11 @@ entity Album { // product detail page
 }
 
 entity User : common {
-    key phone : String;
-        name  : String;
-        note  : String;
+    key phone    : String;
+        name     : String;
+        note     : String;
+        password : String;
 // Address
-// Password
 }
 
 //******************************* other stuff *****************************************************
