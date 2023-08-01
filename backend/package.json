@@ -1,5 +1,5 @@
 {
-  "name": "demo_valueHelp_auto_fill",
+  "name": ""admin"",
   "version": "1.0.0",
   "description": "A simple CAP project.",
   "repository": "<Add your repository here>",
@@ -58,7 +58,8 @@
     "app/user",
     "app/saleoder",
     "app/saleorder",
-    "app/saleorder"
+    "app/saleorder",
+    "app/product"
   ],
   "cds": {
     "requires": {

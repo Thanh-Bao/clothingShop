@@ -34,21 +34,6 @@ annotate service.Product with @(
         Data : [
             {
                 $Type: 'UI.DataField',
-                Label: 'createdAt',
-                Value: createdAt,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'modifiedAt',
-                Value: modifiedAt,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'ID',
-                Value: ID,
-            },
-            {
-                $Type: 'UI.DataField',
                 Label: 'name',
                 Value: name,
             },
@@ -64,16 +49,6 @@ annotate service.Product with @(
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'color',
-                Value: color,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'size',
-                Value: size,
-            },
-            {
-                $Type: 'UI.DataField',
                 Label: 'shortDesc',
                 Value: shortDesc,
             },
@@ -81,21 +56,6 @@ annotate service.Product with @(
                 $Type: 'UI.DataField',
                 Label: 'longDesc',
                 Value: longDesc,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'category_ID',
-                Value: category_ID,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'Image_product_ID',
-                Value: Image_product_ID,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'Album_product_ID',
-                Value: Album_product_ID,
             },
         ],
     },
@@ -109,32 +69,79 @@ annotate service.Product with @(
         {
             $Type : 'UI.ReferenceFacet',
             ID    : 'GeneratedFacet2',
-            Label : 'Images',
+            Label : 'Size',
+            Target: 'Sizes/@UI.LineItem',
+        },
+         {
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'GeneratedFacet3',
+            Label : 'Color',
+            Target: 'Colors/@UI.LineItem',
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'GeneratedFacet4',
+            Label : 'Image',
             Target: 'Image/@UI.FieldGroup#GeneratedGroup2',
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'GeneratedFacet5',
+            Label : 'Album',
+            Target: 'Album/@UI.LineItem',
         },
     ]
 );
 
-annotate service.Image with @(
-    UI.FieldGroup #GeneratedGroup2: {
-        $Type: 'UI.FieldGroupType',
-        Data : [
-           
-            {
-                $Type: 'UI.DataField',
-                Label: 'hover Image URL',
-                Value: hoverImageURL,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'hover Image HTML alt',
-                Value: hoverImage_alt,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'thumbnail URL',
-                Value: thumbnailURL,
-            },
-        ]
-    }
-);
+annotate service.Image with @(UI.FieldGroup #GeneratedGroup2: {
+    $Type: 'UI.FieldGroupType',
+    Data : [
+        {
+            $Type: 'UI.DataField',
+            Label: 'thumbnail URL',
+            Value: thumbnailURL,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'thumbnail HTML alt',
+            Value: thumbnail_alt,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'hover Image URL',
+            Value: hoverImageURL,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'hover Image alt',
+            Value: hoverImage_alt,
+        },
+    ]
+});
+
+annotate service.ProductColor with @(UI.LineItem: [{
+    $Type: 'UI.DataField',
+    Label: 'color',
+    Value: color,
+}, ]);
+
+
+annotate service.ProductSize with @(UI.LineItem: [{
+    $Type: 'UI.DataField',
+    Label: 'size',
+    Value: size,
+}, ]);
+
+
+annotate service.Album with @(UI.LineItem: [
+    {
+        $Type: 'UI.DataField',
+        Label: 'absoluteURL',
+        Value: absoluteURL,
+    },
+    {
+        $Type: 'UI.DataField',
+        Label: 'HTML alt',
+        Value: html_alt,
+    },
+]);

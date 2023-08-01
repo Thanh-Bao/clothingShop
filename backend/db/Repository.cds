@@ -16,26 +16,41 @@ entity SaleOrder : common {
 entity SaleOrderItem {
     key SaleOrder : Association to one SaleOrder;
     key Product   : Association to one Product;
-        quantity    : Integer;
-        price       : Integer;
-        color       : Color;
-        size        : Size;
+        quantity  : Integer;
+        price     : Integer;
+        color     : String;
+        size      : String;
 }
 
 // ******************* master data ************************************************************
 
 entity Product : common {
     key ID        : String; // format: quan-short-nam-thun-co-dan, chan-vay-jean
-        name      : String @mandatory;
+        name      : String;
         price     : Integer;
         material  : Material;
-        color     : Color;
-        size      : Size;
         shortDesc : String;
         longDesc  : String;
+        quantity : Integer;
         category  : Association to one Category;
         Image     : Composition of one Image;
-        Album     : Composition of many Album;
+        Colors     : Composition of many ProductColor on Colors.productID = $self.ID;
+        Sizes     : Composition of many ProductSize
+                        on Sizes.productID = $self.ID;
+        Album     : Composition of many Album
+                        on Album.productID = $self.ID;
+}
+
+entity ProductSize {
+    key ID        : UUID;
+        productID : String;
+        size      : String;
+}
+
+entity ProductColor  {
+    key ID : UUID;
+    productID: String;
+    color: String;
 }
 
 entity Category {
@@ -57,18 +72,17 @@ entity Image {
 
 entity Album { // product detail page
     key ID          : UUID;
-    key product     : Association to one Product;
+        productID   : String;
         absoluteURL : String;
         html_alt    : String; // for SEO
-
 }
 
 entity User : common {
-    key ID       : UUID;
-        phone    : String;
-        name     : String;
-        note     : String;
-        password : String;
+    key ID        : UUID;
+        phone     : String;
+        name      : String;
+        note      : String;
+        password  : String;
         SaleOrder : Association to many SaleOrder;
 // Address
 }
@@ -91,21 +105,3 @@ type Material    : String enum {
     JEAN       = 'JEAN';
     COTON      = 'COTON';
 }
-
-type Color       : String enum {
-    BLACK      = 'BLACK';
-    BLUE       = 'BLUE';
-    GREEN      = 'GREEN';
-    ORANGE     = 'ORANGE';
-    VIOLET     = 'VIOLET';
-    WHITE      = 'WHITE';
-}
-
-
-type Size        : String enum {
-    XXXL       = 'XXXL';
-    XXL        = 'XXL';
-    XL         = 'XL';
-    L          = 'L';
-    M          = 'M';
-};

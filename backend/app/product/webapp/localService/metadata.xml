@@ -21,23 +21,21 @@
                     <NavigationPropertyBinding Path="SiblingEntity" Target="SaleOrder"/>
                 </EntitySet>
                 <EntitySet Name="SaleOrderItem" EntityType="APIService.SaleOrderItem">
+                    <NavigationPropertyBinding Path="SaleOrder" Target="SaleOrder"/>
+                    <NavigationPropertyBinding Path="Product" Target="Product"/>
                     <NavigationPropertyBinding Path="SiblingEntity" Target="SaleOrderItem"/>
                 </EntitySet>
                 <EntitySet Name="Product" EntityType="APIService.Product">
-                    <NavigationPropertyBinding Path="category" Target="Category"/>
                     <NavigationPropertyBinding Path="Image" Target="Image"/>
                     <NavigationPropertyBinding Path="Album" Target="Album"/>
                     <NavigationPropertyBinding Path="SiblingEntity" Target="Product"/>
-                </EntitySet>
-                <EntitySet Name="Category" EntityType="APIService.Category">
-                    <NavigationPropertyBinding Path="products" Target="Product"/>
                 </EntitySet>
                 <EntitySet Name="Image" EntityType="APIService.Image">
                     <NavigationPropertyBinding Path="product" Target="Product"/>
                     <NavigationPropertyBinding Path="SiblingEntity" Target="Image"/>
                 </EntitySet>
                 <EntitySet Name="Album" EntityType="APIService.Album">
-                    <NavigationPropertyBinding Path="product" Target="Product"/>
+                    <NavigationPropertyBinding Path="Product" Target="Product"/>
                     <NavigationPropertyBinding Path="SiblingEntity" Target="Album"/>
                 </EntitySet>
                 <EntitySet Name="User" EntityType="APIService.User">
@@ -60,12 +58,12 @@
                 <NavigationProperty Name="SaleOrderItems" Type="Collection(APIService.SaleOrderItem)">
                     <OnDelete Action="Cascade"/>
                 </NavigationProperty>
-                <Property Name="SaleOrderItems_SaleOrderID" Type="Edm.Guid"/>
-                <Property Name="SaleOrderItems_productID" Type="Edm.String"/>
+                <Property Name="SaleOrderItems_SaleOrder_ID" Type="Edm.Guid"/>
+                <Property Name="SaleOrderItems_Product_ID" Type="Edm.String"/>
                 <NavigationProperty Name="User" Type="APIService.User">
-                    <ReferentialConstraint Property="User_phone" ReferencedProperty="phone"/>
+                    <ReferentialConstraint Property="User_ID" ReferencedProperty="ID"/>
                 </NavigationProperty>
-                <Property Name="User_phone" Type="Edm.String"/>
+                <Property Name="User_ID" Type="Edm.Guid"/>
                 <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
                 <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
                 <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
@@ -74,12 +72,18 @@
             </EntityType>
             <EntityType Name="SaleOrderItem">
                 <Key>
-                    <PropertyRef Name="SaleOrderID"/>
-                    <PropertyRef Name="productID"/>
+                    <PropertyRef Name="SaleOrder_ID"/>
+                    <PropertyRef Name="Product_ID"/>
                     <PropertyRef Name="IsActiveEntity"/>
                 </Key>
-                <Property Name="SaleOrderID" Type="Edm.Guid" Nullable="false"/>
-                <Property Name="productID" Type="Edm.String" Nullable="false"/>
+                <NavigationProperty Name="SaleOrder" Type="APIService.SaleOrder">
+                    <ReferentialConstraint Property="SaleOrder_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="SaleOrder_ID" Type="Edm.Guid" Nullable="false"/>
+                <NavigationProperty Name="Product" Type="APIService.Product">
+                    <ReferentialConstraint Property="Product_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="Product_ID" Type="Edm.String" Nullable="false"/>
                 <Property Name="quantity" Type="Edm.Int32"/>
                 <Property Name="price" Type="Edm.Int32"/>
                 <Property Name="color" Type="Edm.String"/>
@@ -105,10 +109,6 @@
                 <Property Name="size" Type="Edm.String"/>
                 <Property Name="shortDesc" Type="Edm.String"/>
                 <Property Name="longDesc" Type="Edm.String"/>
-                <NavigationProperty Name="category" Type="APIService.Category">
-                    <ReferentialConstraint Property="category_ID" ReferencedProperty="ID"/>
-                </NavigationProperty>
-                <Property Name="category_ID" Type="Edm.String"/>
                 <NavigationProperty Name="Image" Type="APIService.Image">
                     <OnDelete Action="Cascade"/>
                     <ReferentialConstraint Property="Image_ID" ReferencedProperty="ID"/>
@@ -119,25 +119,11 @@
                 <NavigationProperty Name="Album" Type="Collection(APIService.Album)">
                     <OnDelete Action="Cascade"/>
                 </NavigationProperty>
-                <Property Name="Album_ID" Type="Edm.Guid"/>
-                <Property Name="Album_product_ID" Type="Edm.String"/>
                 <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
                 <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
                 <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
                 <NavigationProperty Name="DraftAdministrativeData" Type="APIService.DraftAdministrativeData" ContainsTarget="true"/>
                 <NavigationProperty Name="SiblingEntity" Type="APIService.Product"/>
-            </EntityType>
-            <EntityType Name="Category">
-                <Key>
-                    <PropertyRef Name="ID"/>
-                </Key>
-                <Property Name="ID" Type="Edm.String" Nullable="false"/>
-                <Property Name="name" Type="Edm.String"/>
-                <Property Name="description" Type="Edm.String"/>
-                <NavigationProperty Name="products" Type="Collection(APIService.Product)">
-                    <OnDelete Action="Cascade"/>
-                </NavigationProperty>
-                <Property Name="products_ID" Type="Edm.String"/>
             </EntityType>
             <EntityType Name="Image">
                 <Key>
@@ -162,17 +148,14 @@
             </EntityType>
             <EntityType Name="Album">
                 <Key>
-                    <PropertyRef Name="ID"/>
-                    <PropertyRef Name="product_ID"/>
                     <PropertyRef Name="IsActiveEntity"/>
                 </Key>
-                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
-                <NavigationProperty Name="product" Type="APIService.Product">
-                    <ReferentialConstraint Property="product_ID" ReferencedProperty="ID"/>
-                </NavigationProperty>
-                <Property Name="product_ID" Type="Edm.String" Nullable="false"/>
+                <Property Name="productID" Type="Edm.String"/>
                 <Property Name="absoluteURL" Type="Edm.String"/>
                 <Property Name="html_alt" Type="Edm.String"/>
+                <NavigationProperty Name="Product" Type="APIService.Product">
+                    <ReferentialConstraint Property="productID" ReferencedProperty="ID"/>
+                </NavigationProperty>
                 <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
                 <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
                 <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
@@ -181,15 +164,17 @@
             </EntityType>
             <EntityType Name="User">
                 <Key>
-                    <PropertyRef Name="phone"/>
+                    <PropertyRef Name="ID"/>
                 </Key>
                 <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
                 <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
-                <Property Name="phone" Type="Edm.String" Nullable="false"/>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="phone" Type="Edm.String"/>
                 <Property Name="name" Type="Edm.String"/>
                 <Property Name="note" Type="Edm.String"/>
                 <Property Name="password" Type="Edm.String"/>
                 <NavigationProperty Name="SaleOrder" Type="Collection(APIService.SaleOrder)"/>
+                <Property Name="SaleOrder_ID" Type="Edm.Guid"/>
             </EntityType>
             <EntityType Name="DraftAdministrativeData">
                 <Key>
