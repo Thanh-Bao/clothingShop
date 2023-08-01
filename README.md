@@ -17,7 +17,7 @@ cds w
 ```
 
 
-### install VSCode extension
+### install VSCode extension (Optional)
 
 https://marketplace.visualstudio.com/items?itemName=SAPSE.vscode-cds
 

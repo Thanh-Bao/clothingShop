@@ -14,8 +14,8 @@ entity SaleOrder : common {
 }
 
 entity SaleOrderItem {
-    key SaleOrderID : UUID;
-    key productID   : String;
+    key SaleOrder : Association to one SaleOrder;
+    key Product   : Association to one Product;
         quantity    : Integer;
         price       : Integer;
         color       : Color;
@@ -26,15 +26,15 @@ entity SaleOrderItem {
 
 entity Product : common {
     key ID        : String; // format: quan-short-nam-thun-co-dan, chan-vay-jean
-        name      : String;
+        name      : String @mandatory;
         price     : Integer;
         material  : Material;
         color     : Color;
         size      : Size;
         shortDesc : String;
         longDesc  : String;
-        // category  : Composition of one Category;
-        // Image     : Composition of one Image;
+        category  : Association to one Category;
+        Image     : Composition of one Image;
         Album     : Composition of many Album;
 }
 
@@ -64,10 +64,12 @@ entity Album { // product detail page
 }
 
 entity User : common {
-    key phone    : String;
+    key ID       : UUID;
+        phone    : String;
         name     : String;
         note     : String;
         password : String;
+        SaleOrder : Association to many SaleOrder;
 // Address
 }
 
