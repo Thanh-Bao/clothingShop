@@ -31,10 +31,13 @@ entity Product : common {
         material  : Material;
         shortDesc : String;
         longDesc  : String;
-        quantity : Integer;
-        category  : Association to one Category;
+        quantity  : Integer;
+        category  : String;
+        Category  : Association to one Category
+                        on Category.ID = $self.category;
         Image     : Composition of one Image;
-        Colors     : Composition of many ProductColor on Colors.productID = $self.ID;
+        Colors    : Composition of many ProductColor
+                        on Colors.productID = $self.ID;
         Sizes     : Composition of many ProductSize
                         on Sizes.productID = $self.ID;
         Album     : Composition of many Album
@@ -47,17 +50,16 @@ entity ProductSize {
         size      : String;
 }
 
-entity ProductColor  {
-    key ID : UUID;
-    productID: String;
-    color: String;
+entity ProductColor {
+    key ID        : UUID;
+        productID : String;
+        color     : String;
 }
 
 entity Category {
     key ID          : String;
         name        : String;
         description : String;
-        products    : Composition of many Product;
 }
 
 

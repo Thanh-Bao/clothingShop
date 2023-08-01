@@ -1,6 +1,7 @@
 using APIService as service from '../../srv/Controller';
 
-annotate service.Product with @(UI.LineItem: [
+annotate service.Product with @(
+    UI.LineItem: [
     {
         $Type: 'UI.DataField',
         Label: 'ID',
@@ -26,7 +27,13 @@ annotate service.Product with @(UI.LineItem: [
         Label: 'price',
         Value: price,
     },
-]);
+],
+
+UI.SelectionFields : [
+    category
+]
+
+);
 
 annotate service.Product with @(
     UI.FieldGroup #GeneratedGroup1: {
@@ -56,6 +63,11 @@ annotate service.Product with @(
                 $Type: 'UI.DataField',
                 Label: 'longDesc',
                 Value: longDesc,
+            },
+             {
+                $Type: 'UI.DataField',
+                Label: 'category',
+                Value: category,
             },
         ],
     },
@@ -145,3 +157,28 @@ annotate service.Album with @(UI.LineItem: [
         Value: html_alt,
     },
 ]);
+
+//********************/ value help *******************
+
+annotate service.Product with {
+    category @(Common : { 
+        Text : Category.description,
+        TextArrangement : #TextLast,
+        ValueListWithFixedValues : true,
+        ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'Category',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : category,
+                    ValueListProperty : 'ID'
+                },
+                  {
+                    $Type : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'name'
+                }
+            ]
+      },
+     });
+} ;
