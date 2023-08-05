@@ -65,7 +65,7 @@ annotate service.Product with @(
         category,
         isActive,
         material,
-        price
+        price,
     ]
 );
 
@@ -120,13 +120,13 @@ annotate service.Product with @(
         {
             $Type : 'UI.ReferenceFacet',
             ID    : 'GeneratedFacet2',
-            Label : 'Size',
+            Label : 'Sizes',
             Target: 'Sizes/@UI.LineItem',
         },
         {
             $Type : 'UI.ReferenceFacet',
             ID    : 'GeneratedFacet3',
-            Label : 'Color',
+            Label : 'Colors',
             Target: 'Colors/@UI.LineItem',
         },
         {
@@ -171,16 +171,18 @@ annotate service.Image with @(UI.FieldGroup #GeneratedGroup2: {
 });
 
 annotate service.ProductColor with @(UI.LineItem: [{
-    $Type: 'UI.DataField',
-    Label: 'color',
-    Value: color,
+    $Type             : 'UI.DataField',
+    Label             : 'color',
+    Value             : color,
+    @HTML5.CssDefaults: {width: '15em'}
 }, ]);
 
 
 annotate service.ProductSize with @(UI.LineItem: [{
-    $Type: 'UI.DataField',
-    Label: 'size                                              ',
-    Value: size,
+    $Type             : 'UI.DataField',
+    Label             : 'size                                              ',
+    Value             : size,
+    @HTML5.CssDefaults: {width: '15em'}
 }, ]);
 
 annotate service.ProductSize with {
@@ -203,19 +205,17 @@ annotate service.ProductColor with {
         ValueListWithFixedValues: true,
         ValueList               : {
             $Type         : 'Common.ValueListType',
-            CollectionPath: 'Size',
-            Parameters    : [{
-                $Type            : 'Common.ValueListParameterInOut',
-                LocalDataProperty: color,
-                ValueListProperty: 'size'
-            },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'description'
-            }
+            CollectionPath: 'Color',
+            Parameters    : [
+                {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: color,
+                    ValueListProperty: 'color'
+                },
+               
             ]
         }
-    })
+    });
 };
 
 
