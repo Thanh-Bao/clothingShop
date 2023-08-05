@@ -1,21 +1,16 @@
 using APIService as service from '../../srv/Controller';
 
 annotate service.Product with @(
+    UI.HeaderInfo     : {
+        TypeName      : 'ID',
+        TypeNamePlural: 'ID',
+        Title         : {Value: ID},
+    },
     UI.LineItem       : [
         {
             $Type: 'UI.DataField',
             Label: 'ID',
             Value: ID,
-        },
-        {
-            $Type: 'UI.DataField',
-            Label: 'createdAt',
-            Value: createdAt,
-        },
-        {
-            $Type: 'UI.DataField',
-            Label: 'modifiedAt',
-            Value: modifiedAt,
         },
         {
             $Type: 'UI.DataField',
@@ -26,15 +21,42 @@ annotate service.Product with @(
             $Type: 'UI.DataField',
             Label: 'price',
             Value: price,
+            @HTML5.CssDefaults: {width:'10em'}
         },
         {
             $Type: 'UI.DataField',
             Label: 'isActive',
             Value: isActive,
+            Criticality : { $edmJson: { 
+                                         $If: [{$Eq: [{ $Path: 'isActive'}, false]}, 1,
+                                       { $If: [{$Eq: [{ $Path: 'isActive'}, true ]}, 3,2] }] 
+                                     } 
+                          },
+            @HTML5.CssDefaults: {width:'10em'}
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'material',
+            Value: material,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'category',
+            Value: category,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'quantity',
+            Value: quantity,
         },
     ],
 
-    UI.SelectionFields: [category, isActive]
+    UI.SelectionFields: [
+        category,
+        isActive,
+        material,
+        price
+    ]
 );
 
 annotate service.Product with @(
@@ -145,13 +167,11 @@ annotate service.ProductColor with @(UI.LineItem: [{
 }, ]);
 
 
-annotate service.ProductSize with @(UI.LineItem: [
-    {
-        $Type: 'UI.DataField',
-        Label: 'size                                              ',
-        Value: size,
-    },
-]);
+annotate service.ProductSize with @(UI.LineItem: [{
+    $Type: 'UI.DataField',
+    Label: 'size                                              ',
+    Value: size,
+}, ]);
 
 annotate service.ProductSize with {
     size @(Common: {

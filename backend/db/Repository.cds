@@ -4,7 +4,7 @@ namespace db;
 
 entity SaleOrder : common {
     key ID             : UUID;
-        phone          : String(10)  @mandatory;
+        phone          : String(10)  @mandatory; 
         note           : String;
         total          : Decimal(7)  @mandatory;
         address        : String(70);

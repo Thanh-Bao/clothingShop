@@ -112,7 +112,8 @@
                     "route": "SizeObjectPage"
                   }
                 }
-              }
+              },
+              "initialLoad": true
             }
           }
         },

@@ -112,7 +112,8 @@
                     "route": "CategoryObjectPage"
                   }
                 }
-              }
+              },
+              "initialLoad": true
             }
           }
         },
