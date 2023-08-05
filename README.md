@@ -13,7 +13,7 @@ npm i -g @sap/cds-dk
 ```
 
 ```
-cds w
+npm start
 ```
 
 
@@ -35,13 +35,13 @@ https://marketplace.visualstudio.com/items?itemName=SAPSE.vscode-cds
 
 ![alt text](https://github.com/Thanh-Bao/clothingShop/blob/main/docs/3.png?raw=true)
 
-# Quy tắc lấy API
+# Quy tắc viết query String
 
 https://viblo.asia/p/query-trong-web-api-odata-ZDEeLRxzvJb
 
 https://www.odata.org/getting-started/basic-tutorial/#queryData
 
-# API sample
+# query string sample
 
 ## 1. Trang chủ
 ### Lấy tất cả sản phẩm (SELECT * FROM)
@@ -56,7 +56,7 @@ http://localhost:4004/api/Product?$filter=price gt 500000
 
 ### Tìm kiếm sản phẩm (SELECT with WHERE LIKE, IN)
 
-
+http://localhost:4004/api/Product?$search=hiệu quả
 
 ### Các điều kiện bên trên kết hợp với phân trang (SQL LIMIT)
 
