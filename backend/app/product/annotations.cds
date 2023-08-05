@@ -90,12 +90,12 @@ annotate service.Product with @(
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'shortDesc',
+                Label: 'short description',
                 Value: shortDesc,
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'longDesc',
+                Label: 'full description (HTML format)',
                 Value: longDesc,
             },
             {
@@ -109,6 +109,31 @@ annotate service.Product with @(
                 Value: isActive,
             },
         ],
+    },
+    UI.FieldGroup #GeneratedGroupImage: {
+        $Type: 'UI.FieldGroupType',
+          Data : [
+        {
+            $Type: 'UI.DataField',
+            Label: 'thumbnail URL',
+            Value: thumbnailURL,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'thumbnail HTML alt',
+            Value: thumbnail_alt,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'hover Image URL',
+            Value: hoverImageURL,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'hover Image alt',
+            Value: hoverImage_alt,
+        },
+    ]
     },
     UI.Facets                     : [
         {
@@ -133,7 +158,7 @@ annotate service.Product with @(
             $Type : 'UI.ReferenceFacet',
             ID    : 'GeneratedFacet4',
             Label : 'Image',
-            Target: 'Image/@UI.FieldGroup#GeneratedGroup2',
+            Target: '@UI.FieldGroup#GeneratedGroupImage',
         },
         {
             $Type : 'UI.ReferenceFacet',
@@ -143,32 +168,6 @@ annotate service.Product with @(
         },
     ]
 );
-
-annotate service.Image with @(UI.FieldGroup #GeneratedGroup2: {
-    $Type: 'UI.FieldGroupType',
-    Data : [
-        {
-            $Type: 'UI.DataField',
-            Label: 'thumbnail URL',
-            Value: thumbnailURL,
-        },
-        {
-            $Type: 'UI.DataField',
-            Label: 'thumbnail HTML alt',
-            Value: thumbnail_alt,
-        },
-        {
-            $Type: 'UI.DataField',
-            Label: 'hover Image URL',
-            Value: hoverImageURL,
-        },
-        {
-            $Type: 'UI.DataField',
-            Label: 'hover Image alt',
-            Value: hoverImage_alt,
-        },
-    ]
-});
 
 annotate service.ProductColor with @(UI.LineItem: [{
     $Type             : 'UI.DataField',
@@ -206,13 +205,12 @@ annotate service.ProductColor with {
         ValueList               : {
             $Type         : 'Common.ValueListType',
             CollectionPath: 'Color',
-            Parameters    : [
-                {
-                    $Type            : 'Common.ValueListParameterInOut',
-                    LocalDataProperty: color,
-                    ValueListProperty: 'color'
-                },
-               
+            Parameters    : [{
+                $Type            : 'Common.ValueListParameterInOut',
+                LocalDataProperty: color,
+                ValueListProperty: 'color'
+            },
+
             ]
         }
     });

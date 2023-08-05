@@ -25,20 +25,23 @@ entity SaleOrderItem {
 // ******************* master data ************************************************************
 
 entity Product : common {
-    key ID        : String(40)   @mandatory @title: 'ID đặt theo format quan-short-nam-thun-co-dan, chan-vay-jean';
-        name      : String(60)   @mandatory;
-        price     : Decimal(6)   @mandatory;
-        material  : String(10)   @mandatory;
-        shortDesc : String(200)  @mandatory;
-        longDesc  : String;
-        quantity  : Decimal(4);
-        category  : String;
-        isActive  : Boolean      @mandatory default true;
-        Image     : Composition of one Image;
-        Category  : Association to one Category      on Category.ID = $self.category;
-        Colors    : Composition of many ProductColor on Colors.productID = $self.ID;
-        Sizes     : Composition of many ProductSize  on Sizes.productID = $self.ID;
-        Album     : Composition of many Album        on Album.productID = $self.ID;
+    key ID             : String(40)   @mandatory @title: 'ID đặt theo format quan-short-nam-thun-co-dan, chan-vay-jean';
+        name           : String(60)   @mandatory;
+        price          : Decimal(6)   @mandatory;
+        material       : String(10)   @mandatory;
+        shortDesc      : String(200)  @mandatory;
+        longDesc       : String;
+        quantity       : Decimal(4);
+        category       : String;
+        isActive       : Boolean      @mandatory default true;
+        thumbnailURL   : String       @mandatory;
+        thumbnail_alt  : String;                          // for SEO
+        hoverImageURL  : String       @mandatory;
+        hoverImage_alt : String;                          // for SEO
+        Category       : Association to one Category      on Category.ID = $self.category;
+        Colors         : Composition of many ProductColor on Colors.productID = $self.ID;
+        Sizes          : Composition of many ProductSize  on Sizes.productID = $self.ID;
+        Album          : Composition of many Album        on Album.productID = $self.ID;
 }
 
 entity ProductSize {
@@ -79,15 +82,6 @@ entity Category {
 entity Material  {
     key material    : String(30) @mandatory @title: 'Chất liệu VD: JEAN, COTON, THUN-CO-DAN, ...';
         description : String(255);
-}
-
-entity Image {
-    key ID             : UUID;
-    key product        : Association to one Product;
-        thumbnailURL   : String @mandatory;
-        thumbnail_alt  : String;            // for SEO
-        hoverImageURL  : String @mandatory;
-        hoverImage_alt : String;            // for SEO
 }
 
 entity Album {                              // product detail page
