@@ -33,4 +33,6 @@ https://marketplace.visualstudio.com/items?itemName=SAPSE.vscode-cds
 
 ![alt text](https://github.com/Thanh-Bao/clothingShop/blob/main/docs/5.png?raw=true)
 
+![alt text](https://github.com/Thanh-Bao/clothingShop/blob/main/docs/3.png?raw=true)
+
 
