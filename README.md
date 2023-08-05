@@ -72,7 +72,7 @@ http://localhost:4004/api/Product?$expand=Sizes&$top=1&$orderby=price desc
 
 ### Kết hợp nhiều entity (SQL JOIN)
 
-http://localhost:4004/api/Product?$expand=Sizes
+http://localhost:4004/api/Product?$expand=Sizes,Album
 
 ## 2. Product detail
 
