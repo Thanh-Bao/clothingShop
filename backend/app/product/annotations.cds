@@ -1,38 +1,40 @@
 using APIService as service from '../../srv/Controller';
 
 annotate service.Product with @(
-    UI.LineItem: [
-    {
-        $Type: 'UI.DataField',
-        Label: 'ID',
-        Value: ID,
-    },
-    {
-        $Type: 'UI.DataField',
-        Label: 'createdAt',
-        Value: createdAt,
-    },
-    {
-        $Type: 'UI.DataField',
-        Label: 'modifiedAt',
-        Value: modifiedAt,
-    },
-    {
-        $Type: 'UI.DataField',
-        Label: 'name',
-        Value: name,
-    },
-    {
-        $Type: 'UI.DataField',
-        Label: 'price',
-        Value: price,
-    },
-],
+    UI.LineItem       : [
+        {
+            $Type: 'UI.DataField',
+            Label: 'ID',
+            Value: ID,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'createdAt',
+            Value: createdAt,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'modifiedAt',
+            Value: modifiedAt,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'name',
+            Value: name,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'price',
+            Value: price,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'isActive',
+            Value: isActive,
+        },
+    ],
 
-UI.SelectionFields : [
-    category
-]
-
+    UI.SelectionFields: [category, isActive]
 );
 
 annotate service.Product with @(
@@ -64,10 +66,15 @@ annotate service.Product with @(
                 Label: 'longDesc',
                 Value: longDesc,
             },
-             {
+            {
                 $Type: 'UI.DataField',
                 Label: 'category',
                 Value: category,
+            },
+            {
+                $Type: 'UI.DataField',
+                Label: 'isActive',
+                Value: isActive,
             },
         ],
     },
@@ -84,7 +91,7 @@ annotate service.Product with @(
             Label : 'Size',
             Target: 'Sizes/@UI.LineItem',
         },
-         {
+        {
             $Type : 'UI.ReferenceFacet',
             ID    : 'GeneratedFacet3',
             Label : 'Color',
@@ -138,12 +145,28 @@ annotate service.ProductColor with @(UI.LineItem: [{
 }, ]);
 
 
-annotate service.ProductSize with @(UI.LineItem: [{
-    $Type: 'UI.DataField',
-    Label: 'size',
-    Value: size,
-}, ]);
+annotate service.ProductSize with @(UI.LineItem: [
+    {
+        $Type: 'UI.DataField',
+        Label: 'size                                              ',
+        Value: size,
+    },
+]);
 
+annotate service.ProductSize with {
+    size @(Common: {
+        ValueListWithFixedValues: true,
+        ValueList               : {
+            $Type         : 'Common.ValueListType',
+            CollectionPath: 'Size',
+            Parameters    : [{
+                $Type            : 'Common.ValueListParameterInOut',
+                LocalDataProperty: size,
+                ValueListProperty: 'size'
+            }, ]
+        },
+    });
+};
 
 annotate service.Album with @(UI.LineItem: [
     {
@@ -161,26 +184,24 @@ annotate service.Album with @(UI.LineItem: [
 //********************/ value help *******************
 
 annotate service.Product with {
-    category @(Common : { 
-        Text : Category.description,
-        TextArrangement : #TextLast,
-        ValueListWithFixedValues : true,
-        ValueList : {
-            $Type : 'Common.ValueListType',
-            CollectionPath : 'Category',
-            Parameters : [
+    category @(Common: {
+        Text                    : Category.description,
+        TextArrangement         : #TextLast,
+        ValueListWithFixedValues: true,
+        ValueList               : {
+            $Type         : 'Common.ValueListType',
+            CollectionPath: 'Category',
+            Parameters    : [
                 {
-                    $Type : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : category,
-                    ValueListProperty : 'ID'
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: category,
+                    ValueListProperty: 'ID'
                 },
-                  {
-                    $Type : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty : 'name'
+                {
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'name'
                 }
             ]
-      },
-     });
-} ;
-
-
+        },
+    });
+};
