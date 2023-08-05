@@ -1,2 +1,4 @@
 angular/.angular
 angular/node_modules
+angular/dist
+angular/.vscode
