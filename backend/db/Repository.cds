@@ -49,7 +49,7 @@ entity ProductSize {
 }
 
 entity Size {
-    key size   : String(4)   @mandatory  @assert.range enum { X; XXL; S; };
+    key size   : String(4)   @mandatory  @assert.range enum { S; XS; M; L; XL; XXL; XXXL; XXXXL; };
         height : Decimal(3)  @mandatory  @title: 'Chiều cao';
         weight : Decimal(3)  @mandatory  @title: 'Cân nặng';
         bust   : Decimal(3)  @mandatory  @title: 'Vòng ngực';
