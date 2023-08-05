@@ -46,6 +46,8 @@ https://www.odata.org/getting-started/basic-tutorial/#queryData
 ## 1. Trang chủ
 ### Lấy tất cả sản phẩm (SELECT * FROM)
 
+http://localhost:4004/api/Product
+
 ### Filter sản theo điều kiện (SELECT with WHERE)
 
 #### Lấy ra sản phẩm có giá lớn hơn 500000đ
