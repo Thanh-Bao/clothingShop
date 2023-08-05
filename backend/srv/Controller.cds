@@ -14,6 +14,10 @@ service APIService {
     @odata.draft.enabled
     entity Size          as projection on db.Size;
 
+    @odata.draft.enabled
+    entity Color         as projection on db.Color;
+    @odata.draft.enabled
+    entity Material      as projection on db.Material;
     entity SaleOrderItem as projection on db.SaleOrderItem;
     entity Image         as projection on db.Image;
     entity Album         as projection on db.Album;

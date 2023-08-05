@@ -28,14 +28,14 @@ entity Product : common {
     key ID        : String(40)   @mandatory @title: 'ID đặt theo format quan-short-nam-thun-co-dan, chan-vay-jean';
         name      : String(60)   @mandatory;
         price     : Decimal(6)   @mandatory;
-        material  : String(10)   @mandatory @assert.range enum { JEAN; COTON; };
+        material  : String(10)   @mandatory;
         shortDesc : String(200)  @mandatory;
         longDesc  : String;
         quantity  : Decimal(4);
         category  : String;
         isActive  : Boolean      @mandatory default true;
-        Category  : Association to one Category      on Category.ID = $self.category;
         Image     : Composition of one Image;
+        Category  : Association to one Category      on Category.ID = $self.category;
         Colors    : Composition of many ProductColor on Colors.productID = $self.ID;
         Sizes     : Composition of many ProductSize  on Sizes.productID = $self.ID;
         Album     : Composition of many Album        on Album.productID = $self.ID;
@@ -48,6 +48,13 @@ entity ProductSize {
         Size      : Association to one Size on Size.size = $self.size;
 }
 
+entity ProductColor {
+    key ID        : UUID;
+        productID : String(40) @mandatory;
+        color     : String(10) @mandatory;
+        Color     : Association to one Color on Color.color = $self.color;
+}
+
 entity Size {
     key size   : String(4)   @mandatory  @assert.range enum { S; XS; M; L; XL; XXL; XXXL; XXXXL; };
         height : Decimal(3)  @mandatory  @title: 'Chiều cao';
@@ -57,18 +64,22 @@ entity Size {
         hip    : Decimal(3)  @mandatory  @title: 'Vòng 3';
 }
 
-entity ProductColor {
-    key ID        : UUID;
-        productID : String(40) @mandatory;
-        color     : String(10) @mandatory @assert.range enum { RED; BLUE; WHITE; BLACK; GREEN; ORANGE; };
-}
 
+entity Color {
+    key color        : String(15) @mandatory @title : 'Màu VD: RED, BLACK, GREAN, ...';
+        hexColorCode : String(7)  @mandatory @assert.format : '^#([0-9A-Fa-f]{6})$'; 
+        description  : String(255);
+}
 entity Category {
     key ID          : String(20) @mandatory;
         name        : String(20) @mandatory;
         description : String;
 }
 
+entity Material  {
+    key material    : String(30) @mandatory @title: 'Chất liệu VD: JEAN, COTON, THUN-CO-DAN, ...';
+        description : String(255);
+}
 
 entity Image {
     key ID             : UUID;

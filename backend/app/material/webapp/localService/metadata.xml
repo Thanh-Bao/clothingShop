@@ -1,0 +1,761 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.xml">
+        <edmx:Include Alias="Validation" Namespace="Org.OData.Validation.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="APIService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="SaleOrder" EntityType="APIService.SaleOrder">
+                    <NavigationPropertyBinding Path="SaleOrderItems" Target="SaleOrderItem"/>
+                    <NavigationPropertyBinding Path="User" Target="User"/>
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="SaleOrder"/>
+                </EntitySet>
+                <EntitySet Name="Product" EntityType="APIService.Product">
+                    <NavigationPropertyBinding Path="Category" Target="Category"/>
+                    <NavigationPropertyBinding Path="Image" Target="Image"/>
+                    <NavigationPropertyBinding Path="Colors" Target="ProductColor"/>
+                    <NavigationPropertyBinding Path="Sizes" Target="ProductSize"/>
+                    <NavigationPropertyBinding Path="Album" Target="Album"/>
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="Product"/>
+                </EntitySet>
+                <EntitySet Name="Category" EntityType="APIService.Category">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="Category"/>
+                </EntitySet>
+                <EntitySet Name="Size" EntityType="APIService.Size">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="Size"/>
+                </EntitySet>
+                <EntitySet Name="SaleOrderItem" EntityType="APIService.SaleOrderItem">
+                    <NavigationPropertyBinding Path="SaleOrder" Target="SaleOrder"/>
+                    <NavigationPropertyBinding Path="Product" Target="Product"/>
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="SaleOrderItem"/>
+                </EntitySet>
+                <EntitySet Name="Image" EntityType="APIService.Image">
+                    <NavigationPropertyBinding Path="product" Target="Product"/>
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="Image"/>
+                </EntitySet>
+                <EntitySet Name="Album" EntityType="APIService.Album">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="Album"/>
+                </EntitySet>
+                <EntitySet Name="User" EntityType="APIService.User">
+                    <NavigationPropertyBinding Path="SaleOrder" Target="SaleOrder"/>
+                </EntitySet>
+                <EntitySet Name="Color" EntityType="APIService.Color"/>
+                <EntitySet Name="Material" EntityType="APIService.Material"/>
+                <EntitySet Name="ProductSize" EntityType="APIService.ProductSize">
+                    <NavigationPropertyBinding Path="Size" Target="Size"/>
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="ProductSize"/>
+                </EntitySet>
+                <EntitySet Name="ProductColor" EntityType="APIService.ProductColor">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="ProductColor"/>
+                </EntitySet>
+            </EntityContainer>
+            <EntityType Name="SaleOrder">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="phone" Type="Edm.String" MaxLength="10"/>
+                <Property Name="note" Type="Edm.String"/>
+                <Property Name="total" Type="Edm.Decimal" Precision="7"/>
+                <Property Name="address" Type="Edm.String" MaxLength="70"/>
+                <Property Name="status" Type="Edm.String" MaxLength="15" DefaultValue="PROCESSING"/>
+                <NavigationProperty Name="SaleOrderItems" Type="Collection(APIService.SaleOrderItem)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <Property Name="SaleOrderItems_SaleOrder_ID" Type="Edm.Guid"/>
+                <Property Name="SaleOrderItems_Product_ID" Type="Edm.String" MaxLength="40"/>
+                <NavigationProperty Name="User" Type="APIService.User">
+                    <ReferentialConstraint Property="User_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="User_ID" Type="Edm.Guid"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="APIService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="APIService.SaleOrder"/>
+            </EntityType>
+            <EntityType Name="Product">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="ID" Type="Edm.String" MaxLength="40" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="60"/>
+                <Property Name="price" Type="Edm.Decimal" Precision="6"/>
+                <Property Name="material" Type="Edm.String" MaxLength="10"/>
+                <Property Name="shortDesc" Type="Edm.String" MaxLength="200"/>
+                <Property Name="longDesc" Type="Edm.String"/>
+                <Property Name="quantity" Type="Edm.Decimal" Precision="4"/>
+                <Property Name="category" Type="Edm.String"/>
+                <Property Name="isActive" Type="Edm.Boolean" DefaultValue="true"/>
+                <NavigationProperty Name="Category" Type="APIService.Category">
+                    <ReferentialConstraint Property="category" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="Image" Type="APIService.Image">
+                    <OnDelete Action="Cascade"/>
+                    <ReferentialConstraint Property="Image_ID" ReferencedProperty="ID"/>
+                    <ReferentialConstraint Property="Image_product_ID" ReferencedProperty="product_ID"/>
+                </NavigationProperty>
+                <Property Name="Image_ID" Type="Edm.Guid"/>
+                <Property Name="Image_product_ID" Type="Edm.String" MaxLength="40"/>
+                <NavigationProperty Name="Colors" Type="Collection(APIService.ProductColor)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="Sizes" Type="Collection(APIService.ProductSize)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="Album" Type="Collection(APIService.Album)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="APIService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="APIService.Product"/>
+            </EntityType>
+            <EntityType Name="Category">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" MaxLength="20" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="20"/>
+                <Property Name="description" Type="Edm.String"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="APIService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="APIService.Category"/>
+            </EntityType>
+            <EntityType Name="Size">
+                <Key>
+                    <PropertyRef Name="size"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="size" Type="Edm.String" MaxLength="4" Nullable="false"/>
+                <Property Name="height" Type="Edm.Decimal" Precision="3"/>
+                <Property Name="weight" Type="Edm.Decimal" Precision="3"/>
+                <Property Name="bust" Type="Edm.Decimal" Precision="3"/>
+                <Property Name="waist" Type="Edm.Decimal" Precision="3"/>
+                <Property Name="hip" Type="Edm.Decimal" Precision="3"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="APIService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="APIService.Size"/>
+            </EntityType>
+            <EntityType Name="SaleOrderItem">
+                <Key>
+                    <PropertyRef Name="SaleOrder_ID"/>
+                    <PropertyRef Name="Product_ID"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <NavigationProperty Name="SaleOrder" Type="APIService.SaleOrder">
+                    <ReferentialConstraint Property="SaleOrder_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="SaleOrder_ID" Type="Edm.Guid" Nullable="false"/>
+                <NavigationProperty Name="Product" Type="APIService.Product">
+                    <ReferentialConstraint Property="Product_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="Product_ID" Type="Edm.String" MaxLength="40" Nullable="false"/>
+                <Property Name="quantity" Type="Edm.Decimal" Precision="2"/>
+                <Property Name="price" Type="Edm.Decimal" Precision="6"/>
+                <Property Name="color" Type="Edm.String" MaxLength="10"/>
+                <Property Name="size" Type="Edm.String" MaxLength="4"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="APIService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="APIService.SaleOrderItem"/>
+            </EntityType>
+            <EntityType Name="Image">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                    <PropertyRef Name="product_ID"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <NavigationProperty Name="product" Type="APIService.Product">
+                    <ReferentialConstraint Property="product_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="product_ID" Type="Edm.String" MaxLength="40" Nullable="false"/>
+                <Property Name="thumbnailURL" Type="Edm.String"/>
+                <Property Name="thumbnail_alt" Type="Edm.String"/>
+                <Property Name="hoverImageURL" Type="Edm.String"/>
+                <Property Name="hoverImage_alt" Type="Edm.String"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="APIService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="APIService.Image"/>
+            </EntityType>
+            <EntityType Name="Album">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="productID" Type="Edm.String" MaxLength="40"/>
+                <Property Name="absoluteURL" Type="Edm.String"/>
+                <Property Name="html_alt" Type="Edm.String"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="APIService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="APIService.Album"/>
+            </EntityType>
+            <EntityType Name="User">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="phone" Type="Edm.String" MaxLength="10"/>
+                <Property Name="name" Type="Edm.String" MaxLength="20"/>
+                <Property Name="note" Type="Edm.String"/>
+                <Property Name="password" Type="Edm.String"/>
+                <NavigationProperty Name="SaleOrder" Type="Collection(APIService.SaleOrder)"/>
+                <Property Name="SaleOrder_ID" Type="Edm.Guid"/>
+            </EntityType>
+            <EntityType Name="Color">
+                <Key>
+                    <PropertyRef Name="color"/>
+                </Key>
+                <Property Name="color" Type="Edm.String" MaxLength="15" Nullable="false"/>
+                <Property Name="hexColorCode" Type="Edm.String" MaxLength="7"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+            </EntityType>
+            <EntityType Name="Material">
+                <Key>
+                    <PropertyRef Name="material"/>
+                </Key>
+                <Property Name="material" Type="Edm.String" MaxLength="30" Nullable="false"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+            </EntityType>
+            <EntityType Name="ProductSize">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="productID" Type="Edm.String" MaxLength="40"/>
+                <Property Name="size" Type="Edm.String" MaxLength="4"/>
+                <NavigationProperty Name="Size" Type="APIService.Size">
+                    <ReferentialConstraint Property="size" ReferencedProperty="size"/>
+                </NavigationProperty>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="APIService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="APIService.ProductSize"/>
+            </EntityType>
+            <EntityType Name="ProductColor">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="productID" Type="Edm.String" MaxLength="40"/>
+                <Property Name="color" Type="Edm.String" MaxLength="10"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="APIService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="APIService.ProductColor"/>
+            </EntityType>
+            <EntityType Name="DraftAdministrativeData">
+                <Key>
+                    <PropertyRef Name="DraftUUID"/>
+                </Key>
+                <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="CreationDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="CreatedByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="DraftIsCreatedByMe" Type="Edm.Boolean"/>
+                <Property Name="LastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LastChangedByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="InProcessByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="DraftIsProcessedByMe" Type="Edm.Boolean"/>
+            </EntityType>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="APIService.SaleOrder"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="APIService.SaleOrder"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="APIService.Product"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="APIService.Product"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="APIService.Category"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="APIService.Category"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="APIService.Size"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="APIService.Size"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="APIService.SaleOrderItem"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="APIService.SaleOrderItem"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="APIService.Image"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="APIService.Image"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="APIService.Album"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="APIService.Album"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="APIService.ProductSize"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="APIService.ProductSize"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="APIService.ProductColor"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="APIService.ProductColor"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="APIService.SaleOrder"/>
+                <ReturnType Type="APIService.SaleOrder"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="APIService.Product"/>
+                <ReturnType Type="APIService.Product"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="APIService.Category"/>
+                <ReturnType Type="APIService.Category"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="APIService.Size"/>
+                <ReturnType Type="APIService.Size"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="APIService.SaleOrder"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="APIService.SaleOrder"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="APIService.Product"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="APIService.Product"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="APIService.Category"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="APIService.Category"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="APIService.Size"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="APIService.Size"/>
+            </Action>
+            <Annotations Target="APIService.EntityContainer/SaleOrder">
+                <Annotation Term="Common.DraftRoot">
+                    <Record Type="Common.DraftRootType">
+                        <PropertyValue Property="ActivationAction" String="APIService.draftActivate"/>
+                        <PropertyValue Property="EditAction" String="APIService.draftEdit"/>
+                        <PropertyValue Property="PreparationAction" String="APIService.draftPrepare"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="APIService.SaleOrder/createdAt">
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.SaleOrder/modifiedAt">
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.SaleOrder/phone">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.SaleOrder/total">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.SaleOrder/status">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                <Annotation Term="Validation.AllowedValues">
+                    <Collection>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="PROCESSING"/>
+                            <PropertyValue Property="Value" String="PROCESSING"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="SUCCESS"/>
+                            <PropertyValue Property="Value" String="SUCCESS"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="CANCEL"/>
+                            <PropertyValue Property="Value" String="CANCEL"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="RETURN"/>
+                            <PropertyValue Property="Value" String="RETURN"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="APIService.SaleOrder/IsActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.SaleOrder/HasActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.SaleOrder/HasDraftEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.SaleOrder/DraftAdministrativeData">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.EntityContainer/Product">
+                <Annotation Term="Common.DraftRoot">
+                    <Record Type="Common.DraftRootType">
+                        <PropertyValue Property="ActivationAction" String="APIService.draftActivate"/>
+                        <PropertyValue Property="EditAction" String="APIService.draftEdit"/>
+                        <PropertyValue Property="PreparationAction" String="APIService.draftPrepare"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="APIService.Product/createdAt">
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.Product/modifiedAt">
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.Product/ID">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                <Annotation Term="Common.Label" String="ID đặt theo format quan-short-nam-thun-co-dan, chan-vay-jean"/>
+            </Annotations>
+            <Annotations Target="APIService.Product/name">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.Product/price">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.Product/material">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.Product/shortDesc">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.Product/isActive">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.Product/IsActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.Product/HasActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.Product/HasDraftEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.Product/DraftAdministrativeData">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.EntityContainer/Category">
+                <Annotation Term="Common.DraftRoot">
+                    <Record Type="Common.DraftRootType">
+                        <PropertyValue Property="ActivationAction" String="APIService.draftActivate"/>
+                        <PropertyValue Property="EditAction" String="APIService.draftEdit"/>
+                        <PropertyValue Property="PreparationAction" String="APIService.draftPrepare"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="APIService.Category/ID">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.Category/name">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.Category/IsActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.Category/HasActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.Category/HasDraftEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.Category/DraftAdministrativeData">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.EntityContainer/Size">
+                <Annotation Term="Common.DraftRoot">
+                    <Record Type="Common.DraftRootType">
+                        <PropertyValue Property="ActivationAction" String="APIService.draftActivate"/>
+                        <PropertyValue Property="EditAction" String="APIService.draftEdit"/>
+                        <PropertyValue Property="PreparationAction" String="APIService.draftPrepare"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="APIService.Size/size">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                <Annotation Term="Validation.AllowedValues">
+                    <Collection>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="S"/>
+                            <PropertyValue Property="Value" String="S"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="XS"/>
+                            <PropertyValue Property="Value" String="XS"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="M"/>
+                            <PropertyValue Property="Value" String="M"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="L"/>
+                            <PropertyValue Property="Value" String="L"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="XL"/>
+                            <PropertyValue Property="Value" String="XL"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="XXL"/>
+                            <PropertyValue Property="Value" String="XXL"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="XXXL"/>
+                            <PropertyValue Property="Value" String="XXXL"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="XXXXL"/>
+                            <PropertyValue Property="Value" String="XXXXL"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="APIService.Size/height">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                <Annotation Term="Common.Label" String="Chiều cao"/>
+            </Annotations>
+            <Annotations Target="APIService.Size/weight">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                <Annotation Term="Common.Label" String="Cân nặng"/>
+            </Annotations>
+            <Annotations Target="APIService.Size/bust">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                <Annotation Term="Common.Label" String="Vòng ngực"/>
+            </Annotations>
+            <Annotations Target="APIService.Size/waist">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                <Annotation Term="Common.Label" String="Vòng eo"/>
+            </Annotations>
+            <Annotations Target="APIService.Size/hip">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                <Annotation Term="Common.Label" String="Vòng 3"/>
+            </Annotations>
+            <Annotations Target="APIService.Size/IsActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.Size/HasActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.Size/HasDraftEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.Size/DraftAdministrativeData">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.EntityContainer/SaleOrderItem">
+                <Annotation Term="Common.DraftNode">
+                    <Record Type="Common.DraftNodeType">
+                        <PropertyValue Property="PreparationAction" String="APIService.draftPrepare"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="APIService.SaleOrderItem/quantity">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.SaleOrderItem/price">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.SaleOrderItem/IsActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.SaleOrderItem/HasActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.SaleOrderItem/HasDraftEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.SaleOrderItem/DraftAdministrativeData">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.EntityContainer/Image">
+                <Annotation Term="Common.DraftNode">
+                    <Record Type="Common.DraftNodeType">
+                        <PropertyValue Property="PreparationAction" String="APIService.draftPrepare"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="APIService.Image/thumbnailURL">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.Image/hoverImageURL">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.Image/IsActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.Image/HasActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.Image/HasDraftEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.Image/DraftAdministrativeData">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.EntityContainer/Album">
+                <Annotation Term="Common.DraftNode">
+                    <Record Type="Common.DraftNodeType">
+                        <PropertyValue Property="PreparationAction" String="APIService.draftPrepare"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="APIService.Album/productID">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.Album/absoluteURL">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.Album/IsActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.Album/HasActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.Album/HasDraftEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.Album/DraftAdministrativeData">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.User/createdAt">
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.User/modifiedAt">
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.User/phone">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.Color/color">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.Color/hexColorCode">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                <Annotation Term="Validation.Pattern" String="^#([0-9A-Fa-f]{6})$"/>
+            </Annotations>
+            <Annotations Target="APIService.Material/material">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.EntityContainer/ProductSize">
+                <Annotation Term="Common.DraftNode">
+                    <Record Type="Common.DraftNodeType">
+                        <PropertyValue Property="PreparationAction" String="APIService.draftPrepare"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="APIService.ProductSize/productID">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.ProductSize/size">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.ProductSize/IsActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.ProductSize/HasActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.ProductSize/HasDraftEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.ProductSize/DraftAdministrativeData">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.EntityContainer/ProductColor">
+                <Annotation Term="Common.DraftNode">
+                    <Record Type="Common.DraftNodeType">
+                        <PropertyValue Property="PreparationAction" String="APIService.draftPrepare"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="APIService.ProductColor/productID">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.ProductColor/color">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="APIService.ProductColor/IsActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.ProductColor/HasActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.ProductColor/HasDraftEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.ProductColor/DraftAdministrativeData">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="APIService.DraftAdministrativeData">
+                <Annotation Term="Common.Label" String="{i18n>Draft_DraftAdministrativeData}"/>
+                </Annotations>
+                <Annotations Target="APIService.DraftAdministrativeData/DraftUUID">
+                    <Annotation Term="UI.Hidden" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n>Draft_DraftUUID}"/>
+                    </Annotations>
+                    <Annotations Target="APIService.DraftAdministrativeData/CreationDateTime">
+                        <Annotation Term="Common.Label" String="{i18n>Draft_CreationDateTime}"/>
+                        </Annotations>
+                        <Annotations Target="APIService.DraftAdministrativeData/CreatedByUser">
+                            <Annotation Term="Common.Label" String="{i18n>Draft_CreatedByUser}"/>
+                            </Annotations>
+                            <Annotations Target="APIService.DraftAdministrativeData/DraftIsCreatedByMe">
+                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsCreatedByMe}"/>
+                                </Annotations>
+                                <Annotations Target="APIService.DraftAdministrativeData/LastChangeDateTime">
+                                    <Annotation Term="Common.Label" String="{i18n>Draft_LastChangeDateTime}"/>
+                                    </Annotations>
+                                    <Annotations Target="APIService.DraftAdministrativeData/LastChangedByUser">
+                                        <Annotation Term="Common.Label" String="{i18n>Draft_LastChangedByUser}"/>
+                                        </Annotations>
+                                        <Annotations Target="APIService.DraftAdministrativeData/InProcessByUser">
+                                            <Annotation Term="Common.Label" String="{i18n>Draft_InProcessByUser}"/>
+                                            </Annotations>
+                                            <Annotations Target="APIService.DraftAdministrativeData/DraftIsProcessedByMe">
+                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsProcessedByMe}"/>
+                                                </Annotations>
+                                            </Schema>
+                                        </edmx:DataServices>
+                                    </edmx:Edmx>

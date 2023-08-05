@@ -18,21 +18,31 @@ annotate service.Product with @(
             Value: name,
         },
         {
-            $Type: 'UI.DataField',
-            Label: 'price',
-            Value: price,
-            @HTML5.CssDefaults: {width:'10em'}
+            $Type             : 'UI.DataField',
+            Label             : 'price',
+            Value             : price,
+            @HTML5.CssDefaults: {width: '10em'}
         },
         {
-            $Type: 'UI.DataField',
-            Label: 'isActive',
-            Value: isActive,
-            Criticality : { $edmJson: { 
-                                         $If: [{$Eq: [{ $Path: 'isActive'}, false]}, 1,
-                                       { $If: [{$Eq: [{ $Path: 'isActive'}, true ]}, 3,2] }] 
-                                     } 
-                          },
-            @HTML5.CssDefaults: {width:'10em'}
+            $Type             : 'UI.DataField',
+            Label             : 'isActive',
+            Value             : isActive,
+            Criticality       : {$edmJson: {$If: [
+                {$Eq: [
+                    {$Path: 'isActive'},
+                    false
+                ]},
+                1,
+                {$If: [
+                    {$Eq: [
+                        {$Path: 'isActive'},
+                        true
+                    ]},
+                    3,
+                    2
+                ]}
+            ]}},
+            @HTML5.CssDefaults: {width: '10em'}
         },
         {
             $Type: 'UI.DataField',
@@ -188,6 +198,27 @@ annotate service.ProductSize with {
     });
 };
 
+annotate service.ProductColor with {
+    color @(common: {
+        ValueListWithFixedValues: true,
+        ValueList               : {
+            $Type         : 'Common.ValueListType',
+            CollectionPath: 'Size',
+            Parameters    : [{
+                $Type            : 'Common.ValueListParameterInOut',
+                LocalDataProperty: color,
+                ValueListProperty: 'size'
+            },
+            {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'description'
+            }
+            ]
+        }
+    })
+};
+
+
 annotate service.Album with @(UI.LineItem: [
     {
         $Type: 'UI.DataField',
@@ -220,6 +251,25 @@ annotate service.Product with {
                 {
                     $Type            : 'Common.ValueListParameterDisplayOnly',
                     ValueListProperty: 'name'
+                }
+            ]
+        },
+    });
+
+    material @(Common: {
+        ValueListWithFixedValues: true,
+        ValueList               : {
+            $Type         : 'Common.ValueListType',
+            CollectionPath: 'Material',
+            Parameters    : [
+                {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: material,
+                    ValueListProperty: 'material'
+                },
+                {
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'description'
                 }
             ]
         },
