@@ -1,0 +1,97 @@
+nav{
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+nav .nav__inner{
+    padding: 0 64px;
+    height: 56px;
+    background-color: var(--surface-overlay) !important;
+}
+.logo__wrapper .logo{
+    height: 46px;
+    width: 46px;
+}
+.logo__wrapper .logo img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.page__list__wrapper{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.page__list__wrapper ul{
+    height: 56px;
+}
+.icon__group__wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+.icon__group__wrapper .icon__wrapper{
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.icon__group__wrapper .icon__wrapper i{
+    font-size: 21px;
+}
+/* searchbar */
+.searchbar__wrapper{
+
+}
+.searchbar {
+  background-color: var(--gray-100);
+  border-radius: 30px;
+}
+::ng-deep .searchbar  .custom-input{
+  border: unset;
+  background-color: transparent;
+  width: 100%;
+  border-radius: inherit;
+}
+::ng-deep .searchbar .custom-input:enabled:focus{
+  box-shadow: none;
+}
+ .searchbar p-autocomplete{
+  width: 100%;
+}
+::ng-deep .searchbar p-autocomplete span{
+  width: inherit;
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  /* CSS cho màn hình nhỏ hơn hoặc bằng 767px (mobile) */
+  nav {
+    & .logo__wrapper {
+      order: 1 !important;
+    }
+    & .page__list__wrapper {
+      order: 0 !important;
+    }
+  }
+}
+
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* CSS cho màn hình từ 768px đến 1023px (tablet) */
+  nav {
+    & .logo__wrapper {
+      order: 1 !important;
+    }
+    & .page__list__wrapper {
+      order: 0 !important;
+    }
+  }
+}
+
+/* PC */
+@media (min-width: 1024px) {
+  /* CSS cho màn hình lớn hơn hoặc bằng 1024px (PC) */
+}
+
