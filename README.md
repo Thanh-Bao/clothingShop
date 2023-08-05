@@ -48,15 +48,35 @@ https://www.odata.org/getting-started/basic-tutorial/#queryData
 
 ### Filter sản theo điều kiện (SELECT with WHERE)
 
+#### Lấy ra sản phẩm có giá lớn hơn 500000đ
+
+http://localhost:4004/api/Product?$filter=price gt 500000
+
 ### Tìm kiếm sản phẩm (SELECT with WHERE LIKE, IN)
+
+
 
 ### Các điều kiện bên trên kết hợp với phân trang (SQL LIMIT)
 
+http://localhost:4004/api/Product?$expand=Sizes&$top=1
+
+hoặc
+
+http://localhost:4004/api/Product?$expand=Sizes&$skip=1&$top=1
+
 ### Các điều kiện bên trên kết hợp với sắp xếp (SQL ORDER BY)
+
+http://localhost:4004/api/Product?$expand=Sizes&$top=1&$orderby=price desc
 
 ### Kết hợp nhiều entity (SQL JOIN)
 
+http://localhost:4004/api/Product?$expand=Sizes
+
+## 2. Product detail
+
 ### Lấy ra một sản phẩm khi biết ID 
+
+http://localhost:4004/api/Product(ID='ao-so-mi-nam-dai-tay-cafe-dris-khu-mui',IsActiveEntity=false)
 
 
 
