@@ -1,4 +1,4 @@
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT } from "@angular/common";
 import {
   Component,
   ElementRef,
@@ -6,196 +6,201 @@ import {
   OnInit,
   Renderer2,
   ViewChild,
-} from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+} from "@angular/core";
+import { FormControl, FormGroup } from "@angular/forms";
+import { Observable, map } from "rxjs";
+import { Product } from "src/app/models/response";
+import { ProductService } from "src/app/user/services/product.service";
 interface SortCritera {
   name: string;
   code: string;
 }
 @Component({
-  selector: 'product-list',
-  templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.scss'],
+  selector: "product-list",
+  templateUrl: "./product-list.component.html",
+  styleUrls: ["./product-list.component.scss"],
 })
 // ];
 export class ProductListComponent {
-  @ViewChild('sidebarWrapper')
+  @ViewChild("sidebarWrapper")
   sidebarWrapper!: ElementRef;
-  @ViewChild('productGridWrapper')
+  @ViewChild("productGridWrapper")
   productGridWrapper!: ElementRef;
 
   selectedSortCritera!: SortCritera;
   sortCritera: SortCritera[] = [
     {
-      name: 'Mới nhất',
-      code: 'new',
+      name: "Mới nhất",
+      code: "new",
     },
     {
-      name: 'Giá: Cao-thấp',
-      code: 'descPrice',
+      name: "Giá: Cao-thấp",
+      code: "descPrice",
     },
     {
-      name: 'Giá: Thấp-cao',
-      code: 'ascPrice',
+      name: "Giá: Thấp-cao",
+      code: "ascPrice",
     },
   ];
   isShowSidebar: boolean = true;
   rangeValues: number[] = [20, 80];
   filterOptions = [
     {
-      label: 'Chiều cao',
-      type: 'checkbox',
-      value: ['all'],
+      label: "Chiều cao",
+      type: "checkbox",
+      value: ["all"],
       options: [
         {
-          name: 'Tất cả',
-          value: 'all',
+          name: "Tất cả",
+          value: "all",
         },
         {
-          name: 'Dưới 150 cm',
-          value: 'under150',
+          name: "Dưới 150 cm",
+          value: "under150",
         },
         {
-          name: '150 - 160 cm',
-          value: '150-160',
+          name: "150 - 160 cm",
+          value: "150-160",
         },
         {
-          name: '160 - 170 cm',
-          value: '160-170',
+          name: "160 - 170 cm",
+          value: "160-170",
         },
         {
-          name: '170 - 180 cm',
-          value: '170-180',
+          name: "170 - 180 cm",
+          value: "170-180",
         },
         {
-          name: 'Trên 180 cm',
-          value: 'over180',
-        },
-      ]
-    },
-    {
-      label: 'Cân nặng',
-      type: 'checkbox',
-      value: ['all'],
-      options: [
-        {
-          name: 'Tất cả',
-          value: 'all',
-        },
-        {
-          name: 'Dưới 40 kg',
-          value: 'under40',
-        },
-        {
-          name: '40 - 55 kg',
-          value: '40-55',
-        },
-        {
-          name: '55 - 65 kg',
-          value: '55-65',
-        },
-        {
-          name: '65 - 80 kg',
-          value: '65-80',
-        },
-        {
-          name: 'Trên 80 kgg',
-          value: 'over50',
+          name: "Trên 180 cm",
+          value: "over180",
         },
       ],
     },
     {
-      label: 'Kích thước',
-      type: 'checkbox',
-      value: ['all'],
+      label: "Cân nặng",
+      type: "checkbox",
+      value: ["all"],
       options: [
         {
-          name: 'Tất cả',
-          value: 'all',
+          name: "Tất cả",
+          value: "all",
         },
         {
-          name: 'S',
-          value: 's',
+          name: "Dưới 40 kg",
+          value: "under40",
         },
         {
-          name: 'M',
-          value: 'm',
+          name: "40 - 55 kg",
+          value: "40-55",
         },
         {
-          name: 'L',
-          value: 'l',
+          name: "55 - 65 kg",
+          value: "55-65",
         },
         {
-          name: 'XL',
-          value: 'xl',
+          name: "65 - 80 kg",
+          value: "65-80",
         },
         {
-          name: 'XXL',
-          value: 'xxl',
+          name: "Trên 80 kgg",
+          value: "over50",
         },
       ],
     },
     {
-      label: 'Giới tính',
-      type: 'checkbox',
-      value: ['all'],
+      label: "Kích thước",
+      type: "checkbox",
+      value: ["all"],
       options: [
         {
-          name: 'Tất cả',
-          value: 'all',
+          name: "Tất cả",
+          value: "all",
         },
         {
-          name: 'Nam',
-          value: 'male',
+          name: "S",
+          value: "s",
         },
         {
-          name: 'Nữ',
-          value: 'female',
+          name: "M",
+          value: "m",
         },
         {
-          name: 'Unisex',
-          value: 'unisex',
+          name: "L",
+          value: "l",
+        },
+        {
+          name: "XL",
+          value: "xl",
+        },
+        {
+          name: "XXL",
+          value: "xxl",
         },
       ],
     },
     {
-      label: 'Phân loại',
-      type: 'checkbox',
-      value: ['all'],
+      label: "Giới tính",
+      type: "checkbox",
+      value: ["all"],
       options: [
         {
-          name: 'Tất cả',
-          value: 'all',
+          name: "Tất cả",
+          value: "all",
         },
         {
-          name: 'Đầm',
-          value: 'male',
+          name: "Nam",
+          value: "male",
         },
         {
-          name: 'Váy',
-          value: 'female',
+          name: "Nữ",
+          value: "female",
         },
         {
-          name: 'Chân váy',
-          value: 'unisex',
+          name: "Unisex",
+          value: "unisex",
+        },
+      ],
+    },
+    {
+      label: "Phân loại",
+      type: "checkbox",
+      value: ["all"],
+      options: [
+        {
+          name: "Tất cả",
+          value: "all",
+        },
+        {
+          name: "Đầm",
+          value: "male",
+        },
+        {
+          name: "Váy",
+          value: "female",
+        },
+        {
+          name: "Chân váy",
+          value: "unisex",
         },
       ],
     },
   ];
-  filterLabel: string ='Bộ lọc'  
+  products$!: Observable<Product[]>;
+  filterLabel: string = "Bộ lọc";
   constructor(
-    @Inject(DOCUMENT) private document: Document
-  ) {
-  }
+    @Inject(DOCUMENT) private document: Document,
+    private _productService: ProductService
+  ) {}
   a() {
     this.document
-      .getElementById('sidebarWrapper')
-      ?.classList.toggle('result-no-sidebar');
+      .getElementById("sidebarWrapper")
+      ?.classList.toggle("result-no-sidebar");
     console.log(1);
   }
   items!: string[];
 
   ngOnInit() {
     this.items = Array.from({ length: 1000 }).map((_, i) => `Item #${i}`);
+    this.products$ = this._productService.findAll({ top: 10 }).pipe(map((res) => res.value));
   }
 }

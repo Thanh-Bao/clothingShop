@@ -99,14 +99,26 @@
     >
       <div class="grid">
         <div
-          class="lg:col-4 md:col-6 col-6"
-          *ngFor="let i of [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; index as idx"
+          class="lg:col-4 md:col-6 col-12"
+          *ngFor="let product of products$ | async ; index as idx"
         >
           <div id="productItemWrapper" class="product-item__wrapper">
-            <img
-              src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/220a9e95-2e4e-48ab-87af-6e1e914e3c04/air-force-1-07-shoes-ZL3fVs.png"
-              alt=""
-            />
+            <div class="product-item">
+              <div class="img__wrapper">
+                  <img
+                    [src]="product.thumbnailURL"
+                  />
+                  <img
+                  [src]="product.hoverImageURL"
+                  />
+              </div>
+              <div class="product-info">
+                <a class="product-info__name">{{product.name}}</a>
+                <div class="product-info__price">
+                  <p>{{product.price | currency:'VND'}}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -114,11 +126,11 @@
   </div>
 </div>
 <custom-dialog #filterDialogComp [header]="filterLabel">
-    <div class="dialog-header">
-      <h1>
-        {{filterLabel}}
-      </h1>
-    </div>
+  <div class="dialog-header">
+    <h1>
+      {{ filterLabel }}
+    </h1>
+  </div>
   <div class="dialog-content">
     <div class="ng-container" *ngFor="let item of filterOptions">
       <div class="card w-full">
@@ -144,7 +156,10 @@
     </div>
     <div class="flex align-items-center filter-button-group">
       <div class="flex-1">
-        <p-button label="Xoá tất cả" styleClass="p-button-outlined p-button-text "></p-button>
+        <p-button
+          label="Xoá tất cả"
+          styleClass="p-button-outlined p-button-text "
+        ></p-button>
       </div>
       <div class="flex-1">
         <p-button

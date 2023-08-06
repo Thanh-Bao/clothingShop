@@ -39,6 +39,22 @@ nav .nav__inner{
 .icon__group__wrapper .icon__wrapper i{
     font-size: 21px;
 }
+/* page list */
+.page-list{
+  
+}
+.page-list .page-item{
+  height: 56px;
+  padding: 20px 18px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.page-list .page-item.slt{
+  background-color: var(--surface-100);
+}
+.page-list .page-item:hover{
+  background-color: var(--surface-hover);
+}
 /* searchbar */
 .searchbar__wrapper{
 

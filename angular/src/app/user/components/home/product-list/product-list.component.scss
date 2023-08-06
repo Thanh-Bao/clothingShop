@@ -1,15 +1,15 @@
 .product-list__wrapper {
-    padding: 15px 0;
+  padding: 15px 0;
 }
 .product-list__wrapper .navbar {
   padding: 0 64px;
 }
-.product-list__wrapper .navbar .filter-display__wrapper{
+.product-list__wrapper .navbar .filter-display__wrapper {
 }
 .product-list__wrapper h2 {
 }
 /* nav */
-.product-list__wrapper .nav__wrapper{
+.product-list__wrapper .nav__wrapper {
 }
 /* product grid */
 .product-grid__wrapper {
@@ -24,25 +24,58 @@
   top: 56px;
   max-height: 781px;
   overflow: hidden;
-  padding-top: 0
+  padding-top: 0;
 }
-.sidebar__wrapper .sidebar{
+.sidebar__wrapper .sidebar {
   background-color: var(--surface-overlay);
   padding: 15px;
 }
 .sidebar__wrapper.result-no-sidebar {
   animation: a 300ms forwards linear;
 }
+/* product item */
 .product-item__wrapper {
+  
 }
-.product-item__wrapper img {
+.product-item__wrapper .img__wrapper {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.product-item__wrapper .img__wrapper::before {
+  content: "";
+  display: block;
+  padding-top: 133.779264214%;
+  height: 0;
+  width: 100%;
+}
+.product-item__wrapper .img__wrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+  -o-object-fit: cover;
   object-fit: cover;
+  -o-object-position: top;
+  object-position: top;
+  z-index: 0;
+}
+.product-item__wrapper .img__wrapper:hover img:first-child {
+  z-index: 1;
+}
+.product-item__wrapper .product-info .product-info__price{
+  margin-top: 10px;
+}
+.product-item__wrapper .product-info .product-info__price p{
+  text-decoration: none;
+  font-weight: 700;
 }
 .product-item__wrapper.result-no-sidebar {
   animation: d 300ms forwards linear;
 }
+
 /* Mobile */
 @media (max-width: 767px) {
   /* CSS cho màn hình nhỏ hơn hoặc bằng 767px (mobile) */
@@ -102,10 +135,10 @@
 /* Mobile */
 @media (max-width: 767px) {
   /* CSS cho màn hình nhỏ hơn hoặc bằng 767px (mobile) */
-  .sidebar__wrapper{
+  .sidebar__wrapper {
     display: none;
   }
-  ::ng-deep .filter-button-group p-button button{
+  ::ng-deep .filter-button-group p-button button {
     display: block;
     width: 100%;
   }
@@ -114,10 +147,10 @@
 /* Tablet */
 @media (min-width: 764px) and (max-width: 1023px) {
   /* CSS cho màn hình từ 764px đến 1023px (tablet) */
-  .sidebar__wrapper{
+  .sidebar__wrapper {
     display: none;
   }
-  ::ng-deep .filter-button-group p-button button{
+  ::ng-deep .filter-button-group p-button button {
     display: block;
     width: 100%;
   }
@@ -128,12 +161,12 @@
   /* CSS cho màn hình lớn hơn hoặc bằng 1024px (PC) */
 }
 
-::ng-deep .custom-p-panel .p-panel-header,::ng-deep .p-panel-content{
-    background-color: inherit !important;
-    box-shadow: none !important;
+::ng-deep .custom-p-panel .p-panel-header,
+::ng-deep .p-panel-content {
+  background-color: inherit !important;
+  box-shadow: none !important;
 }
-::ng-deep .custom-p-panel{
-    background-color: inherit !important;
-    box-shadow: none !important;
+::ng-deep .custom-p-panel {
+  background-color: inherit !important;
+  box-shadow: none !important;
 }
-
