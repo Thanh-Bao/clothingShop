@@ -35,6 +35,10 @@ https://marketplace.visualstudio.com/items?itemName=SAPSE.vscode-cds
 
 ![alt text](https://github.com/Thanh-Bao/clothingShop/blob/main/docs/3.png?raw=true)
 
+# Run Chrome without cors
+
+https://alfilatov.com/posts/run-chrome-without-cors/
+
 # Quy tắc viết query String
 
 https://viblo.asia/p/query-trong-web-api-odata-ZDEeLRxzvJb
