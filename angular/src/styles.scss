@@ -101,6 +101,10 @@ video {
   border: 0;
   vertical-align: baseline;
 }
+a{
+  text-decoration: none;
+  color: inherit
+}
 /* Mobile */
 @media (max-width: 767px) {
   /* CSS cho màn hình nhỏ hơn hoặc bằng 767px (mobile) */

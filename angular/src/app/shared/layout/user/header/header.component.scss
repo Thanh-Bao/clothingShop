@@ -36,7 +36,7 @@ nav .nav__inner{
     align-items: center;
     justify-content: center;
 }
-.icon__group__wrapper .icon__wrapper i{
+nav i{
     font-size: 21px;
 }
 /* page list */
@@ -49,6 +49,7 @@ nav .nav__inner{
   text-transform: uppercase;
   font-weight: 700;
 }
+
 .page-list .page-item.slt{
   background-color: var(--surface-100);
 }

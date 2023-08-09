@@ -20,6 +20,7 @@
             [(ngModel)]="selectedSortCritera"
             optionLabel="name"
             placeholder="Sắp xếp bởi"
+            (onChange)="selectetSorter($event.value)"
           ></p-dropdown>
         </div>
       </div>

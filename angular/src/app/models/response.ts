@@ -21,10 +21,10 @@ export interface Product {
 export interface Category {
     ID: string 
     name: string 
-    description: string 
-    IsActiveEntity: boolean 
-    HasActiveEntity: boolean 
-    HasDraftEntity: boolean 
+    description?: string 
+    IsActiveEntity?: boolean 
+    HasActiveEntity?: boolean 
+    HasDraftEntity?: boolean 
 }
 
 export interface ODataResponse<T>{

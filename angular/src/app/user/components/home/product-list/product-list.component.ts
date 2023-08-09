@@ -8,8 +8,10 @@ import {
   ViewChild,
 } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
-import { Observable, map } from "rxjs";
+import { Observable, concatMap, map, switchMap } from "rxjs";
 import { Product } from "src/app/models/response";
+import { CategoryService } from "src/app/user/services/category.service";
+import { FilterService } from "src/app/user/services/filter.service";
 import { ProductService } from "src/app/user/services/product.service";
 interface SortCritera {
   name: string;
@@ -27,21 +29,25 @@ export class ProductListComponent {
   @ViewChild("productGridWrapper")
   productGridWrapper!: ElementRef;
 
-  selectedSortCritera!: SortCritera;
   sortCritera: SortCritera[] = [
     {
+      name: "Mặc định",
+      code: "",
+    },
+    {
       name: "Mới nhất",
-      code: "new",
+      code: "createdAt desc",
     },
     {
       name: "Giá: Cao-thấp",
-      code: "descPrice",
+      code: "price desc",
     },
     {
       name: "Giá: Thấp-cao",
-      code: "ascPrice",
+      code: "price asc",
     },
   ];
+  selectedSortCritera: SortCritera = this.sortCritera[0];
   isShowSidebar: boolean = true;
   rangeValues: number[] = [20, 80];
   filterOptions = [
@@ -189,18 +195,30 @@ export class ProductListComponent {
   filterLabel: string = "Bộ lọc";
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    private _productService: ProductService
+    private _productService: ProductService,
+    private _categoryService: CategoryService,
+    private _filterSerivce: FilterService
   ) {}
   a() {
     this.document
       .getElementById("sidebarWrapper")
       ?.classList.toggle("result-no-sidebar");
-    console.log(1);
+    console.log(this.selectedSortCritera.code);
   }
   items!: string[];
 
   ngOnInit() {
     this.items = Array.from({ length: 1000 }).map((_, i) => `Item #${i}`);
-    this.products$ = this._productService.findAll({ top: 10 }).pipe(map((res) => res.value));
+    this.products$ = this._filterSerivce.filter$.pipe(
+      switchMap(filter => {
+        return this._productService.findAll({ top: 10 }, filter).pipe(map((res) => res.value));
+      })
+    )
+  }
+  selectetSorter(value: SortCritera){
+    let currFilter = this._filterSerivce.filterVal
+    currFilter.pagination.orderBy = value.code
+    currFilter.pagination.orderBy = value.code? value.code:undefined
+    this._filterSerivce.nextFilter(currFilter)
   }
 }
