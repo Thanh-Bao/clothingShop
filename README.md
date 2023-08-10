@@ -91,6 +91,8 @@ http://localhost:4004/api/Product(ID='ao-so-mi-nam-dai-tay-cafe-dris-khu-mui',Is
 
 
 
+![alt text](https://github.com/Thanh-Bao/clothingShop/blob/main/docs/6.png?raw=true)
+
 
 
 
