@@ -88,7 +88,7 @@ http://localhost:4004/api/Product?$filter=contains(name,'Áo sơ mi') and price 
 
 http://localhost:4004/api/Product(ID='ao-so-mi-nam-dai-tay-cafe-dris-khu-mui',IsActiveEntity=false)
 
-
+_______________________________________________________________________________
 
 
 ![alt text](https://github.com/Thanh-Bao/clothingShop/blob/main/docs/6.jpg?raw=true)
