@@ -78,6 +78,10 @@ http://localhost:4004/api/Product?$expand=Sizes&$top=1&$orderby=price desc
 
 http://localhost:4004/api/Product?$expand=Sizes,Album
 
+### nested $filter nhiều điều kiện kết hợp $expand
+
+http://localhost:4004/api/Product?$filter=contains(name,'Áo sơ mi') and price gt 300000 and price lt 500000&$expand=Sizes($filter=size eq 'XL')
+
 ## 2. Product detail
 
 ### Lấy ra một sản phẩm khi biết ID 
