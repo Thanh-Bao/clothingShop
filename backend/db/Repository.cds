@@ -18,14 +18,14 @@ entity SaleOrderItem {
     key Product   : Association to one Product;
         quantity  : Decimal(2) @mandatory;
         price     : Decimal(6) @mandatory;
-        color     : String(10);
+        color     : String(15);
         size      : String(4);
 }
 
 // ******************* master data ************************************************************
 
 entity Product : common {
-    key ID             : String(40)   @mandatory @title: 'ID đặt theo format quan-short-nam-thun-co-dan, chan-vay-jean';
+    key ID             : String(100)   @mandatory @title: 'ID đặt theo format quan-short-nam-thun-co-dan, chan-vay-jean';
         name           : String(60)   @mandatory;
         price          : Decimal(6)   @mandatory;
         material       : String(10)   @mandatory;
@@ -54,7 +54,8 @@ entity ProductSize {
 entity ProductColor {
     key ID        : UUID;
         productID : String(40) @mandatory;
-        color     : String(10) @mandatory;
+         abc : String(122);
+        color     : String(15) @mandatory;
         Color     : Association to one Color on Color.color = $self.color;
 }
 
@@ -69,7 +70,7 @@ entity Size {
 
 
 entity Color {
-    key color        : String(15) @mandatory @title : 'Màu VD: RED, BLACK, GREAN, ...';
+    key color        : String(15) @mandatory;
         hexColorCode : String(7)  @mandatory @assert.format : '^#([0-9A-Fa-f]{6})$'; 
         description  : String(255);
 }
