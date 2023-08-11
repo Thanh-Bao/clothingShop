@@ -1,29 +1,54 @@
-<nav class="nav__wrapper my-4">
+<nav class="nav__wrapper">
   <div class="nav__inner">
     <div class="grid align-items-center h-full">
       <div
-        class="logo__wrapper p-0 lg:col-3 md:col-2 col-2 flex-order-0 h-full flex align-items-center"
+        class="logo__wrapper p-0 lg:col-3 md:col-2 col-2 h-full flex align-items-center"
       >
         <div class="logo">
           <img src="/assets/logo/brand-logo.png" alt="" />
         </div>
       </div>
-      <div class="page__list__wrapper lg:col-6 md:col-5 col-5 flex-order-1">
-        <ul class="page__list flex align-items-center">
+      <div class="page-list__wrapper p-0 lg:col-6 md:col-5 col-5">
+        <ul
+          class="page-list flex align-items-center justify-content-center hide-on-tablet hide-on-mobile"
+        >
           <li
-            *ngFor="let i of [1, 1, 1, 1, 1, 1]"
-            class="page__item lg:col-2 text-center"
+            *ngFor="let category of categories$ | async"
+            class="page-item"
+            [class.slt]="category === (selectedCategory$ | async)"
+            (click)="selectCategory(category)"
           >
-            a
+            <a routerLink="collection/{{ category.ID }}">
+              {{ category.name }}
+            </a>
           </li>
         </ul>
+        <div class="page-list__icon hide-on-pc">
+          <div
+            class="icon__group__wrapper lg:col-3 md:col-5 col-5 flex-order-2 h-full"
+          >
+            <div
+              class="icon__group flex justify-content-end align-items-center"
+            >
+              <div class="icon__wrapper person-icon">
+                <i class="pi pi-align-left"></i>
+              </div>
+              <div
+                class="icon__wrapper search-icon"
+                (click)="searchDialogComp.showDialog('top')"
+              >
+                <i class="pi pi-search"></i>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div
         class="icon__group__wrapper lg:col-3 md:col-5 col-5 flex-order-2 h-full"
       >
         <div class="icon__group flex justify-content-end align-items-center">
           <div
-            class="icon__wrapper search-icon"
+            class="icon__wrapper search-icon hide-on-mobile hide-on-tablet"
             (click)="searchDialogComp.showDialog('top')"
           >
             <i class="pi pi-search"></i>

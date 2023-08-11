@@ -36,15 +36,32 @@ nav .nav__inner{
     align-items: center;
     justify-content: center;
 }
-.icon__group__wrapper .icon__wrapper i{
+nav i{
     font-size: 21px;
+}
+/* page list */
+.page-list{
+  
+}
+.page-list .page-item{
+  height: 56px;
+  padding: 20px 18px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.page-list .page-item.slt{
+  background-color: var(--surface-100);
+}
+.page-list .page-item:hover{
+  background-color: var(--surface-hover);
 }
 /* searchbar */
 .searchbar__wrapper{
 
 }
 .searchbar {
-  background-color: var(--gray-100);
+  background-color: var(--gray-200);
   border-radius: 30px;
 }
 ::ng-deep .searchbar  .custom-input{
@@ -62,6 +79,7 @@ nav .nav__inner{
 ::ng-deep .searchbar p-autocomplete span{
   width: inherit;
 }
+
 
 /* Mobile */
 @media (max-width: 767px) {

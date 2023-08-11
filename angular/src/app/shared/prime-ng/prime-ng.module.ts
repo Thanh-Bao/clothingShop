@@ -13,6 +13,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
 import { SliderModule } from 'primeng/slider';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { InputNumberModule } from 'primeng/inputnumber';
 @NgModule({
   declarations: [],
   imports: [
@@ -32,7 +33,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     DialogModule,
     DialogModule,
     SliderModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    InputNumberModule
   ]
 })
 export class PrimeNgModule { }
