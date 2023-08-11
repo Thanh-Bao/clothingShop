@@ -46,11 +46,46 @@
             <p-button
               label="Áp dụng"
               styleClass="p-button-raised ml-2"
+              (click)="applySidebarFilter()"
             ></p-button>
           </div>
         </div>
         <div class="slider__wrapper py-4">
-          <p-slider [(ngModel)]="rangeValues" [range]="true"></p-slider>
+          <p-slider
+            [(ngModel)]="rangeValues"
+            [range]="true"
+            [min]="minPrice"
+            [max]="maxPrice"
+          ></p-slider>
+          <div class="price-range__group flex align-items-center justify-content-between mt-4">
+            <p-inputNumber
+              inputId="integeronly"
+              [(ngModel)]="rangeValues[0]"
+              [min]="minPrice"
+              [max]="maxPrice - 1"
+              mode="currency"
+              currency="VND"
+              locale="vi-VN"
+              styleClass="custom-input"
+              (onBlur)="updateSliderRanges()"
+            >
+            </p-inputNumber>
+            <div class="line">
+              <span></span>
+            </div>
+            <p-inputNumber
+              inputId="integeronly"
+              [(ngModel)]="rangeValues[1]"
+              [min]="minPrice + 1"
+              [max]="maxPrice"
+              mode="currency"
+              currency="VND"
+              locale="vi-VN"
+              styleClass="custom-input"
+              (onBlur)="updateSliderRanges()"
+            >
+            </p-inputNumber>
+          </div>
         </div>
         <p-scroller
           [items]="filterOptions"
@@ -101,22 +136,18 @@
       <div class="grid">
         <div
           class="lg:col-4 md:col-6 col-12"
-          *ngFor="let product of products$ | async ; index as idx"
+          *ngFor="let product of products$ | async; index as idx"
         >
           <div id="productItemWrapper" class="product-item__wrapper">
             <div class="product-item">
               <div class="img__wrapper">
-                  <img
-                    [src]="product.thumbnailURL"
-                  />
-                  <img
-                  [src]="product.hoverImageURL"
-                  />
+                <img [src]="product.thumbnailURL" />
+                <img [src]="product.hoverImageURL" />
               </div>
               <div class="product-info">
-                <a class="product-info__name">{{product.name}}</a>
+                <a class="product-info__name">{{ product.name }}</a>
                 <div class="product-info__price">
-                  <p>{{product.price | currency:'VND'}}</p>
+                  <p>{{ product.price | currency : "VND" }}</p>
                 </div>
               </div>
             </div>
@@ -167,6 +198,7 @@
           label="Áp dụng"
           styleClass="p-button-raised ml-2 flex-1 custom-button "
           class="flex-1"
+          (click)="applySidebarFilter()"
         ></p-button>
       </div>
     </div>

@@ -61,7 +61,7 @@ nav i{
 
 }
 .searchbar {
-  background-color: var(--gray-100);
+  background-color: var(--gray-200);
   border-radius: 30px;
 }
 ::ng-deep .searchbar  .custom-input{
@@ -79,6 +79,7 @@ nav i{
 ::ng-deep .searchbar p-autocomplete span{
   width: inherit;
 }
+
 
 /* Mobile */
 @media (max-width: 767px) {

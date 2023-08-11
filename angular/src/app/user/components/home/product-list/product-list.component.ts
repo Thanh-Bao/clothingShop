@@ -8,10 +8,12 @@ import {
   ViewChild,
 } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
-import { Observable, concatMap, map, switchMap } from "rxjs";
+import { Observable, concatMap, forkJoin, map, switchMap, tap } from "rxjs";
+import { Filter } from "src/app/models/model";
 import { Product } from "src/app/models/response";
 import { CategoryService } from "src/app/user/services/category.service";
 import { FilterService } from "src/app/user/services/filter.service";
+import { FormatStringUtilsService } from "src/app/user/services/format-string-utils.service";
 import { ProductService } from "src/app/user/services/product.service";
 interface SortCritera {
   name: string;
@@ -49,7 +51,9 @@ export class ProductListComponent {
   ];
   selectedSortCritera: SortCritera = this.sortCritera[0];
   isShowSidebar: boolean = true;
-  rangeValues: number[] = [20, 80];
+  rangeValues: number[] = [0,100];
+  minPrice!: number;
+  maxPrice!: number;
   filterOptions = [
     {
       label: "Chiều cao",
@@ -191,34 +195,68 @@ export class ProductListComponent {
       ],
     },
   ];
-  products$!: Observable<Product[]>;
+  products$!: Observable<Product[] | null>;
   filterLabel: string = "Bộ lọc";
+  items!: string[];
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private _productService: ProductService,
     private _categoryService: CategoryService,
-    private _filterSerivce: FilterService
+    private _filterSerivce: FilterService,
+    private _formatStringUtilsService: FormatStringUtilsService
   ) {}
+
+  ngOnInit() {
+    this.items = Array.from({ length: 1000 }).map((_, i) => `Item #${i}`);
+    this._filterSerivce.filter$
+      .pipe(
+        switchMap((filter) => {
+          return this._productService
+            .findAll(filter)
+            .pipe(map((res) => res.value));
+        }),
+        tap((products) => {
+          this._productService.nextProducts(products);
+        })
+      )
+      .subscribe();
+    this.products$ = this._productService.products$;
+    let minPriceProduct$ = this._productService
+      .fetchMinAndMaxPriceProduct("asc")
+      .pipe(map((res) => res.value[0]));
+    let maxPriceProduct$ = this._productService
+      .fetchMinAndMaxPriceProduct("desc")
+      .pipe(map((res) => res.value[0]));
+    forkJoin([minPriceProduct$, maxPriceProduct$])
+      .pipe(
+        map((res) => {
+          return res.map((product) => product.price);
+        })
+      )
+      .subscribe((val) => {
+        this.rangeValues = val
+        this.minPrice = val[0];
+        this.maxPrice = val[1];
+      });
+  }
   a() {
     this.document
       .getElementById("sidebarWrapper")
       ?.classList.toggle("result-no-sidebar");
-    console.log(this.selectedSortCritera.code);
   }
-  items!: string[];
-
-  ngOnInit() {
-    this.items = Array.from({ length: 1000 }).map((_, i) => `Item #${i}`);
-    this.products$ = this._filterSerivce.filter$.pipe(
-      switchMap(filter => {
-        return this._productService.findAll({ top: 10 }, filter).pipe(map((res) => res.value));
-      })
-    )
+  selectetSorter(value: SortCritera) {
+    let currFilter = this._filterSerivce.filterVal;
+    currFilter.pagination.orderBy = value.code;
+    currFilter.pagination.orderBy = value.code ? value.code : undefined;
+    this._filterSerivce.nextFilter(currFilter);
   }
-  selectetSorter(value: SortCritera){
-    let currFilter = this._filterSerivce.filterVal
-    currFilter.pagination.orderBy = value.code
-    currFilter.pagination.orderBy = value.code? value.code:undefined
-    this._filterSerivce.nextFilter(currFilter)
+  updateSliderRanges() {
+    this.rangeValues = [this.rangeValues[0], this.rangeValues[1]];
+    console.log(this.rangeValues);
+  }
+  applySidebarFilter() {
+    let filter: Filter = this._filterSerivce.filterVal;
+    filter.priceRanges = this.rangeValues;
+    this._filterSerivce.nextFilter(filter);
   }
 }

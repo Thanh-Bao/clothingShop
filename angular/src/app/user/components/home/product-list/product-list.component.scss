@@ -75,7 +75,25 @@
 .product-item__wrapper.result-no-sidebar {
   animation: d 300ms forwards linear;
 }
-
+/* slider wrapper */
+.slider__wrapper p-inputNumber{
+  width: 45%;
+}
+::ng-deep .slider__wrapper p-inputNumber .custom-input{
+  width: 100%;
+}
+::ng-deep .slider__wrapper p-inputNumber input{
+  width: inherit;
+  padding: 10px;
+}
+.slider__wrapper .price-range__group .line{
+  flex: 1;
+  padding: 0 2px;
+}
+.slider__wrapper .price-range__group .line span{
+  border: .8px dashed black;
+  display: block;
+}
 /* Mobile */
 @media (max-width: 767px) {
   /* CSS cho màn hình nhỏ hơn hoặc bằng 767px (mobile) */

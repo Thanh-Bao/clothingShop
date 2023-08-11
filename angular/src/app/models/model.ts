@@ -5,5 +5,7 @@ export interface Pagination {
 }
 export interface Filter{
     pagination: Pagination
-    categoryId?: string
+    categoryId?: string,
+    search?: string,
+    priceRanges?: number[]
 }

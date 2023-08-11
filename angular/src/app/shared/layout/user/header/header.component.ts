@@ -5,6 +5,7 @@ import { Category } from "src/app/models/response";
 import { ThemeService } from "src/app/theme.service";
 import { CategoryService } from "src/app/user/services/category.service";
 import { FilterService } from "src/app/user/services/filter.service";
+import { ProductService } from "src/app/user/services/product.service";
 
 @Component({
   selector: "user-header",
@@ -20,15 +21,19 @@ export class HeaderComponent implements OnInit {
   selectedCategory$!: Observable<Category | null>;
   constructor(
     private _categoryService: CategoryService,
-    private _filterService: FilterService
+    private _filterService: FilterService,
+    private _productService: ProductService
   ) {
     this.selectedCategory$ = this._categoryService.selectedCateogry$;
     this.selectedCategory$.subscribe((val) => console.log(val));
   }
   search(event: any) {
-    this.suggestions = [...Array(10).keys()].map(
-      (item) => event.query + "-" + item
-    );
+    let filter = this._filterService.filterVal
+    filter.search = event.query
+    this._productService.findAll(filter).subscribe(res => {
+      this.suggestions = res.value.map(val => val.name)
+      this._productService.nextProducts(res.value)
+    })
   }
   ngOnInit(): void {
     this.categories$ = this._categoryService
