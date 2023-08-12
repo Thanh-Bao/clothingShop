@@ -94,6 +94,17 @@ _______________________________________________________________________________
 ![alt text](https://github.com/Thanh-Bao/clothingShop/blob/main/docs/6.jpg?raw=true)
 
 
+# to deploy 
+
+```
+docker compose build
+```
+
+```
+docker compose up -d
+```
+
+
 
 
 
