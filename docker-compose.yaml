@@ -1,0 +1,19 @@
+version: '3'
+
+
+services:
+  clothing_shop_backend:
+    image: clothing_shop_backend
+    build:
+      context: backend/
+      dockerfile: ./Dockerfile
+    ports:
+      - 4004:4004
+  clothing_shop_angular:
+    image: clothing_shop_angular
+    build:
+      context: angular/
+      dockerfile: ./Dockerfile
+    ports:
+      - 4200:80
+  

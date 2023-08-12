@@ -1,4 +1,5 @@
-export const API_DOMAIN: string = "http://localhost:4004/api"
+export const API_DOMAIN: string = "/api" //! comment this line while in development mode
+// export const API_DOMAIN: string = "http://localhost:4004/api"
 export const PRODUCT_API: string = API_DOMAIN + "/Product"
 export const CATEGORY_API: string = API_DOMAIN + "/Category"
 export const SALE_ORDER_API: string = API_DOMAIN + "/SaleOrder"
