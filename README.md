@@ -97,23 +97,22 @@ http://localhost:4004/api/Product(ID='ao-so-mi-nam-dai-tay-cafe-dris-khu-mui',Is
 
 ```
 {
-        "phone"          : "0934565431",
-        "note"           : null,
         "name"           : "Thanh Tung",
+        "phone"          : "0934565431",
         "address"        : "Lô T2-1.2, Đường D1, Đ. D1, P.Tân Phú, TP.Thủ Đức, TP.Hồ Chí Minh.",
-        "userID"         : null,
+        "note"           : null,
         "SaleOrderItems" : [
              {
-               "productID"    : "quan-short-nam-thun-co-dan",
+                "productID"    : "quan-short-nam-thun-co-dan",
                 "quantity"     : 2,
                 "color"        : "RED",
                 "size"         : "XL" 
             },
             {
                "productID"    : "quan-short-nam-thun-co-dan",
-                "quantity"     : 2,
-                "color"        : "RED",
-                "size"         : "XL" 
+                "quantity"     : 3,
+                "color"        : "BLUE",
+                "size"         : "S" 
             }
         ]
 }
