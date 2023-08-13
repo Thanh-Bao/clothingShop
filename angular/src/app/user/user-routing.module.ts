@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserComponent } from './user.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,12 @@ const routes: Routes = [
         redirectTo: '',
         pathMatch: 'full'
       },
+      
+      {
+        path: 'checkout',
+        component: CheckoutComponent
+      },
+
     ],
   },
 ];

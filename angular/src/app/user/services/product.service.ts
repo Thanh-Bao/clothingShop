@@ -51,7 +51,7 @@ export class ProductService {
       );
     }
     if (search) {
-      let format = this._formatStringUtilsService.removeVietnameseTones(search)
+      let format = this._formatStringUtilsService.removeVietnameseTones(search);
       filterQueryString = filterQueryString.concat(
         ` and contains(ID,'${format}')`
       );
@@ -82,6 +82,27 @@ export class ProductService {
         $orderby: `price ${dir}`,
         $top: 1,
         $select: "price",
+      },
+    });
+    return this._httpClient.get<ODataResponse<Product[]>>(
+      PRODUCT_API,
+      this.httpOptions
+    );
+  }
+  findAllByIds(ids: string[]): Observable<ODataResponse<Product[]>> {
+    let filterValue: string = "";
+    ids.forEach((id, idx) => {
+      if (idx === ids.length - 1) {
+        filterValue = filterValue.concat(`ID eq '${id}'`);
+      } else {
+        filterValue = filterValue.concat(`ID eq '${id}' or `);
+      }
+    });
+    console.log(filterValue);
+    
+    this.httpOptions.params = new HttpParams({
+      fromObject: {
+        $filter: filterValue,
       },
     });
     return this._httpClient.get<ODataResponse<Product[]>>(

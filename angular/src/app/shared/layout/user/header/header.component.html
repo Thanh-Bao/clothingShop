@@ -56,8 +56,68 @@
           <div class="icon__wrapper person-icon">
             <i class="pi pi-user"></i>
           </div>
-          <div class="icon__wrapper cart-icon">
-            <i class="pi pi-shopping-cart"></i>
+          <div class="icon__wrapper cart-icon" (click)="toggleCart($event)">
+            <i
+              class="pi pi-shopping-cart mr-4 p-text-secondary"
+              pBadge
+              [value]="cartService.pendingProductsVal.length + ''"
+            ></i>
+            <p-overlayPanel
+              #overlayPanel
+              styleClass="cart-overlay-panel"
+              [style]="{ width: '600px' }"
+            >
+              <ng-template pTemplate="content">
+                <ng-container *ngIf="cartItems">
+                  <p-table
+                    [value]="cartItems"
+                    selectionMode="single"
+                    [paginator]="true"
+                    [rows]="2"
+                  >
+                    <ng-template pTemplate="header">
+                      <tr>
+                        <th pSortableColumn="product.name">
+                          Tên sản phẩm
+                          <p-sortIcon field="product.name"></p-sortIcon>
+                        </th>
+                        <th class="text-center">Hình ảnh</th>
+                        <th pSortableColumn="product.price" class="text-center">
+                          Giá <p-sortIcon field="product.name"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="quantity" class="text-center">Số lượng <p-sortIcon field="quantity"></p-sortIcon></th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-cartItem>
+                      <tr [pSelectableRow]="rowData">
+                        <td >
+                          <span>
+                            {{ cartItem.product.name }}
+                          </span>
+                        </td>
+                        <td class="text-center">
+                          <img
+                            [src]="cartItem.product.thumbnailURL"
+                            [alt]="cartItem.product.thumbnailURL"
+                            class="w-5rem shadow-2"
+                          />
+                        </td>
+                        <td class="text-center">
+                          <span>
+                            {{ cartItem.product.price }}
+                          </span>
+                        </td>
+                        <td class="text-center">
+                          <span>
+                            {{ cartItem.quantity }}
+                          </span>
+                        </td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </ng-container>
+              </ng-template>
+            </p-overlayPanel>
           </div>
         </div>
       </div>

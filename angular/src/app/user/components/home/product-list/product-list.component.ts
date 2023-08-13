@@ -11,6 +11,7 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { Observable, concatMap, forkJoin, map, switchMap, tap } from "rxjs";
 import { Filter } from "src/app/models/model";
 import { Product } from "src/app/models/response";
+import { CartService } from "src/app/user/services/cart.service";
 import { CategoryService } from "src/app/user/services/category.service";
 import { FilterService } from "src/app/user/services/filter.service";
 import { FormatStringUtilsService } from "src/app/user/services/format-string-utils.service";
@@ -51,7 +52,7 @@ export class ProductListComponent {
   ];
   selectedSortCritera: SortCritera = this.sortCritera[0];
   isShowSidebar: boolean = true;
-  rangeValues: number[] = [0,100];
+  rangeValues: number[] = [0, 100];
   minPrice!: number;
   maxPrice!: number;
   filterOptions = [
@@ -203,7 +204,8 @@ export class ProductListComponent {
     private _productService: ProductService,
     private _categoryService: CategoryService,
     private _filterSerivce: FilterService,
-    private _formatStringUtilsService: FormatStringUtilsService
+    private _formatStringUtilsService: FormatStringUtilsService,
+    public cartService: CartService
   ) {}
 
   ngOnInit() {
@@ -234,7 +236,7 @@ export class ProductListComponent {
         })
       )
       .subscribe((val) => {
-        this.rangeValues = val
+        this.rangeValues = val;
         this.minPrice = val[0];
         this.maxPrice = val[1];
       });
@@ -252,7 +254,6 @@ export class ProductListComponent {
   }
   updateSliderRanges() {
     this.rangeValues = [this.rangeValues[0], this.rangeValues[1]];
-    console.log(this.rangeValues);
   }
   applySidebarFilter() {
     let filter: Filter = this._filterSerivce.filterVal;

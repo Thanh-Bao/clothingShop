@@ -35,6 +35,8 @@ nav .nav__inner{
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    user-select: none;
 }
 nav i{
     font-size: 21px;
@@ -78,6 +80,11 @@ nav i{
 }
 ::ng-deep .searchbar p-autocomplete span{
   width: inherit;
+}
+
+/*  cart overlay panel */
+::ng-deep .cart-overlay-panel p-table td{
+  vertical-align: middle
 }
 
 

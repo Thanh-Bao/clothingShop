@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/my-brand",
+            "outputPath": "dist/my-brand/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -135,6 +135,60 @@
             ],
             "scripts": []
         }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/my-brand/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json",
+            "inlineStyleLanguage": "scss"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media"
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false,
+              "vendorChunk": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "my-brand:build:development",
+              "serverTarget": "my-brand:server:development"
+            },
+            "production": {
+              "browserTarget": "my-brand:build:production",
+              "serverTarget": "my-brand:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "my-brand:build:production",
+              "serverTarget": "my-brand:server:production"
+            },
+            "development": {
+              "browserTarget": "my-brand:build:development",
+              "serverTarget": "my-brand:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

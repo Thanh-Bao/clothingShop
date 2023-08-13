@@ -43,6 +43,21 @@
   overflow: hidden;
   margin-bottom: 10px;
 }
+.product-item__wrapper .product__image {
+  position: relative;
+}
+.product-item__wrapper .product__image .cart__icon{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 20px;
+  z-index: 999;
+  cursor: pointer;
+  padding: 15px;
+}
+.product-item__wrapper .product__image .cart__icon:hover{
+  color: var(--primary-color)
+}
 .product-item__wrapper .img__wrapper::before {
   content: "";
   display: block;

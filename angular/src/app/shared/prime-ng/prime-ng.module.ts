@@ -14,6 +14,9 @@ import { DialogModule } from 'primeng/dialog';
 import { SliderModule } from 'primeng/slider';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { BadgeModule } from 'primeng/badge';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { TableModule } from 'primeng/table';
 @NgModule({
   declarations: [],
   imports: [
@@ -34,7 +37,10 @@ import { InputNumberModule } from 'primeng/inputnumber';
     DialogModule,
     SliderModule,
     AutoCompleteModule,
-    InputNumberModule
+    InputNumberModule,
+    BadgeModule,
+    OverlayPanelModule,
+    TableModule
   ]
 })
 export class PrimeNgModule { }

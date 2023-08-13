@@ -12,11 +12,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
 import { HttpClientModule } from '@angular/common/http';
-
+import { CookieModule } from 'ngx-cookie';
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
     AppRoutingModule,
     InputTextModule,
@@ -27,7 +27,8 @@ import { HttpClientModule } from '@angular/common/http';
     DropdownModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CookieModule.withOptions()
   ],
   providers: [],
   bootstrap: [AppComponent],
