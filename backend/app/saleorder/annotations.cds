@@ -34,28 +34,18 @@ annotate service.SaleOrder with @(
         Data : [
             {
                 $Type: 'UI.DataField',
-                Label: 'createdAt',
-                Value: createdAt,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'modifiedAt',
-                Value: modifiedAt,
-            },
-            {
-                $Type: 'UI.DataField',
                 Label: 'phone',
                 Value: phone,
+            },
+             {
+                $Type: 'UI.DataField',
+                Label: 'name',
+                Value: name,
             },
             {
                 $Type: 'UI.DataField',
                 Label: 'note',
                 Value: note,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'total',
-                Value: total,
             },
             {
                 $Type: 'UI.DataField',
@@ -66,11 +56,6 @@ annotate service.SaleOrder with @(
                 $Type: 'UI.DataField',
                 Label: 'status',
                 Value: status,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'SaleOrderItems_Product_ID',
-                Value: SaleOrderItems_Product_ID,
             },
         ],
     },
