@@ -12,10 +12,11 @@ entity SaleOrder : common {
         userID         : String(99);
         status         : String(15)  @mandatory @assert.range enum { PROCESSING; SUCCESS; CANCEL; RETURN } default 'PROCESSING';
         SaleOrderItems : Composition of many SaleOrderItem on SaleOrderItems.saleOrderID = $self.ID;
-        // User        : Association to one  User  on User.ID  = $self.userID;
+        User        : Association to one  User  on User.ID  = $self.userID;
 }
 
 entity SaleOrderItem {
+    key ID           : UUID;
         saleOrderID  : UUID;
         productID    : String(100);
         quantity     : Decimal(2) @mandatory;
@@ -23,7 +24,7 @@ entity SaleOrderItem {
         color        : String(15);
         size         : String(4);
         SaleOrder    : Association to one SaleOrder; 
-        // Product   : Association to one Product   on Product.ID   = $self.productID;
+        Product   : Association to one Product   on Product.ID   = $self.productID;
 }
 
 // ******************* master data ************************************************************
