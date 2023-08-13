@@ -91,27 +91,27 @@ http://localhost:4004/api/Product(ID='ao-so-mi-nam-dai-tay-cafe-dris-khu-mui',Is
 ## 3 . Create new Order
 
 **POST** : http://localhost:4004/odata/v4/api/SaleOrder
+.
+
 **body**
 
 ```
 {
         "phone"          : "0934565431",
         "note"           : null,
-        "total"          : 560000,
+        "name"           : "Thanh Tung",
         "address"        : "Lô T2-1.2, Đường D1, Đ. D1, P.Tân Phú, TP.Thủ Đức, TP.Hồ Chí Minh.",
         "userID"         : null,
         "SaleOrderItems" : [
              {
                "productID"    : "quan-short-nam-thun-co-dan",
                 "quantity"     : 2,
-                "price"        : 400000,
                 "color"        : "RED",
                 "size"         : "XL" 
             },
             {
                "productID"    : "quan-short-nam-thun-co-dan",
                 "quantity"     : 2,
-                "price"        : 400000,
                 "color"        : "RED",
                 "size"         : "XL" 
             }

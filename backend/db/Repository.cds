@@ -6,8 +6,9 @@ entity SaleOrder : common {
     key ID             : UUID;
         phone          : String(10)  @mandatory @assert.format : '^0\d{9}$'; 
         note           : String;
-        total          : Decimal(7)  @mandatory;
-        address        : String(70);
+        total          : Decimal(7);
+        address        : String(70); @mandatory
+        name           : String(100);
         userID         : String(99);
         status         : String(15)  @mandatory @assert.range enum { PROCESSING; SUCCESS; CANCEL; RETURN } default 'PROCESSING';
         SaleOrderItems : Composition of many SaleOrderItem;
@@ -18,7 +19,7 @@ entity SaleOrderItem {
     key SaleOrder    : Association to one SaleOrder; 
     key productID    : String(100);
         quantity     : Decimal(2) @mandatory;
-        price        : Decimal(6) @mandatory;
+        price        : Decimal(6);
         color        : String(15);
         size         : String(4);
         Product      : Association to one Product   on Product.ID   = $self.productID;
