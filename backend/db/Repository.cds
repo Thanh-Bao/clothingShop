@@ -6,8 +6,8 @@ entity SaleOrder : common {
     key ID             : UUID;
         phone          : String(10)  @mandatory @assert.format : '^0\d{9}$'; 
         note           : String;
-        total          : Decimal(7);
-        address        : String(70); @mandatory
+        total          : Decimal(7)  @readonly ;
+        address        : String(70)  @mandatory;
         name           : String(100);
         userID         : String(99);
         status         : String(15)  @mandatory @assert.range enum { PROCESSING; SUCCESS; CANCEL; RETURN } default 'PROCESSING';
@@ -19,12 +19,12 @@ entity SaleOrderItem {
     key ID           : UUID;
         saleOrderID  : UUID;
         productID    : String(100);
-        quantity     : Decimal(2) @mandatory;
-        price        : Decimal(6);
+        quantity     : Decimal(2) @mandatory default 1;
+        price        : Decimal(6) @readonly;
         color        : String(15);
         size         : String(4);
         SaleOrder    : Association to one SaleOrder; 
-        Product   : Association to one Product   on Product.ID   = $self.productID;
+        Product      : Association to one Product   on Product.ID   = $self.productID;
 }
 
 // ******************* master data ************************************************************

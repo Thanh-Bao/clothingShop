@@ -59,6 +59,26 @@ annotate service.SaleOrder with @(
             },
         ],
     },
+    UI.FieldGroup #GeneratedGroup3: {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type: 'UI.DataField',
+                Label: 'created at',
+                Value: createdAt,
+            },
+             {
+                $Type: 'UI.DataField',
+                Label: 'modified at',
+                Value: modifiedAt,
+            },
+            {
+                $Type: 'UI.DataField',
+                Label: 'Total (VNĐ)',
+                Value: total, 
+            },
+        ],
+    },
     UI.Facets                     : [
         {
             $Type : 'UI.ReferenceFacet',
@@ -69,8 +89,14 @@ annotate service.SaleOrder with @(
         {
             $Type : 'UI.ReferenceFacet',
             ID    : 'GeneratedFacet2',
-            Label : 'Sale Order detail',
+            Label : 'List Product',
             Target: 'SaleOrderItems/@UI.LineItem',
+        },
+           {
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'GeneratedFacet3',
+            Label : 'Meta data',
+            Target: '@UI.FieldGroup#GeneratedGroup3',
         },
     ]
 );
