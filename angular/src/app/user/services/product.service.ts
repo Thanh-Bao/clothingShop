@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Filter, Pagination } from "src/app/models/model";
-import { API_DOMAIN, PRODUCT_API } from "src/app/models/constance";
+import { SAP_API_DOMAIN, PRODUCT_API } from "src/app/models/constance";
 import { HttpParams } from "@angular/common/http";
 import { BehaviorSubject, Observable, map } from "rxjs";
 import { ODataResponse, Product } from "src/app/models/response";
