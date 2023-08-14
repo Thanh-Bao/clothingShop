@@ -21,6 +21,12 @@ npm start
 
 https://marketplace.visualstudio.com/items?itemName=SAPSE.vscode-cds
 
+_______________________________________________________________________________
+
+
+![alt text](https://github.com/Thanh-Bao/clothingShop/blob/main/docs/6.jpg?raw=true)
+
+________________________________________________________________________________
 
 # Detail Design
 
@@ -117,11 +123,6 @@ http://localhost:4004/api/Product(ID='ao-so-mi-nam-dai-tay-cafe-dris-khu-mui',Is
         ]
 }
 ```
-
-_______________________________________________________________________________
-
-
-![alt text](https://github.com/Thanh-Bao/clothingShop/blob/main/docs/6.jpg?raw=true)
 
 
 # to deploy 
