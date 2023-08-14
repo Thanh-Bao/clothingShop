@@ -21,6 +21,12 @@ npm start
 
 https://marketplace.visualstudio.com/items?itemName=SAPSE.vscode-cds
 
+_______________________________________________________________________________
+
+
+![alt text](https://github.com/Thanh-Bao/clothingShop/blob/main/docs/6.jpg?raw=true)
+
+________________________________________________________________________________
 
 # Detail Design
 
@@ -88,10 +94,35 @@ http://localhost:4004/api/Product?$filter=contains(name,'Áo sơ mi') and price 
 
 http://localhost:4004/api/Product(ID='ao-so-mi-nam-dai-tay-cafe-dris-khu-mui',IsActiveEntity=false)
 
-_______________________________________________________________________________
+## 3 . Create new Order
 
+**POST** : http://localhost:4004/odata/v4/api/SaleOrder
+.
 
-![alt text](https://github.com/Thanh-Bao/clothingShop/blob/main/docs/6.jpg?raw=true)
+**body**
+
+```
+{
+        "name"           : "Thanh Tung",
+        "phone"          : "0934565431",
+        "address"        : "Lô T2-1.2, Đường D1, Đ. D1, P.Tân Phú, TP.Thủ Đức, TP.Hồ Chí Minh.",
+        "note"           : null,
+        "SaleOrderItems" : [
+             {
+                "productID"    : "quan-short-nam-thun-co-dan",
+                "quantity"     : 2,
+                "color"        : "RED",
+                "size"         : "XL" 
+            },
+            {
+               "productID"    : "quan-short-nam-thun-co-dan",
+                "quantity"     : 3,
+                "color"        : "BLUE",
+                "size"         : "S" 
+            }
+        ]
+}
+```
 
 
 # to deploy 

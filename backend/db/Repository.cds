@@ -4,28 +4,33 @@ namespace db;
 
 entity SaleOrder : common {
     key ID             : UUID;
-        phone          : String(10)  @mandatory; 
+        phone          : String(10)  @mandatory @assert.format : '^0\d{9}$'; 
         note           : String;
-        total          : Decimal(7)  @mandatory;
-        address        : String(70);
+        total          : Decimal(7)  @readonly ;
+        address        : String(70)  @mandatory;
+        name           : String(100);
+        userID         : String(99);
         status         : String(15)  @mandatory @assert.range enum { PROCESSING; SUCCESS; CANCEL; RETURN } default 'PROCESSING';
-        SaleOrderItems : Composition of many SaleOrderItem;
-        User           : Association to User;
+        SaleOrderItems : Composition of many SaleOrderItem on SaleOrderItems.saleOrderID = $self.ID;
+        User        : Association to one  User  on User.ID  = $self.userID;
 }
 
 entity SaleOrderItem {
-    key SaleOrder : Association to one SaleOrder;
-    key Product   : Association to one Product;
-        quantity  : Decimal(2) @mandatory;
-        price     : Decimal(6) @mandatory;
-        color     : String(15);
-        size      : String(4);
+    key ID           : UUID;
+        saleOrderID  : UUID;
+        productID    : String(100);
+        quantity     : Decimal(2) @mandatory default 1;
+        price        : Decimal(6) @readonly;
+        color        : String(15);
+        size         : String(4);
+        SaleOrder    : Association to one SaleOrder; 
+        Product      : Association to one Product   on Product.ID   = $self.productID;
 }
 
 // ******************* master data ************************************************************
 
 entity Product : common {
-    key ID             : String(100)   @mandatory @title: 'ID đặt theo format quan-short-nam-thun-co-dan, chan-vay-jean';
+    key ID             : String(100)  @mandatory @title: 'ID đặt theo format quan-short-nam-thun-co-dan, chan-vay-jean';
         name           : String(60)   @mandatory;
         price          : Decimal(6)   @mandatory;
         material       : String(10)   @mandatory;
@@ -38,10 +43,10 @@ entity Product : common {
         thumbnail_alt  : String;                          // for SEO
         hoverImageURL  : String       @mandatory;
         hoverImage_alt : String;                          // for SEO
-        Category       : Association to one Category      on Category.ID = $self.category;
+        Category       : Association to one Category      on Category.ID      = $self.category;
         Colors         : Composition of many ProductColor on Colors.productID = $self.ID;
-        Sizes          : Composition of many ProductSize  on Sizes.productID = $self.ID;
-        Album          : Composition of many Album        on Album.productID = $self.ID;
+        Sizes          : Composition of many ProductSize  on Sizes.productID  = $self.ID;
+        Album          : Composition of many Album        on Album.productID  = $self.ID;
 }
 
 entity ProductSize {
@@ -54,7 +59,6 @@ entity ProductSize {
 entity ProductColor {
     key ID        : UUID;
         productID : String(40) @mandatory;
-         abc : String(122);
         color     : String(15) @mandatory;
         Color     : Association to one Color on Color.color = $self.color;
 }
@@ -98,7 +102,7 @@ entity User : common {
         name      : String(20);
         note      : String;
         password  : String;
-        SaleOrder : Association to many SaleOrder;
+        // SaleOrder : Association to many SaleOrder;
         // Address
 }
 
