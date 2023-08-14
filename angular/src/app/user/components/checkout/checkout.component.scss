@@ -1,0 +1,74 @@
+.checkout{
+    padding: 10px 64px
+}
+.checkout input, ::ng-deep .checkout .p-dropdown, .checkout textarea{
+    width: 100%;
+}
+.checkout__inner{
+    position: relative;
+    padding-bottom: 50px;
+}
+
+.checkout__inner .order-btn__wrapper {
+    position: sticky;
+    bottom: 15px;
+    padding: 0 28px 
+}
+::ng-deep .checkout__inner .order-btn__wrapper button{
+    width: 100%;
+}
+.checkout__inner h1{
+    margin-bottom: 16px;
+}
+
+.delivery__info, .cart, .payment{
+    padding: 54px 28px 
+}
+.payment{
+    padding-top: unset
+}
+.payment .payment-method__list{
+    padding-top: unset
+}
+.payment .payment-method__item{
+    padding: 20px;
+    border: 1px solid var(--gray-400);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 14px;
+    opacity: .5;
+}
+.payment .payment-method__item:last-child{
+    margin-bottom: unset;
+}
+.payment .payment-method__item .img__wrapper{
+    margin: auto 20px;
+    display: flex;
+}
+.payment .payment-method__item .img__wrapper img{
+    width: 35px;
+    min-height: 35px;
+    max-width: 55px;
+}
+.payment .payment-method__item.slt{
+    border-color: var(--primary-color);
+    opacity: 1;
+}
+.delivery__info{
+    border-right: 1px solid var(--gray-400);
+    
+}
+.delivery__info .line-group{
+    padding: 7px 0;
+}
+.cart{
+    padding-left: 11px
+}
+::ng-deep .product-cart .p-dataview-header{
+    padding: 7px 0 21px
+}
+
+::ng-deep .cart p-inputnumber input{
+    width: 40px;
+}

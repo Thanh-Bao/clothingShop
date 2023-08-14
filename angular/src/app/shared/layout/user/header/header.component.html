@@ -1,5 +1,5 @@
 <nav class="nav__wrapper">
-  <div class="nav__inner">
+  <div class="nav__inner shadow-1">
     <div class="grid align-items-center h-full">
       <div
         class="logo__wrapper p-0 lg:col-3 md:col-2 col-2 h-full flex align-items-center"
@@ -62,15 +62,10 @@
               pBadge
               [value]="cartService.pendingProductsVal.length + ''"
             ></i>
-            <p-overlayPanel
-              #overlayPanel
-              styleClass="cart-overlay-panel"
-              [style]="{ width: '600px' }"
-            >
+            <p-overlayPanel #overlayPanel styleClass="cart-overlay-panel">
               <ng-template pTemplate="content">
-                <ng-container *ngIf="cartItems">
                   <p-table
-                    [value]="cartItems"
+                    [value]="cartProducts"
                     selectionMode="single"
                     [paginator]="true"
                     [rows]="2"
@@ -85,37 +80,38 @@
                         <th pSortableColumn="product.price" class="text-center">
                           Giá <p-sortIcon field="product.name"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="quantity" class="text-center">Số lượng <p-sortIcon field="quantity"></p-sortIcon></th>
+                        <th pSortableColumn="quantity" class="text-center">
+                          Số lượng <p-sortIcon field="quantity"></p-sortIcon>
+                        </th>
                       </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-rowData let-cartItem>
+                    <ng-template pTemplate="body" let-rowData let-cartProduct>
                       <tr [pSelectableRow]="rowData">
-                        <td >
+                        <td>
                           <span>
-                            {{ cartItem.product.name }}
+                            {{ cartProduct.product.name }}
                           </span>
                         </td>
                         <td class="text-center">
                           <img
-                            [src]="cartItem.product.thumbnailURL"
-                            [alt]="cartItem.product.thumbnailURL"
+                            [src]="cartProduct.product.thumbnailURL"
+                            [alt]="cartProduct.product.thumbnailURL"
                             class="w-5rem shadow-2"
                           />
                         </td>
                         <td class="text-center">
                           <span>
-                            {{ cartItem.product.price }}
+                            {{ cartProduct.product.price | currency : "VND" }}
                           </span>
                         </td>
                         <td class="text-center">
                           <span>
-                            {{ cartItem.quantity }}
+                            {{ cartProduct.quantity }}
                           </span>
                         </td>
                       </tr>
                     </ng-template>
                   </p-table>
-                </ng-container>
               </ng-template>
             </p-overlayPanel>
           </div>

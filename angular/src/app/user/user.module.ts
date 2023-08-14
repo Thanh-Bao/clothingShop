@@ -6,6 +6,7 @@ import { UserComponent } from './user.component';
 import { UserLayoutModule } from '../shared/layout/user/user-layout.module';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { PrimeNgModule } from '../shared/prime-ng/prime-ng.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -17,7 +18,9 @@ import { PrimeNgModule } from '../shared/prime-ng/prime-ng.module';
     CommonModule,
     UserRoutingModule,
     UserLayoutModule,
-    PrimeNgModule
+    PrimeNgModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class UserModule { }

@@ -17,6 +17,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { BadgeModule } from 'primeng/badge';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DataViewModule, DataViewLayoutOptions } from 'primeng/dataview';
 @NgModule({
   declarations: [],
   imports: [
@@ -40,7 +43,11 @@ import { TableModule } from 'primeng/table';
     InputNumberModule,
     BadgeModule,
     OverlayPanelModule,
-    TableModule
+    TableModule,
+    InputTextModule,
+    DropdownModule,
+    InputTextareaModule,
+    DataViewModule,
   ]
 })
 export class PrimeNgModule { }

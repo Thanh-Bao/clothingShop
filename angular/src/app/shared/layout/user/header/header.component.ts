@@ -26,7 +26,8 @@ export class HeaderComponent implements OnInit {
   isShowClear = true;
   categories$!: Observable<Category[]>;
   selectedCategory$!: Observable<Category | null>;
-  cartItems: CartItem[] = [];
+  cartProducts$!: Observable<CartItem[] | []>
+  cartProducts: CartItem[] = []
   constructor(
     private _categoryService: CategoryService,
     private _filterService: FilterService,
@@ -44,13 +45,10 @@ export class HeaderComponent implements OnInit {
     this.categories$ = this._categoryService
       .findAll()
       .pipe(map((res) => res.value));
-    this._productService
-      .findAll(this._filterService.defaultFilter)
-      .subscribe((v) => {
-        v.value.forEach((v) => {
-          this.cartItems.push({ product: v, quantity: 1 });
-        });
-      });
+    this.cartProducts$ = this.cartService.cartProducts$ 
+    this.cartProducts$.subscribe(val => {
+      this.cartProducts = val
+    })
   }
   selectCategory(cateogry: Category) {
     if (this._categoryService.selectedCategoryVal != cateogry) {
@@ -63,37 +61,7 @@ export class HeaderComponent implements OnInit {
   @ViewChild("overlayPanel")
   overlayPanel: any;
   toggleCart(event: any) {
-    this.cartItems = [];
-    let pendingProducts: PendingProduct[] = this.cartService.pendingProductsVal;
-    this._productService
-      .findAllByIds(pendingProducts.map((p) => p.productID))
-      .pipe(map((res) => res.value));
-    this.cartService.pendingProducts$
-      .pipe(
-        switchMap((pProducts) => {
-          pendingProducts = pProducts;
-          return this._productService
-            .findAllByIds(pendingProducts.map((p) => p.productID))
-            .pipe(map((res) => res.value));
-        })
-      )
-      .subscribe((val) => {
-        let cartItems: CartItem[] = [];
-        val.forEach((product) => {
-          let foundCookieProduct: PendingProduct | undefined =
-            pendingProducts.find(
-              (cProduct) => cProduct.productID === product.ID
-            );
-          if (foundCookieProduct) {
-            cartItems.push({
-              product: product,
-              quantity: foundCookieProduct.quantity,
-            });
-          }
-        });
-        this.cartItems = cartItems;
-      });
-
+    this.cartProducts$ = this.cartService.cartProducts$
     this.overlayPanel.toggle(event);
   }
 }

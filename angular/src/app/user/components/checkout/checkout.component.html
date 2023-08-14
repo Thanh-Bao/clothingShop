@@ -1,0 +1,178 @@
+<div class="checkout">
+  <div class="checkout__inner">
+    <div class="grid">
+      <div class="lg:col-7 md:col-12 col-12">
+        <div class="delivery__info">
+          <h1>Thông tin vận chuyển</h1>
+          <form [formGroup]="deliveryFG">
+            <ng-container *ngFor="let item of g">
+              <div class="line-group">
+                <div class="grid">
+                  <ng-container *ngFor="let i of item">
+                    <ng-container *ngIf="i.type === 'field'">
+                      <div [class]="i.columnClass">
+                        <span class="p-float-label">
+                          <input
+                            pInputText
+                            id="username"
+                            [formControlName]="i.fieldName"
+                          />
+                          <label htmlFor="username">{{ i.label }}</label>
+                        </span>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="i.type === 'dropdown'">
+                      <div [class]="i.columnClass">
+                        <span class="p-float-label">
+                          <p-dropdown
+                            [options]="i.options!"
+                            [placeholder]="i.label"
+                            optionLabel="key"
+                            inputId="float-label"
+                            [formControlName]="i.fieldName"
+                          ></p-dropdown>
+                          <label for="float-label">{{ i.label }}</label>
+                        </span>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="i.type === 'textarea'">
+                      <div [class]="i.columnClass">
+                        <span class="p-float-label">
+                          <textarea
+                            id="float-input"
+                            rows="5"
+                            cols="30"
+                            pInputTextarea
+                            [formControlName]="i.fieldName"
+                          ></textarea>
+                          <label for="float-input">{{ i.label }}</label>
+                        </span>
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                </div>
+              </div>
+            </ng-container>
+          </form>
+        </div>
+        <div class="payment">
+          <h1>Hình thức thanh toán</h1>
+          <ul class="payment-method__list">
+            <ng-container *ngFor="let m of paymentMethods">
+              <li
+                class="payment-method__item cursor-pointer"
+                [class.slt]="sltedPaymentMethod === m.value"
+                (click)="sltedPaymentMethod = rd.value"
+              >
+                <p-radioButton
+                  #rd
+                  [value]="m.value"
+                  [(ngModel)]="sltedPaymentMethod"
+                  inputId="ingredientt1"
+                ></p-radioButton>
+                <div class="img__wrapper">
+                  <img [src]="m.logo" alt="" />
+                </div>
+                <div class="label">
+                  <p class="font-semibold">{{ m.label }}</p>
+                  <p>{{ m.desc }}</p>
+                </div>
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+        <div class="order-btn__wrapper">
+          <p-button
+            class="order-btn w-full"
+            label="Đặt hàng"
+            styleClass="p-button-raised"
+          ></p-button>
+        </div>
+      </div>
+      <div class="lg:col-5 md:col-5 col-5">
+        <div class="cart">
+          <h1>Giỏ hàng</h1>
+          <div class="card" *ngIf="cartProducts$ | async as cartProducts">
+            <p-dataView
+              #dv
+              [value]="cartProducts"
+              [sortField]="sortField"
+              [sortOrder]="sortOrder"
+              styleClass="product-cart"
+            >
+              <ng-template pTemplate="header">
+                <div
+                  class="flex flex-column md:flex-row md:justify-content-between"
+                >
+                  <p-dropdown
+                    [options]="sortOptions"
+                    placeholder="Sắp xếp theo"
+                    styleClass="mb-2 md:mb-0"
+                    (onChange)="onSortChange($event)"
+                  ></p-dropdown>
+                </div>
+              </ng-template>
+              <ng-template let-cartProduct pTemplate="listItem">
+                <div class="col-12">
+                  <div class="flex py-4 gap-4">
+                    <img
+                      class="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round"
+                      [src]="cartProduct.product.thumbnailURL"
+                    />
+                    <div
+                      class="flex flex-column justify-content-between align-items-center xl:align-items-start flex-1 gap-4"
+                    >
+                      <div class="">
+                        <div class="text-base font-bold text-900">
+                          {{ cartProduct.product.name }}
+                        </div>
+                        <span>Xám xanh / M</span>
+                      </div>
+                      <div class="flex flex-column align-items-start">
+                        <div class="flex">
+                          <p-dropdown
+                            class="p-inputtext-sm"
+                            optionLabel="name"
+                          ></p-dropdown>
+                          <p-dropdown
+                            class="p-inputtext-sm ml-2"
+                            optionLabel="name"
+                          ></p-dropdown>
+                        </div>
+                        <div class="mt-3">
+                                <p-inputNumber
+                                  class="p-inputtext-sm"
+                                  [(ngModel)]="cartProduct.quantity"
+                                  [showButtons]="true"
+                                  buttonLayout="horizontal"
+                                  spinnerMode="horizontal"
+                                  inputId="vertical"
+                                  decrementButtonClass="p-button-primary"
+                                  incrementButtonClass="p-button-primary"
+                                  incrementButtonIcon="pi pi-plus"
+                                  decrementButtonIcon="pi pi-minus"
+                                  (onInput)="
+                                    updateQuantity(cartProduct.product, $event.value)
+                                  "
+                                ></p-inputNumber>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="flex flex-column justify-content-between align-items-center xl:align-items-end gap-4"
+                    >
+                      <i class="pi pi-trash text-xl cursor-pointer" (click)="removeCartProduct(cartProduct.product.ID)"></i>
+                      <span class="text-base">{{
+                        cartProduct.product.price | currency : "VND"
+                      }}</span>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </p-dataView>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
