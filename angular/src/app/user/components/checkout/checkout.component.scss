@@ -8,7 +8,9 @@
     position: relative;
     padding-bottom: 50px;
 }
-
+.checkout__info{
+    border-right: 1px solid var(--gray-400);
+}
 .checkout__inner .order-btn__wrapper {
     position: sticky;
     bottom: 15px;
@@ -55,10 +57,7 @@
     border-color: var(--primary-color);
     opacity: 1;
 }
-.delivery__info{
-    border-right: 1px solid var(--gray-400);
-    
-}
+
 .delivery__info .line-group{
     padding: 7px 0;
 }

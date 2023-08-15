@@ -98,11 +98,11 @@ export class ProductService {
         filterValue = filterValue.concat(`ID eq '${id}' or `);
       }
     });
-    console.log(filterValue);
     
     this.httpOptions.params = new HttpParams({
       fromObject: {
         $filter: filterValue,
+        $expand: "Sizes,Colors"
       },
     });
     return this._httpClient.get<ODataResponse<Product[]>>(

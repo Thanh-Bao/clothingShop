@@ -6,11 +6,11 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "@sap/cds": "^6",
+    "@sap/cds": "^7.1.1",
     "express": "^4"
   },
   "devDependencies": {
-    "@sap/eslint-plugin-ui5-jsdocs": "^2.0.5",  
+    "@sap/eslint-plugin-ui5-jsdocs": "^2.0.5",
     "@sap/ux-specification": "^1.108.11",
     "@sapui5/ts-types": "^1.92.2",
     "eslint": "^7.32.0",

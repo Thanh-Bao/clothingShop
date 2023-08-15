@@ -39,6 +39,8 @@ export class CartService {
             .pipe(
               map((res) => res.value),
               concatMap((val) => {
+                console.log(val);
+                
                 let cartItems: CartItem[] = [];
                 val.forEach((product) => {
                   let foundCookieProduct: PendingProduct | undefined =

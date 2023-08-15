@@ -156,7 +156,6 @@ export class CheckoutComponent {
             code: c.ID,
           });
         });
-        console.log(cities);
       }
     });
     this._addressService.findAllDistrict(2).subscribe((v) => console.log(v));
@@ -247,7 +246,6 @@ export class CheckoutComponent {
             code: c.ID,
           });
         });
-        console.log(options);
       });
 
     /* fetch Cart Item */
@@ -275,8 +273,6 @@ export class CheckoutComponent {
     pendingProducts = pendingProducts.filter(
       (pendingProduct) => pendingProduct.productID !== productID
     );
-    console.log(pendingProducts);
-    
     this._cartService.pendingProductsBSub.next(pendingProducts);
   }
 }

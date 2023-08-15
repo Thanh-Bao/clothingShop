@@ -2,91 +2,93 @@
   <div class="checkout__inner">
     <div class="grid">
       <div class="lg:col-7 md:col-12 col-12">
-        <div class="delivery__info">
-          <h1>Thông tin vận chuyển</h1>
-          <form [formGroup]="deliveryFG">
-            <ng-container *ngFor="let item of g">
-              <div class="line-group">
-                <div class="grid">
-                  <ng-container *ngFor="let i of item">
-                    <ng-container *ngIf="i.type === 'field'">
-                      <div [class]="i.columnClass">
-                        <span class="p-float-label">
-                          <input
-                            pInputText
-                            id="username"
-                            [formControlName]="i.fieldName"
-                          />
-                          <label htmlFor="username">{{ i.label }}</label>
-                        </span>
-                      </div>
-                    </ng-container>
-                    <ng-container *ngIf="i.type === 'dropdown'">
-                      <div [class]="i.columnClass">
-                        <span class="p-float-label">
-                          <p-dropdown
-                            [options]="i.options!"
-                            [placeholder]="i.label"
-                            optionLabel="key"
-                            inputId="float-label"
-                            [formControlName]="i.fieldName"
-                          ></p-dropdown>
-                          <label for="float-label">{{ i.label }}</label>
-                        </span>
-                      </div>
-                    </ng-container>
-                    <ng-container *ngIf="i.type === 'textarea'">
-                      <div [class]="i.columnClass">
-                        <span class="p-float-label">
-                          <textarea
-                            id="float-input"
-                            rows="5"
-                            cols="30"
-                            pInputTextarea
-                            [formControlName]="i.fieldName"
-                          ></textarea>
-                          <label for="float-input">{{ i.label }}</label>
-                        </span>
-                      </div>
-                    </ng-container>
-                  </ng-container>
-                </div>
-              </div>
-            </ng-container>
-          </form>
-        </div>
-        <div class="payment">
-          <h1>Hình thức thanh toán</h1>
-          <ul class="payment-method__list">
-            <ng-container *ngFor="let m of paymentMethods">
-              <li
-                class="payment-method__item cursor-pointer"
-                [class.slt]="sltedPaymentMethod === m.value"
-                (click)="sltedPaymentMethod = rd.value"
-              >
-                <p-radioButton
-                  #rd
-                  [value]="m.value"
-                  [(ngModel)]="sltedPaymentMethod"
-                  inputId="ingredientt1"
-                ></p-radioButton>
-                <div class="img__wrapper">
-                  <img [src]="m.logo" alt="" />
-                </div>
-                <div class="label">
-                  <p class="font-semibold">{{ m.label }}</p>
-                  <p>{{ m.desc }}</p>
-                </div>
-              </li>
-            </ng-container>
-          </ul>
-        </div>
-        <div class="order-btn__wrapper">
-          <p-button
-            class="order-btn w-full"
-            label="Đặt hàng"
-            styleClass="p-button-raised"
-          ></p-button>
+        <div class="checkout__info">
+            <div class="delivery__info">
+              <h1>Thông tin vận chuyển</h1>
+              <form [formGroup]="deliveryFG">
+                <ng-container *ngFor="let item of g">
+                  <div class="line-group">
+                    <div class="grid">
+                      <ng-container *ngFor="let i of item">
+                        <ng-container *ngIf="i.type === 'field'">
+                          <div [class]="i.columnClass">
+                            <span class="p-float-label">
+                              <input
+                                pInputText
+                                id="username"
+                                [formControlName]="i.fieldName"
+                              />
+                              <label htmlFor="username">{{ i.label }}</label>
+                            </span>
+                          </div>
+                        </ng-container>
+                        <ng-container *ngIf="i.type === 'dropdown'">
+                          <div [class]="i.columnClass">
+                            <span class="p-float-label">
+                              <p-dropdown
+                                [options]="i.options!"
+                                [placeholder]="i.label"
+                                optionLabel="key"
+                                inputId="float-label"
+                                [formControlName]="i.fieldName"
+                              ></p-dropdown>
+                              <label for="float-label">{{ i.label }}</label>
+                            </span>
+                          </div>
+                        </ng-container>
+                        <ng-container *ngIf="i.type === 'textarea'">
+                          <div [class]="i.columnClass">
+                            <span class="p-float-label">
+                              <textarea
+                                id="float-input"
+                                rows="5"
+                                cols="30"
+                                pInputTextarea
+                                [formControlName]="i.fieldName"
+                              ></textarea>
+                              <label for="float-input">{{ i.label }}</label>
+                            </span>
+                          </div>
+                        </ng-container>
+                      </ng-container>
+                    </div>
+                  </div>
+                </ng-container>
+              </form>
+            </div>
+            <div class="payment">
+              <h1>Hình thức thanh toán</h1>
+              <ul class="payment-method__list">
+                <ng-container *ngFor="let m of paymentMethods">
+                  <li
+                    class="payment-method__item cursor-pointer"
+                    [class.slt]="sltedPaymentMethod === m.value"
+                    (click)="sltedPaymentMethod = rd.value"
+                  >
+                    <p-radioButton
+                      #rd
+                      [value]="m.value"
+                      [(ngModel)]="sltedPaymentMethod"
+                      inputId="ingredientt1"
+                    ></p-radioButton>
+                    <div class="img__wrapper">
+                      <img [src]="m.logo" alt="" />
+                    </div>
+                    <div class="label">
+                      <p class="font-semibold">{{ m.label }}</p>
+                      <p>{{ m.desc }}</p>
+                    </div>
+                  </li>
+                </ng-container>
+              </ul>
+            </div>
+            <div class="order-btn__wrapper">
+              <p-button
+                class="order-btn w-full"
+                label="Đặt hàng"
+                styleClass="p-button-raised"
+              ></p-button>
+            </div>
         </div>
       </div>
       <div class="lg:col-5 md:col-5 col-5">
@@ -135,8 +137,10 @@
                             optionLabel="name"
                           ></p-dropdown>
                           <p-dropdown
+                            [options]="cartProduct.product.Sizes"
                             class="p-inputtext-sm ml-2"
                             optionLabel="name"
+                            optionLabel="size"
                           ></p-dropdown>
                         </div>
                         <div class="mt-3">

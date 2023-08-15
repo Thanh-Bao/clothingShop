@@ -17,6 +17,7 @@ export interface Product {
   IsActiveEntity: boolean;
   HasActiveEntity: boolean;
   HasDraftEntity: boolean;
+  Sizes: Size[]
 }
 export interface Category {
     ID: string 
@@ -25,6 +26,11 @@ export interface Category {
     IsActiveEntity?: boolean 
     HasActiveEntity?: boolean 
     HasDraftEntity?: boolean 
+}
+export interface Size{
+  ID: string
+  productID: string
+  size: string
 }
 
 export interface ODataResponse<T>{
