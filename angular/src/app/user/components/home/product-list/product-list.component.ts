@@ -28,7 +28,6 @@ interface SortCritera {
   templateUrl: "./product-list.component.html",
   styleUrls: ["./product-list.component.scss"],
 })
-// ];
 export class ProductListComponent {
   @ViewChild("sidebarWrapper")
   sidebarWrapper!: ElementRef;
@@ -224,6 +223,7 @@ export class ProductListComponent {
             .pipe(map((res) => res.value));
         }),
         tap((products) => {
+          
           this._productService.nextProducts(products);
         })
       )
@@ -275,8 +275,6 @@ export class ProductListComponent {
     
     this.addedProductDialog.showDialog('top-right')
     setTimeout(() => {
-      console.log(1);
-      
       this.addedProductDialog.onHide(product)
     }, 2000);
     this.cartService.addedCartProduct$.subscribe(v => console.log(v))

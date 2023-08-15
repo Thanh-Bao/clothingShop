@@ -39,10 +39,10 @@ export class ProductService {
         $top: pagination.top,
       },
     });
-    // if(pagination && pagination.orderBy){
-    //   let queryString = filter.pagination.orderBy!
-    //   params = params.append("$orderby", queryString);
-    // }
+    if(pagination && pagination.orderBy){
+      let queryString = filter.pagination.orderBy!
+      params = params.append("$orderby", queryString);
+    }
 
     let filterQueryString = "";
     if (categoryId) {
@@ -58,16 +58,16 @@ export class ProductService {
     }
     if (priceRanges) {
       filterQueryString = filterQueryString.concat(
-        ` and price gt ${priceRanges[0]} and price lt ${priceRanges[1]}`
+        ` and price ge ${priceRanges[0]} and price le ${priceRanges[1]}`
       );
     }
     if (filterQueryString) {
       filterQueryString = filterQueryString.slice(5);
       params = params.append("$filter", filterQueryString);
     }
-
     this.httpOptions.params = params;
     console.log(params);
+   
 
     return this._httpClient.get<ODataResponse<Product[]>>(
       PRODUCT_API,
