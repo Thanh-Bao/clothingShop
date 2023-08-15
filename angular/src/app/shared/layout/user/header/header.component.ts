@@ -40,8 +40,12 @@ export class HeaderComponent implements OnInit {
     this.selectedCategory$.subscribe((val) => console.log(val));
   }
   search(event: any) {
+    console.log(event)
     let filter = this._filterService.filterVal;
     filter.search = event.query;
+    this._productService.findAll(filter).subscribe(val => {
+      this.suggestions = val.value.map(val => val.name)
+    })
   }
   ngOnInit(): void {
     this.categories$ = this._categoryService
