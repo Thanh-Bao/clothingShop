@@ -133,13 +133,22 @@
                       <div class="flex flex-column align-items-start">
                         <div class="flex">
                           <p-dropdown
+                            [options]="cartProduct.product.Colors"
                             class="p-inputtext-sm"
-                            optionLabel="name"
-                          ></p-dropdown>
+                            optionLabel="color"
+                          >
+                          <ng-template let-color pTemplate="item">
+                            <div class="flex align-items-center gap-2">
+                                <div [style]="{width: '40px', height: '15px', backgroundColor: color.Color.hexColorCode } " >
+                                </div>
+                                {{color.color}}
+                            </div>
+                            
+                        </ng-template>
+                        </p-dropdown>
                           <p-dropdown
                             [options]="cartProduct.product.Sizes"
                             class="p-inputtext-sm ml-2"
-                            optionLabel="name"
                             optionLabel="size"
                           ></p-dropdown>
                         </div>

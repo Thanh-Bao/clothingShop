@@ -10,6 +10,7 @@ import {
 } from "rxjs";
 import { CartItem } from "src/app/shared/layout/user/header/header.component";
 import { ProductService } from "./product.service";
+import { Product } from "src/app/models/response";
 export interface PendingProduct {
   productID: string;
   quantity: number;
@@ -23,6 +24,9 @@ export class CartService {
   pendingProducts$!: Observable<PendingProduct[] | []>;
 
   cartProducts$!: Observable<CartItem[] | []>;
+
+  addedCartProductBSub!: BehaviorSubject<Product | null>;
+  addedCartProduct$!: Observable<Product | null>;
   constructor(
     private _cookieService: CookieService,
     private _productService: ProductService
@@ -30,17 +34,20 @@ export class CartService {
     this.pendingProductsBSub = new BehaviorSubject<PendingProduct[] | []>([]);
     this.pendingProducts$ = this.pendingProductsBSub.asObservable();
 
+    this.addedCartProductBSub = new BehaviorSubject<Product | null>(null);
+    this.addedCartProduct$ = this.addedCartProductBSub.asObservable();
+
     this.cartProducts$ = this.pendingProducts$.pipe(
       switchMap((pendingProducts: PendingProduct[]) => {
-        if(pendingProducts.length){
-          this.addPendingProductsToCookie(pendingProducts)
+        if (pendingProducts.length) {
+          this.addPendingProductsToCookie(pendingProducts);
           return this._productService
             .findAllByIds(pendingProducts.map((p) => p.productID))
             .pipe(
               map((res) => res.value),
               concatMap((val) => {
                 console.log(val);
-                
+
                 let cartItems: CartItem[] = [];
                 val.forEach((product) => {
                   let foundCookieProduct: PendingProduct | undefined =
@@ -57,30 +64,30 @@ export class CartService {
                 return of(cartItems);
               })
             );
-        }else{
-          this._cookieService.remove(this.pendingProductKey)
-          return of([])
+        } else {
+          this._cookieService.remove(this.pendingProductKey);
+          return of([]);
         }
       })
     );
   }
 
-  addToCart(productID: string, quantity: number) {
+  addToCart(product: Product, quantity: number) {
     let pendingProducts: PendingProduct[] = this.pendingProductsVal;
     let foundPendingProduct = pendingProducts.find(
-      (p) => p.productID === productID
+      (p) => p.productID === product.ID
     );
 
     if (foundPendingProduct) {
       foundPendingProduct.quantity = foundPendingProduct.quantity + quantity;
     } else {
-      pendingProducts.push({ productID, quantity });
+      pendingProducts.push({ productID: product.ID, quantity });
     }
     this._cookieService.put(
       this.pendingProductKey,
       JSON.stringify(pendingProducts)
     );
-
+    this.addedCartProductBSub.next(product);
     this.pendingProductsBSub.next(pendingProducts);
   }
   updateCart(productID: string, quantity: number) {
@@ -90,7 +97,7 @@ export class CartService {
     );
 
     if (foundPendingProduct) {
-      foundPendingProduct.quantity = quantity
+      foundPendingProduct.quantity = quantity;
     } else {
       pendingProducts.push({ productID, quantity });
     }
@@ -101,8 +108,11 @@ export class CartService {
 
     this.pendingProductsBSub.next(pendingProducts);
   }
-  addPendingProductsToCookie(pendingProducts: PendingProduct[]){
-      this._cookieService.put(this.pendingProductKey, JSON.stringify(pendingProducts))
+  addPendingProductsToCookie(pendingProducts: PendingProduct[]) {
+    this._cookieService.put(
+      this.pendingProductKey,
+      JSON.stringify(pendingProducts)
+    );
   }
   get pendingProductsFromCookie(): PendingProduct[] {
     let pendingProducts: PendingProduct[];

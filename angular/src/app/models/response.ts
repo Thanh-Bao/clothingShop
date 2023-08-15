@@ -17,7 +17,7 @@ export interface Product {
   IsActiveEntity: boolean;
   HasActiveEntity: boolean;
   HasDraftEntity: boolean;
-  Sizes: Size[]
+  Sizes: SizeItem[]
 }
 export interface Category {
     ID: string 
@@ -27,10 +27,18 @@ export interface Category {
     HasActiveEntity?: boolean 
     HasDraftEntity?: boolean 
 }
-export interface Size{
+export interface SizeItem{
   ID: string
   productID: string
   size: string
+}
+export interface Size{
+  size: string
+  height: number
+  weight: number
+  bust: number
+  waist: number
+  hip: number
 }
 
 export interface ODataResponse<T>{

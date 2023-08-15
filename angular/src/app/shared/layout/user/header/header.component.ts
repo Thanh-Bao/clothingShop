@@ -28,11 +28,13 @@ export class HeaderComponent implements OnInit {
   selectedCategory$!: Observable<Category | null>;
   cartProducts$!: Observable<CartItem[] | []>
   cartProducts: CartItem[] = []
+  cartProductTotal: number = 0
+  addedCartProduct!: CartItem
   constructor(
     private _categoryService: CategoryService,
     private _filterService: FilterService,
     private _productService: ProductService,
-    public cartService: CartService
+    public cartService: CartService,
   ) {
     this.selectedCategory$ = this._categoryService.selectedCateogry$;
     this.selectedCategory$.subscribe((val) => console.log(val));
@@ -48,6 +50,9 @@ export class HeaderComponent implements OnInit {
     this.cartProducts$ = this.cartService.cartProducts$ 
     this.cartProducts$.subscribe(val => {
       this.cartProducts = val
+      val.forEach(v => {
+        this.cartProductTotal += v.quantity
+      })
     })
   }
   selectCategory(cateogry: Category) {

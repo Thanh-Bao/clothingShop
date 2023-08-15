@@ -12,8 +12,16 @@ export class CustomDialogComponent {
   maximizable!: boolean
   @Input()
   header!: string
+  @Input()
+  modal!: boolean
+  @Input()
+  customStyle!: any
   showDialog(position: string) {
     this.position = position;
     this.visible = true;
+  }
+  onHide($event: any){
+    this.visible = false
+    
   }
 }

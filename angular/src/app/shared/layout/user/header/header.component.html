@@ -60,7 +60,7 @@
             <i
               class="pi pi-shopping-cart mr-4 p-text-secondary"
               pBadge
-              [value]="(cartService.cartProducts$ | async)!.length + '' "
+              [value]="cartProducts.length + '' "
             ></i>
             <p-overlayPanel #overlayPanel styleClass="cart-overlay-panel">
               <ng-template pTemplate="content">
@@ -110,10 +110,13 @@
                           </span>
                         </td>
                       </tr>
-                      aaaa
                     </ng-template>
                   </p-table>
-              </ng-template>
+                </ng-template>
+                <div class="flex align-items-center justify-content-between p-2">
+                  <span>{{cartProductTotal}} sản phẩm</span>
+                  <a class="text-primary" routerLink="/checkout">Xem tất cả</a>
+                </div>
             </p-overlayPanel>
           </div>
         </div>
@@ -146,3 +149,4 @@
     </div>
   </div>
 </custom-dialog>
+

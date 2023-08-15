@@ -102,7 +102,7 @@ export class ProductService {
     this.httpOptions.params = new HttpParams({
       fromObject: {
         $filter: filterValue,
-        $expand: "Sizes,Colors"
+        $expand: "Sizes($expand=Size),Colors($expand=Color)"
       },
     });
     return this._httpClient.get<ODataResponse<Product[]>>(

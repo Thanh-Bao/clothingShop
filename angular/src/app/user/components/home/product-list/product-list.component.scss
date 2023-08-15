@@ -109,6 +109,11 @@
   border: .8px dashed black;
   display: block;
 }
+::ng-deep .added-cart-product td{
+  vertical-align: middle
+}
+
+
 /* Mobile */
 @media (max-width: 767px) {
   /* CSS cho màn hình nhỏ hơn hoặc bằng 767px (mobile) */

@@ -57,7 +57,9 @@
             [min]="minPrice"
             [max]="maxPrice"
           ></p-slider>
-          <div class="price-range__group flex align-items-center justify-content-between mt-4">
+          <div
+            class="price-range__group flex align-items-center justify-content-between mt-4"
+          >
             <p-inputNumber
               inputId="integeronly"
               [(ngModel)]="rangeValues[0]"
@@ -145,7 +147,10 @@
                   <img [src]="product.thumbnailURL" />
                   <img [src]="product.hoverImageURL" />
                 </div>
-                <i class="cart__icon pi pi-cart-plus" (click)="cartService.addToCart(product.ID, 1)"></i>
+                <i
+                  class="cart__icon pi pi-cart-plus"
+                  (click)="addToCart(product, 1)"
+                ></i>
               </div>
               <div class="product-info">
                 <a class="product-info__name">{{ product.name }}</a>
@@ -153,7 +158,6 @@
                   <p>{{ product.price | currency : "VND" }}</p>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -161,14 +165,18 @@
     </div>
   </div>
 </div>
-<custom-dialog #filterDialogComp [header]="filterLabel">
+<custom-dialog
+  #filterDialogComp
+  [header]="filterLabel"
+  [modal]="true"
+>
   <div class="dialog-header">
     <h1>
       {{ filterLabel }}
     </h1>
   </div>
   <div class="dialog-content">
-    <div class="ng-container" *ngFor="let item of filterOptions">
+    <ng-container *ngFor="let item of filterOptions">
       <div class="card w-full">
         <p-panel
           styleClass="custom-p-panel"
@@ -189,7 +197,7 @@
           <ng-container *ngIf="item.type !== 'checkbox'"> b </ng-container>
         </p-panel>
       </div>
-    </div>
+    </ng-container>
     <div class="flex align-items-center filter-button-group">
       <div class="flex-1">
         <p-button
@@ -206,5 +214,36 @@
         ></p-button>
       </div>
     </div>
+  </div>
+</custom-dialog>
+
+<custom-dialog #addedProductDialog [customStyle]="{ width: '600px'}">
+  <div class="dialog-header">
+    <h3>Đã thêm vào giỏ hàng</h3>
+  </div>
+  <div class="dialog-content">
+    <p-table [value]="addedProduct" selectionMode="single" [rows]="1" class="added-cart-product">
+      <ng-template pTemplate="body" let-rowData let-addedProduct>
+        <tr [pSelectableRow]="rowData">
+          <td class="text-center">
+            <img
+              [src]="addedProduct.thumbnailURL"
+              [alt]="addedProduct.thumbnailURL"
+              class="w-5rem shadow-2"
+            />
+          </td>
+          <td>
+            <span>
+              {{ addedProduct.name }}
+            </span>
+          </td>
+          <td class="text-center">
+            <span>
+              {{ addedProduct.price | currency : "VND" }}
+            </span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
 </custom-dialog>

@@ -1,6 +1,7 @@
 import { DOCUMENT } from "@angular/common";
 import {
   Component,
+  ComponentRef,
   ElementRef,
   Inject,
   OnInit,
@@ -11,6 +12,8 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { Observable, concatMap, forkJoin, map, switchMap, tap } from "rxjs";
 import { Filter } from "src/app/models/model";
 import { Product } from "src/app/models/response";
+import { CustomDialogComponent } from "src/app/shared/custom-dialog/custom-dialog.component";
+import { CartItem } from "src/app/shared/layout/user/header/header.component";
 import { CartService } from "src/app/user/services/cart.service";
 import { CategoryService } from "src/app/user/services/category.service";
 import { FilterService } from "src/app/user/services/filter.service";
@@ -31,6 +34,8 @@ export class ProductListComponent {
   sidebarWrapper!: ElementRef;
   @ViewChild("productGridWrapper")
   productGridWrapper!: ElementRef;
+  @ViewChild("addedProductDialog")
+  addedProductDialog!: CustomDialogComponent
 
   sortCritera: SortCritera[] = [
     {
@@ -199,6 +204,7 @@ export class ProductListComponent {
   products$!: Observable<Product[] | null>;
   filterLabel: string = "Bộ lọc";
   items!: string[];
+  addedProduct!: Product[]
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private _productService: ProductService,
@@ -240,6 +246,10 @@ export class ProductListComponent {
         this.minPrice = val[0];
         this.maxPrice = val[1];
       });
+
+    this.cartService.addedCartProduct$.subscribe(addedProduct => {
+      this.addedProduct = [addedProduct!]
+    })
   }
   a() {
     this.document
@@ -259,5 +269,16 @@ export class ProductListComponent {
     let filter: Filter = this._filterSerivce.filterVal;
     filter.priceRanges = this.rangeValues;
     this._filterSerivce.nextFilter(filter);
+  }
+  addToCart(product: Product, quantity: number){
+    this.cartService.addToCart(product, quantity)
+    
+    this.addedProductDialog.showDialog('top-right')
+    setTimeout(() => {
+      console.log(1);
+      
+      this.addedProductDialog.onHide(product)
+    }, 2000);
+    this.cartService.addedCartProduct$.subscribe(v => console.log(v))
   }
 }

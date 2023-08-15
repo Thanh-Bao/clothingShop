@@ -9,9 +9,9 @@ import { CartService, PendingProduct } from './user/services/cart.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit{
-  constructor(private _cookieService: CookieService, private _cartService: CartService) {}
+  constructor(private _cookieService: CookieService, public cartService: CartService) {}
   ngOnInit(): void {
-    let pendingProducts: PendingProduct[] = this._cartService.pendingProductsFromCookie
-    this._cartService.pendingProductsBSub.next(pendingProducts)
+    let pendingProducts: PendingProduct[] = this.cartService.pendingProductsFromCookie
+    this.cartService.pendingProductsBSub.next(pendingProducts)
   }
 }

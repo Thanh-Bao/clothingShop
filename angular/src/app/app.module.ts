@@ -13,6 +13,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
 import { HttpClientModule } from '@angular/common/http';
 import { CookieModule } from 'ngx-cookie';
+import { CustomDialogModule } from './shared/custom-dialog/custom-dialog.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -28,6 +29,7 @@ import { CookieModule } from 'ngx-cookie';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    CustomDialogModule,
     CookieModule.withOptions()
   ],
   providers: [],

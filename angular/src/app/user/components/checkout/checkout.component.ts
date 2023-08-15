@@ -67,16 +67,16 @@ export class CheckoutComponent {
         validators: [Validators.required],
       },
     ],
-    [
-      {
-        type: "field",
-        label: "Email",
-        fieldName: "email",
-        columnClass: "lg:col-12 md:col-12 col-12",
-        value: "",
-        validators: [Validators.email],
-      },
-    ],
+    // [
+    //   {
+    //     type: "field",
+    //     label: "Email",
+    //     fieldName: "email",
+    //     columnClass: "lg:col-12 md:col-12 col-12",
+    //     value: "",
+    //     validators: [Validators.email],
+    //   },
+    // ],
     [
       {
         type: "field",
