@@ -18,6 +18,7 @@ export interface Product {
   HasActiveEntity: boolean;
   HasDraftEntity: boolean;
   Sizes: SizeItem[]
+  Colors: ColorItem[]
 }
 export interface Category {
     ID: string 
@@ -31,6 +32,17 @@ export interface SizeItem{
   ID: string
   productID: string
   size: string
+  Size: Size
+}
+export interface ColorItem{
+  ID: string
+  color: string
+  size: string
+  Color: Color
+}
+export interface Color{
+  color: string
+  hexColorCode: string
 }
 export interface Size{
   size: string

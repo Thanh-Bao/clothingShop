@@ -99,6 +99,10 @@
   background-color: red;
   position: relative;
   border-radius: 16px;
+  margin-right: 10px;
+}
+.overview .product-detail__info .color .color__list .color__item:last-child {
+  margin-right: unset;
 }
 .overview .product-detail__info .color .color__list .color__item::before {
   content: "";

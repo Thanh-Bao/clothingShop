@@ -42,25 +42,29 @@
                 {{product.name}}
             </div> -->
             <div class="price pt-3">
-              <h2>
-                {{ product.price | currency : "VND" }}
-              </h2>
+              <div class="flex align-items-center">
+                <p class="mr-1">Giá bán:</p>
+                <h2>
+                  {{ product.price | currency : "VND" }}
+                </h2>
+              </div>
             </div>
             <div class="color mt-3">
               <p>Màu sắc: <strong>Xanh đậm</strong></p>
               <div class="color__list mt-1">
-                <div class="color__item"></div>
+                <ng-container *ngFor="let color of product.Colors">
+                    <div class="color__item" [style]="{backgroundColor: color.Color.hexColorCode } "></div>
+                </ng-container>
               </div>
             </div>
             <div class="size mt-3">
               <p>Kích thước: <strong>S</strong></p>
               <div class="size__list mt-1">
-                <div class="size__item">
-                  <strong>S</strong>
-                </div>
-                <div class="size__item slt">
-                  <strong>S</strong>
-                </div>
+                <ng-container *ngFor="let size of product.Sizes">
+                    <div class="size__item slt">
+                      <strong>{{size.size}}</strong>
+                    </div>
+                </ng-container>
               </div>
             </div>
             <div class="action mt-8">
