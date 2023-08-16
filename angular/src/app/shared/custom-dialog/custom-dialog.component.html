@@ -1,0 +1,14 @@
+  <p-dialog
+    [header]="header"
+    [(visible)]="visible"
+    [position]="position"
+    [style]="customStyle"
+    [modal]="modal"
+    [dismissableMask]="true"
+    (onHide)="onHide($event)"
+  >
+    <ng-template pTemplate="header">
+      <ng-content select=".dialog-header"></ng-content>
+    </ng-template>
+    <ng-content select=".dialog-content"></ng-content>
+  </p-dialog>
