@@ -25,6 +25,6 @@ import { PageNotFoundModule } from '../shared/page-not-found/page-not-found.modu
     FormsModule,
     ReactiveFormsModule,
     PageNotFoundModule
-  ]
+  ],
 })
 export class UserModule { }

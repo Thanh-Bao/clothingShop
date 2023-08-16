@@ -14,6 +14,10 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { HttpClientModule } from '@angular/common/http';
 import { CookieModule } from 'ngx-cookie';
 import { CustomDialogModule } from './shared/custom-dialog/custom-dialog.module';
+import { ProductDetailComponent } from './user/components/product-detail/product-detail.component';
+import { PageNotFoundComponent } from './shared/page-not-found/page-not-found/page-not-found.component';
+import { HomeModule } from './user/components/home/home.module';
+import { PageNotFoundModule } from './shared/page-not-found/page-not-found.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -30,7 +34,8 @@ import { CustomDialogModule } from './shared/custom-dialog/custom-dialog.module'
     ReactiveFormsModule,
     HttpClientModule,
     CustomDialogModule,
-    CookieModule.withOptions()
+    CookieModule.withOptions(),
+    
   ],
   providers: [],
   bootstrap: [AppComponent],
