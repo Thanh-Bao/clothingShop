@@ -1,0 +1,252 @@
+<div class="product-list__wrapper">
+  <div class="nav__wrapper mb-4">
+    <nav class="navbar grid flex justify-content-between align-items-center">
+      <h2 class="" (click)="filterDialogComp.showDialog('left')">
+        Tất cả sản phẩm
+      </h2>
+      <div
+        class="filter__pc flex align-items-center hide-on-mobile hide-on-tablet"
+      >
+        <div class="sorter__wrapper flex align-items-center">
+          <span class="mr-2"> Hiển thị bộ lọc</span>
+          <p-inputSwitch
+            [(ngModel)]="isShowSidebar"
+            (onChange)="a()"
+          ></p-inputSwitch>
+        </div>
+        <div class="filter-display__wrapper ml-4">
+          <p-dropdown
+            [options]="sortCritera"
+            [(ngModel)]="selectedSortCritera"
+            optionLabel="name"
+            placeholder="Sắp xếp bởi"
+            (onChange)="selectetSorter($event.value)"
+          ></p-dropdown>
+        </div>
+      </div>
+      <div class="filter__m-t hide-on-pc">
+        <p-button
+          [label]="filterLabel"
+          styleClass="p-button-rounded p-button-outlined"
+          icon="pi pi-filter"
+          iconPos="right"
+          (click)="filterDialogComp.showDialog('left')"
+        ></p-button>
+      </div>
+    </nav>
+  </div>
+  <div class="grid">
+    <!-- sidebar -->
+    <div id="sidebarWrapper" #sidebarWrapper class="sidebar__wrapper lg:col-3">
+      <div class="sidebar">
+        <div class="flex align-items-center justify-content-between pb-4">
+          <h3 class="font-bold text-xl">Bộ lọc</h3>
+          <div class="flex align-items-center">
+            <p-button label="Xoá tất cả" styleClass="p-button-text"></p-button>
+            <p-button
+              label="Áp dụng"
+              styleClass="p-button-raised ml-2"
+              (click)="applySidebarFilter()"
+            ></p-button>
+          </div>
+        </div>
+        <div class="slider__wrapper py-4">
+          <p-slider
+            [(ngModel)]="rangeValues"
+            [range]="true"
+            [min]="minPrice"
+            [max]="maxPrice"
+          ></p-slider>
+          <div
+            class="price-range__group flex align-items-center justify-content-between mt-4"
+          >
+            <p-inputNumber
+              inputId="integeronly"
+              [(ngModel)]="rangeValues[0]"
+              [min]="minPrice"
+              [max]="maxPrice - 1"
+              mode="currency"
+              currency="VND"
+              locale="vi-VN"
+              styleClass="custom-input"
+              (onBlur)="updateSliderRanges()"
+            >
+            </p-inputNumber>
+            <div class="line">
+              <span></span>
+            </div>
+            <p-inputNumber
+              inputId="integeronly"
+              [(ngModel)]="rangeValues[1]"
+              [min]="minPrice + 1"
+              [max]="maxPrice"
+              mode="currency"
+              currency="VND"
+              locale="vi-VN"
+              styleClass="custom-input"
+              (onBlur)="updateSliderRanges()"
+            >
+            </p-inputNumber>
+          </div>
+        </div>
+        <p-scroller
+          [items]="filterOptions"
+          [itemSize]="50"
+          scrollHeight="781px"
+          styleClass="surface-border"
+        >
+          <ng-template pTemplate="item" let-item let-options="options">
+            <div
+              class="flex align-items-center p-2"
+              [ngClass]="{ 'surface-ground': options.odd }"
+            >
+              <div class="card w-full">
+                <p-panel
+                  styleClass="custom-p-panel"
+                  [header]="item.label"
+                  [toggleable]="true"
+                >
+                  <ng-container *ngIf="item.type === 'checkbox'">
+                    <div
+                      *ngFor="let option of item.options"
+                      class="field-checkbox"
+                    >
+                      <p-checkbox
+                        name="group"
+                        [value]="option.value"
+                        [(ngModel)]="item.value"
+                        [inputId]="option.value"
+                      ></p-checkbox>
+                      <label [for]="option.value">{{ option.name }}</label>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="item.type !== 'checkbox'">
+                    b
+                  </ng-container>
+                </p-panel>
+              </div>
+            </div>
+          </ng-template>
+        </p-scroller>
+      </div>
+    </div>
+    <div
+      id="productGridWrapper"
+      #productGridWrapper
+      class="product-grid__wrapper lg:col-9 md:col-12 col-12"
+    >
+      <div class="grid">
+        <div
+          class="lg:col-4 md:col-6 col-12"
+          *ngFor="let product of products$ | async; index as idx"
+        >
+          <a [routerLink]="['/product', product.ID]">
+            <div id="productItemWrapper" class="product-item__wrapper">
+              <div class="product-item">
+                <div class="product__image">
+                  <div class="img__wrapper">
+                    <img [src]="product.thumbnailURL" />
+                    <img [src]="product.hoverImageURL" />
+                  </div>
+                  <i
+                    class="cart__icon pi pi-cart-plus"
+                    (click)="addToCart(product, 1)"
+                  ></i>
+                </div>
+                <div class="product-info">
+                  <a class="product-info__name">{{ product.name }}</a>
+                  <div class="product-info__price">
+                    <p>{{ product.price | currency : "VND" }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<custom-dialog
+  #filterDialogComp
+  [header]="filterLabel"
+  [modal]="true"
+  [customStyle]="{ width: '100%'}"
+>
+  <div class="dialog-header">
+    <h1>
+      {{ filterLabel }}
+    </h1>
+  </div>
+  <div class="dialog-content">
+    <ng-container *ngFor="let item of filterOptions">
+      <div class="card w-full">
+        <p-panel
+          styleClass="custom-p-panel"
+          [header]="item.label"
+          [toggleable]="true"
+        >
+          <ng-container *ngIf="item.type === 'checkbox'">
+            <div *ngFor="let option of item.options" class="field-checkbox">
+              <p-checkbox
+                name="group"
+                [value]="option.value"
+                [(ngModel)]="item.value"
+                [inputId]="option.value"
+              ></p-checkbox>
+              <label [for]="option.value">{{ option.name }}</label>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="item.type !== 'checkbox'"> b </ng-container>
+        </p-panel>
+      </div>
+    </ng-container>
+    <div class="flex align-items-center filter-button-group">
+      <div class="flex-1">
+        <p-button
+          label="Xoá tất cả"
+          styleClass="p-button-outlined p-button-text "
+        ></p-button>
+      </div>
+      <div class="flex-1">
+        <p-button
+          label="Áp dụng"
+          styleClass="p-button-raised ml-2 flex-1 custom-button "
+          class="flex-1"
+          (click)="applySidebarFilter()"
+        ></p-button>
+      </div>
+    </div>
+  </div>
+</custom-dialog>
+
+<custom-dialog #addedProductDialog [customStyle]="{ width: '600px'}">
+  <div class="dialog-header">
+    <h3>Đã thêm vào giỏ hàng</h3>
+  </div>
+  <div class="dialog-content">
+    <p-table [value]="addedProduct" selectionMode="single" [rows]="1" class="added-cart-product">
+      <ng-template pTemplate="body" let-rowData let-addedProduct>
+        <tr [pSelectableRow]="rowData">
+          <td class="text-center">
+            <img
+              [src]="addedProduct.thumbnailURL"
+              [alt]="addedProduct.thumbnailURL"
+              class="w-5rem shadow-2"
+            />
+          </td>
+          <td>
+            <span>
+              {{ addedProduct.name }}
+            </span>
+          </td>
+          <td class="text-center">
+            <span>
+              {{ addedProduct.price | currency : "VND" }}
+            </span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</custom-dialog>

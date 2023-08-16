@@ -1,0 +1,152 @@
+<nav class="nav__wrapper shadow-1">
+  <div class="nav__inner">
+    <div class="grid align-items-center h-full">
+      <div
+        class="logo__wrapper lg:col-3 md:col-2 col-2 h-full flex align-items-center  pb-0"
+      >
+        <div class="logo" routerLink="/">
+          <img src="/assets/logo/brand-logo.png" alt="" />
+        </div>
+      </div>
+      <div class="page-list__wrapper lg:col-6 md:col-5 col-5  pb-0">
+        <ul
+          class="page-list flex align-items-center justify-content-center hide-on-tablet hide-on-mobile"
+        >
+          <li
+            *ngFor="let category of categories$ | async"
+            class="page-item"
+            [class.slt]="category === (selectedCategory$ | async)"
+            (click)="selectCategory(category)"
+          >
+            <a routerLink="collection/{{ category.ID }}">
+              {{ category.name }}
+            </a>
+          </li>
+        </ul>
+        <div class="page-list__icon hide-on-pc">
+          <div
+            class="icon__group__wrapper lg:col-3 md:col-5 col-5 flex-order-2 h-full"
+          >
+            <div
+              class="icon__group flex justify-content-end align-items-center"
+            >
+              <div class="icon__wrapper person-icon">
+                <i class="pi pi-align-left"></i>
+              </div>
+              <div
+                class="icon__wrapper search-icon"
+                (click)="searchDialogComp.showDialog('top')"
+              >
+                <i class="pi pi-search"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="icon__group__wrapper lg:col-3 md:col-5 col-5 flex-order-2 h-full  pb-0"
+      >
+        <div class="icon__group flex justify-content-end align-items-center">
+          <div
+            class="icon__wrapper search-icon hide-on-mobile hide-on-tablet"
+            (click)="searchDialogComp.showDialog('top')"
+          >
+            <i class="pi pi-search"></i>
+          </div>
+          <div class="icon__wrapper person-icon">
+            <i class="pi pi-user"></i>
+          </div>
+          <div class="icon__wrapper cart-icon" (click)="toggleCart($event)">
+            <i
+              class="pi pi-shopping-cart mr-4 p-text-secondary"
+              pBadge
+              [value]="cartProducts.length + '' "
+            ></i>
+            <p-overlayPanel #overlayPanel styleClass="cart-overlay-panel">
+              <ng-template pTemplate="content">
+                  <p-table
+                    [value]="cartProducts"
+                    selectionMode="single"
+                    [paginator]="true"
+                    [rows]="2"
+                  >
+                    <ng-template pTemplate="header">
+                      <tr>
+                        <th pSortableColumn="product.name">
+                          Tên sản phẩm
+                          <p-sortIcon field="product.name"></p-sortIcon>
+                        </th>
+                        <th class="text-center">Hình ảnh</th>
+                        <th pSortableColumn="product.price" class="text-center">
+                          Giá <p-sortIcon field="product.name"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="quantity" class="text-center">
+                          Số lượng <p-sortIcon field="quantity"></p-sortIcon>
+                        </th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-cartProduct>
+                      <tr [pSelectableRow]="rowData">
+                        <td>
+                          <span>
+                            {{ cartProduct.product.name }}
+                          </span>
+                        </td>
+                        <td class="text-center">
+                          <img
+                            [src]="cartProduct.product.thumbnailURL"
+                            [alt]="cartProduct.product.thumbnailURL"
+                            class="w-5rem shadow-2"
+                          />
+                        </td>
+                        <td class="text-center">
+                          <span>
+                            {{ cartProduct.product.price | currency : "VND" }}
+                          </span>
+                        </td>
+                        <td class="text-center">
+                          <span>
+                            {{ cartProduct.quantity }}
+                          </span>
+                        </td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </ng-template>
+                <div class="flex align-items-center justify-content-between p-2">
+                  <span>{{cartProductTotal}} sản phẩm</span>
+                  <a class="text-primary" routerLink="/checkout">Xem tất cả</a>
+                </div>
+            </p-overlayPanel>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<custom-dialog #searchDialogComp [customStyle]="{ width: '100%'}">
+  <div class="dialog-header flex-1 flex align-items-center">
+    <div class="logo__wrapper lg:col-2 md:col-2 col-2">
+      <div class="logo">
+        <img src="/assets/logo/brand-logo.png" alt="" />
+      </div>
+    </div>
+    <div class="searchbar__wrapper lg:col-10 md:col-8 col-8 flex-1">
+      <div class="searchbar flex align-items-center">
+        <i class="pi pi-search text-2xl p-3"></i>
+        <p-autoComplete
+          [(ngModel)]="selectedItem"
+          [suggestions]="suggestions"
+          (completeMethod)="search($event)"
+          inputStyleClass="custom-input"
+          styleClass="custom-autocomplete"
+          [autofocus]="true"
+          [showClear]="true"
+          placeholder="Tìm kiếm"
+        ></p-autoComplete>
+      </div>
+    </div>
+  </div>
+</custom-dialog>
+

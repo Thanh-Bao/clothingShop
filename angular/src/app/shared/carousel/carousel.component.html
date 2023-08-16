@@ -1,0 +1,51 @@
+<div #imageCarousel class="image-carousel">
+    <div class="image-carousel__item-list-wrapper">
+      <ul
+        #imageCarouselList
+        class="image-carousel__item-list row no-gutters no-wrap"
+        [class.no-gutters]="noGutters"
+      >
+        <ng-container *ngFor="let item of items$ | async; index as idx">
+          <ng-container
+            [ngTemplateOutlet]="itemRender"
+            [ngTemplateOutletContext]="{ itemIdx: idx }"
+          ></ng-container>
+        </ng-container>
+      </ul>
+      <ng-container *ngIf="isShowController">
+        <div
+          #carouselArrowPrev
+          class="carousel-arrow carousel-arrow--hint carousel-arrow--prev"
+          (click)="previous()"
+          *ngIf="isShowPreBtn"
+        >
+          <i class="pi pi-angle-left"></i>
+        </div>
+        <div
+          #carouselArrowNext
+          class="carousel-arrow carousel-arrow--hint carousel-arrow--next"
+          (click)="next()"
+          *ngIf="isShowNextBtn"
+        >
+          <i class="pi pi-angle-right"></i>
+        </div>
+      </ng-container>
+    </div>
+    <ng-container *ngIf="dotRender">
+      <ul class="carousel-dots">
+        <ng-container *ngFor="let dot of dotArray; index as idx">
+          <ng-container
+            [ngTemplateOutlet]="dotRender"
+            [ngTemplateOutletContext]="{
+              dotValue: dot,
+              currentIdx: currentIdx,
+              step: step,
+              dotIndex: idx * step
+            }"
+          >
+          </ng-container>
+        </ng-container>
+      </ul>
+    </ng-container>
+  </div>
+  
