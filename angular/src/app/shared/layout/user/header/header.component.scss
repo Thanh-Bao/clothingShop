@@ -1,11 +1,10 @@
 nav{
-    position: sticky;
-    top: 0;
-    z-index: 999;
+    // position: fixed;
+    // top: 0;
+    // z-index: 999;
 }
 nav .nav__inner{
     padding: 0 64px;
-    height: 56px;
     background-color: var(--surface-overlay) !important;
 }
 .logo__wrapper .logo{
@@ -20,9 +19,6 @@ nav .nav__inner{
 .page__list__wrapper{
     padding-top: 0;
     padding-bottom: 0;
-}
-.page__list__wrapper ul{
-    height: 56px;
 }
 .icon__group__wrapper{
     display: flex;
@@ -43,13 +39,16 @@ nav i{
 }
 /* page list */
 .page-list{
-  
+  display: flex;
+  align-items: center;
 }
 .page-list .page-item{
   height: 56px;
-  padding: 20px 18px;
+  padding: 10px;
   text-transform: uppercase;
   font-weight: 700;
+  display: flex;
+  align-items: center;
 }
 
 .page-list .page-item.slt{

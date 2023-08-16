@@ -140,26 +140,28 @@
           class="lg:col-4 md:col-6 col-12"
           *ngFor="let product of products$ | async; index as idx"
         >
-          <div id="productItemWrapper" class="product-item__wrapper">
-            <div class="product-item">
-              <div class="product__image">
-                <div class="img__wrapper">
-                  <img [src]="product.thumbnailURL" />
-                  <img [src]="product.hoverImageURL" />
+          <a [routerLink]="['/product', product.ID]">
+            <div id="productItemWrapper" class="product-item__wrapper">
+              <div class="product-item">
+                <div class="product__image">
+                  <div class="img__wrapper">
+                    <img [src]="product.thumbnailURL" />
+                    <img [src]="product.hoverImageURL" />
+                  </div>
+                  <i
+                    class="cart__icon pi pi-cart-plus"
+                    (click)="addToCart(product, 1)"
+                  ></i>
                 </div>
-                <i
-                  class="cart__icon pi pi-cart-plus"
-                  (click)="addToCart(product, 1)"
-                ></i>
-              </div>
-              <div class="product-info">
-                <a class="product-info__name">{{ product.name }}</a>
-                <div class="product-info__price">
-                  <p>{{ product.price | currency : "VND" }}</p>
+                <div class="product-info">
+                  <a class="product-info__name">{{ product.name }}</a>
+                  <div class="product-info__price">
+                    <p>{{ product.price | currency : "VND" }}</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>

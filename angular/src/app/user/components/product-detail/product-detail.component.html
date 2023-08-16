@@ -1,0 +1,117 @@
+<div class="product-detail" *ngIf="product">
+  <div class="product-detail__inner">
+    <div class="overview">
+      <div class="grid">
+        <div class="lg:col-7 md:col-12 col-12">
+          <div class="product-detail__gallery">
+            <div class="slick__list flex flex-column">
+              <div
+                class="slick__item"
+                *ngFor="let i of list; index as idx"
+                [class.slt]="slt === idx"
+                (click)="slt = idx"
+              >
+                <div class="img__wrapper">
+                  <img
+                    src="https://media.coolmate.me/cdn-cgi/image/width=80,height=80,quality=80,format=auto/uploads/June2023/Tee_Powerfit_Xam_Dam_6.jpg"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="album__list">
+              <div
+                class="album__item"
+                *ngFor="let i of list; index as idx"
+                [class.show]="idx === slt"
+              >
+                <img
+                  src="https://media.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/June2023/Quan_lot_Gym_Powerfit-listing-26.jpg"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="lg:col-5 md:col-12 col-12">
+          <div class="product-detail__info">
+            <h1 class="name">
+              {{ product.name }}
+            </h1>
+            <!-- <div class="rating">
+                {{product.name}}
+            </div> -->
+            <div class="price pt-3">
+              <h2>
+                {{ product.price | currency : "VND" }}
+              </h2>
+            </div>
+            <div class="color mt-3">
+              <p>Màu sắc: <strong>Xanh đậm</strong></p>
+              <div class="color__list mt-1">
+                <div class="color__item"></div>
+              </div>
+            </div>
+            <div class="size mt-3">
+              <p>Kích thước: <strong>S</strong></p>
+              <div class="size__list mt-1">
+                <div class="size__item">
+                  <strong>S</strong>
+                </div>
+                <div class="size__item slt">
+                  <strong>S</strong>
+                </div>
+              </div>
+            </div>
+            <div class="action mt-8">
+              <div class="grid">
+                <div class="lg:col-3">
+                  <p>
+                    Số lượng:
+                    <p-inputNumber
+                      class="p-inputtext-sm"
+                      [showButtons]="true"
+                      buttonLayout="horizontal"
+                      spinnerMode="horizontal"
+                      inputId="vertical"
+                      decrementButtonClass="p-button-primary"
+                      incrementButtonClass="p-button-primary"
+                      incrementButtonIcon="pi pi-plus"
+                      decrementButtonIcon="pi pi-minus"
+                    ></p-inputNumber>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="action mt-3">
+              <div class="grid">
+                <div class="lg:col-6">
+                  <p-button
+                    icon="pi pi-cart-plus"
+                    label="Thêm vào giỏ hàng"
+                    styleClass="p-button-raised p-button-lg p-button-secondary h-full w-full"
+                  ></p-button>
+                </div>
+                <div class="lg:col-6">
+                  <p-button
+                    label="Thanh toán"
+                    styleClass="p-button-raised p-button-lg h-full w-full"
+                  ></p-button>
+                </div>
+              </div>
+            </div>
+            <div class="desc py-4 mt-3">
+              <strong>Mô tả</strong>
+              <p>
+                {{ product.shortDesc }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="product === undefined">
+  <page-not-found></page-not-found>
+</div>

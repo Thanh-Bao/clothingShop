@@ -10,7 +10,6 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrimeNgModule } from 'src/app/shared/prime-ng/prime-ng.module';
 import { CustomDialogModule } from 'src/app/shared/custom-dialog/custom-dialog.module';
-import { CheckoutComponent } from '../checkout/checkout.component';
 @NgModule({
   declarations: [
     HomeComponent,
@@ -25,7 +24,7 @@ import { CheckoutComponent } from '../checkout/checkout.component';
     FormsModule,
     ReactiveFormsModule,
     PrimeNgModule,
-    CustomDialogModule
+    CustomDialogModule,
   ],
 })
 export class HomeModule {}
