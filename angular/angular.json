@@ -194,6 +194,7 @@
     }
   },
   "cli": {
-    "analytics": "696916fa-0cf5-4eec-adb7-86880fc92f81"
+    "analytics": "696916fa-0cf5-4eec-adb7-86880fc92f81",
+    "defaultCollection": "@schematics/angular"
   }
 }
