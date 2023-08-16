@@ -10,13 +10,18 @@ const routes: Routes = [
     component: UserComponent,
     children: [
       {
+        path: 'home',
+        loadChildren: () =>
+          import('./components/home/home.module').then((m) => m.HomeModule),
+      },
+      {
         path: '',
         loadChildren: () =>
           import('./components/home/home.module').then((m) => m.HomeModule),
       },
       {
         path: '',
-        redirectTo: '',
+        redirectTo: 'home',
         pathMatch: 'full'
       },
       {
