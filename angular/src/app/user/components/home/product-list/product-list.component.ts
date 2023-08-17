@@ -9,6 +9,7 @@ import {
   ViewChild,
 } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
+import { DialogService } from "primeng/dynamicdialog";
 import { Observable, concatMap, forkJoin, map, switchMap, tap } from "rxjs";
 import { Filter } from "src/app/models/model";
 import { Product } from "src/app/models/response";
@@ -22,6 +23,7 @@ import { CategoryService } from "src/app/user/services/category.service";
 import { FilterService } from "src/app/user/services/filter.service";
 import { FormatStringUtilsService } from "src/app/user/services/format-string-utils.service";
 import { ProductService } from "src/app/user/services/product.service";
+import { AddToCartNotifycationComponent } from "./add-to-cart-notifycation/add-to-cart-notifycation.component";
 interface SortCritera {
   name: string;
   code: string;
@@ -198,7 +200,8 @@ export class ProductListComponent {
     private _categoryService: CategoryService,
     private _filterSerivce: FilterService,
     private _formatStringUtilsService: FormatStringUtilsService,
-    public cartService: CartService
+    public cartService: CartService,
+    private _dialogService: DialogService
   ) {}
 
   ngOnInit() {
@@ -246,11 +249,18 @@ export class ProductListComponent {
       });
 
     this.cartService.addedCartProduct$.subscribe((addedProduct) => {
-      console.log(addedProduct);
-      
       this.addedPendingProduct = addedProduct!;
+      let ref = this._dialogService.open(AddToCartNotifycationComponent, {
+        header: "Đã thêm vào giỏ hàng",
+        position: "topright",
+        modal: false,
+        data: addedProduct![0],
+        showHeader: false
+      });
+      setTimeout(() => {
+        ref.close()
+      }, 2000);
     });
-    this._filterSerivce.filter$.subscribe((v) => console.log(v));
   }
   a() {
     this.document
@@ -270,7 +280,6 @@ export class ProductListComponent {
     let filter: Filter = this._filterSerivce.filterVal;
     filter.priceRanges = this.rangeValues;
     this._filterSerivce.nextFilter(filter);
-    console.log(this.filterOptions);
   }
   selectSize(event: MouseEvent, product: Product, sltSizeID: string) {
     event.preventDefault();
@@ -282,9 +291,5 @@ export class ProductListComponent {
       colorID: product.sltColorID,
       quantity: 1,
     });
-    this.addedProductDialog.showDialog("topright");
-    setTimeout(() => {
-      this.addedProductDialog.onHide();
-    }, 5000);
   }
 }

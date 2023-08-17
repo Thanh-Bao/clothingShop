@@ -10,12 +10,15 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrimeNgModule } from 'src/app/shared/prime-ng/prime-ng.module';
 import { CustomDialogModule } from 'src/app/shared/custom-dialog/custom-dialog.module';
+import { AddToCartNotifycationComponent } from './product-list/add-to-cart-notifycation/add-to-cart-notifycation.component';
+import { DialogService } from 'primeng/dynamicdialog';
 @NgModule({
   declarations: [
     HomeComponent,
     HomepageProductSectionComponent,
     HomepageProductBannerComponent,
     ProductListComponent,
+    AddToCartNotifycationComponent,
   ],
   imports: [
     CommonModule,
@@ -26,5 +29,8 @@ import { CustomDialogModule } from 'src/app/shared/custom-dialog/custom-dialog.m
     PrimeNgModule,
     CustomDialogModule,
   ],
+  providers: [
+    DialogService
+  ]
 })
 export class HomeModule {}

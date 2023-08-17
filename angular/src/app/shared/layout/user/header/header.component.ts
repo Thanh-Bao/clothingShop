@@ -55,6 +55,7 @@ export class HeaderComponent implements OnInit {
     this.cartService.cartProducts$
       .pipe(
         tap((cartProducts) => {
+          this.quantityTotal = 0
           this.cartProducts = cartProducts;
           cartProducts.forEach(cartProduct => {
             this.quantityTotal += cartProduct.quantity

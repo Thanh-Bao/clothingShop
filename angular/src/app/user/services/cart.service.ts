@@ -64,8 +64,6 @@ export class CartService {
                       foundProduct.Sizes.find(
                         (SizeItem) => SizeItem.ID === pendingProduct.sizeID
                       );
-                      console.log(foundColorItem);
-                      
                     cartItems.push({
                       product: foundProduct,
                       color: foundColorItem!.Color!,

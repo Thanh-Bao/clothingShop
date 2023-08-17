@@ -20,6 +20,7 @@ import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DataViewModule, DataViewLayoutOptions } from 'primeng/dataview';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 @NgModule({
   declarations: [],
   imports: [
@@ -48,6 +49,7 @@ import { DataViewModule, DataViewLayoutOptions } from 'primeng/dataview';
     DropdownModule,
     InputTextareaModule,
     DataViewModule,
+    DynamicDialogModule
   ]
 })
 export class PrimeNgModule { }
