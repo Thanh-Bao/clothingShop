@@ -14,7 +14,10 @@ import { Filter } from "src/app/models/model";
 import { Product } from "src/app/models/response";
 import { CustomDialogComponent } from "src/app/shared/custom-dialog/custom-dialog.component";
 import { CartItem } from "src/app/shared/layout/user/header/header.component";
-import { CartService } from "src/app/user/services/cart.service";
+import {
+  CartService,
+  PendingProduct,
+} from "src/app/user/services/cart.service";
 import { CategoryService } from "src/app/user/services/category.service";
 import { FilterService } from "src/app/user/services/filter.service";
 import { FormatStringUtilsService } from "src/app/user/services/format-string-utils.service";
@@ -33,8 +36,8 @@ export class ProductListComponent {
   sidebarWrapper!: ElementRef;
   @ViewChild("productGridWrapper")
   productGridWrapper!: ElementRef;
-  @ViewChild("addedProductDialog")
-  addedProductDialog!: CustomDialogComponent
+  @ViewChild("addedPendingProductDialog")
+  addedProductDialog!: CustomDialogComponent;
 
   sortCritera: SortCritera[] = [
     {
@@ -63,12 +66,9 @@ export class ProductListComponent {
     {
       label: "Chiều cao",
       type: "checkbox",
-      value: ["all"],
+      fieldName: "height",
+      value: [],
       options: [
-        {
-          name: "Tất cả",
-          value: "all",
-        },
         {
           name: "Dưới 150 cm",
           value: "under150",
@@ -94,12 +94,9 @@ export class ProductListComponent {
     {
       label: "Cân nặng",
       type: "checkbox",
-      value: ["all"],
+      value: [],
+      fieldName: "weight",
       options: [
-        {
-          name: "Tất cả",
-          value: "all",
-        },
         {
           name: "Dưới 40 kg",
           value: "under40",
@@ -125,12 +122,9 @@ export class ProductListComponent {
     {
       label: "Kích thước",
       type: "checkbox",
-      value: ["all"],
+      fieldName: "size",
+      value: [],
       options: [
-        {
-          name: "Tất cả",
-          value: "all",
-        },
         {
           name: "S",
           value: "s",
@@ -156,12 +150,9 @@ export class ProductListComponent {
     {
       label: "Giới tính",
       type: "checkbox",
-      value: ["all"],
+      fieldName: "sex",
+      value: [],
       options: [
-        {
-          name: "Tất cả",
-          value: "all",
-        },
         {
           name: "Nam",
           value: "male",
@@ -179,12 +170,9 @@ export class ProductListComponent {
     {
       label: "Phân loại",
       type: "checkbox",
-      value: ["all"],
+      fieldName: "category",
+      value: [],
       options: [
-        {
-          name: "Tất cả",
-          value: "all",
-        },
         {
           name: "Đầm",
           value: "male",
@@ -203,7 +191,7 @@ export class ProductListComponent {
   products$!: Observable<Product[] | null>;
   filterLabel: string = "Bộ lọc";
   items!: string[];
-  addedProduct!: Product[]
+  addedPendingProduct!: CartItem[];
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private _productService: ProductService,
@@ -223,12 +211,22 @@ export class ProductListComponent {
             .pipe(map((res) => res.value));
         }),
         tap((products) => {
-          
           this._productService.nextProducts(products);
         })
       )
       .subscribe();
-    this.products$ = this._productService.products$;
+    this.products$ = this._productService.products$.pipe(
+      map((products) => {
+        if (products) {
+          products.map((product) => {
+            product.sltColorID = product.Colors[0].ID;
+            product.sltSizeID = product.Sizes[0].ID;
+            return product;
+          });
+        }
+        return products;
+      })
+    );
     let minPriceProduct$ = this._productService
       .fetchMinAndMaxPriceProduct("asc")
       .pipe(map((res) => res.value[0]));
@@ -247,9 +245,12 @@ export class ProductListComponent {
         this.maxPrice = val[1];
       });
 
-    this.cartService.addedCartProduct$.subscribe(addedProduct => {
-      this.addedProduct = [addedProduct!]
-    })
+    this.cartService.addedCartProduct$.subscribe((addedProduct) => {
+      console.log(addedProduct);
+      
+      this.addedPendingProduct = addedProduct!;
+    });
+    this._filterSerivce.filter$.subscribe((v) => console.log(v));
   }
   a() {
     this.document
@@ -269,14 +270,21 @@ export class ProductListComponent {
     let filter: Filter = this._filterSerivce.filterVal;
     filter.priceRanges = this.rangeValues;
     this._filterSerivce.nextFilter(filter);
+    console.log(this.filterOptions);
   }
-  addToCart(product: Product, quantity: number){
-    this.cartService.addToCart(product, quantity)
-    
-    this.addedProductDialog.showDialog("topright")
+  selectSize(event: MouseEvent, product: Product, sltSizeID: string) {
+    event.preventDefault();
+    event.stopPropagation();
+    product.sltSizeID = sltSizeID;
+    this.cartService.addToCart({
+      productID: product.ID,
+      sizeID: sltSizeID,
+      colorID: product.sltColorID,
+      quantity: 1,
+    });
+    this.addedProductDialog.showDialog("topright");
     setTimeout(() => {
-      this.addedProductDialog.onHide(product)
-    }, 2000);
-    this.cartService.addedCartProduct$.subscribe(v => console.log(v))
+      this.addedProductDialog.onHide();
+    }, 5000);
   }
 }

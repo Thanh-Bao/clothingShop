@@ -113,8 +113,6 @@
                     >
                       <p-checkbox
                         name="group"
-                        [value]="option.value"
-                        [(ngModel)]="item.value"
                         [inputId]="option.value"
                       ></p-checkbox>
                       <label [for]="option.value">{{ option.name }}</label>
@@ -140,33 +138,55 @@
           class="lg:col-4 md:col-6 col-12"
           *ngFor="let product of products$ | async; index as idx"
         >
-          <a [routerLink]="['/product', product.ID]">
-            <div id="productItemWrapper" class="product-item__wrapper">
-              <div class="product-item">
-                <div class="product__image">
-                  <div class="img__wrapper">
+          <div id="productItemWrapper" class="product-item__wrapper">
+            <div class="product-item">
+              <div class="product__image">
+                <div class="img__wrapper"  >
+                  <a [routerLink]="['/product', product.ID]">
                     <img [src]="product.thumbnailURL" />
                     <img [src]="product.hoverImageURL" />
-                  </div>
-                  <i
-                    class="cart__icon pi pi-cart-plus"
-                    (click)="addToCart(product, 1)"
-                  ></i>
+                    <div class="size__list">
+                      <div class="flex flex-column align-items-center justify-content-center">
+                        <strong>Thêm nhanh vào giỏ hàng</strong>
+                        <div class="flex mt-2">
+                          <ng-container *ngFor="let size of product.Sizes">
+                            <div class="size__item mr-2" (click)="selectSize($event, product, size.ID)">
+                              <strong>{{size.size}}</strong>
+                            </div>
+                          </ng-container>
+                          </div>
+                      </div>
+                    </div>
+                  </a>
                 </div>
-                <div class="product-info">
-                  <a class="product-info__name">{{ product.name }}</a>
-                  <div class="product-info__price">
-                    <p>{{ product.price | currency : "VND" }}</p>
+             
+              </div>
+              <div class="product-info">
+                <div class="color">
+                  <div class="color__list">
+                    <ng-container *ngFor="let color of product.Colors; index as idx">
+                      <ng-container *ngIf="color && color.Color">
+                        <div class="color__item" (click)="product.sltColorID = color.ID">
+                          <div class="color__item-slt" [class.show]="color.ID === product.sltColorID"></div>
+                          <div class="color__item--background" [style]="{backgroundColor: color.Color.hexColorCode }"></div>
+                        </div>
+                      </ng-container>
+                    </ng-container>
                   </div>
+                </div>
+                <p class="product-info__name mt-2">{{ product.name }}</p>
+                <div class="product-info__price">
+                  <p>{{ product.price | currency : "VND" }}</p>
                 </div>
               </div>
             </div>
-          </a>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 <custom-dialog
   #filterDialogComp
   [header]="filterLabel"
@@ -220,29 +240,35 @@
   </div>
 </custom-dialog>
 
-<custom-dialog #addedProductDialog [customStyle]="{ width: '600px'}">
+<custom-dialog #addedPendingProductDialog >
   <div class="dialog-header">
     <h3>Đã thêm vào giỏ hàng</h3>
   </div>
   <div class="dialog-content">
-    <p-table [value]="addedProduct" selectionMode="single" [rows]="1" class="added-cart-product">
-      <ng-template pTemplate="body" let-rowData let-addedProduct>
+    <p-table [value]="addedPendingProduct" selectionMode="single" [rows]="1" class="added-cart-product">
+      <ng-template pTemplate="body" let-rowData let-addedPendingProduct>
         <tr [pSelectableRow]="rowData">
           <td class="text-center">
             <img
-              [src]="addedProduct.thumbnailURL"
-              [alt]="addedProduct.thumbnailURL"
+              [src]="addedPendingProduct.product.thumbnailURL"
+              [alt]="addedPendingProduct.product.thumbnailURL"
               class="w-5rem shadow-2"
             />
           </td>
           <td>
             <span>
-              {{ addedProduct.name }}
+              {{ addedPendingProduct.product.name }}
             </span>
           </td>
           <td class="text-center">
             <span>
-              {{ addedProduct.price | currency : "VND" }}
+              {{ addedPendingProduct.color.color }}/ {{ addedPendingProduct.size.size }}
+            </span>
+          </td>
+          <td class="text-center">
+            <span>
+              <strong>{{addedPendingProduct.quantity}}</strong>x
+              {{ addedPendingProduct.product.price | currency : "VND" }}
             </span>
           </td>
         </tr>

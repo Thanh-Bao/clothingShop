@@ -264,8 +264,8 @@ export class CheckoutComponent {
     }
     this.sortField = "product." + this.sortField;
   }
-  updateQuantity(product: Product, quantity: string) {
-    this._cartService.updateCart(product.ID, Number.parseInt(quantity));
+  updateQuantity(productID: string, colorID: string, sizeID: string, quantity: number) {
+    this._cartService.updateQuantity({productID, colorID, sizeID, quantity});
   }
   removeCartProduct(productID: string) {
     let pendingProducts: PendingProduct[] =

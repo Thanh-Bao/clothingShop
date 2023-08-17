@@ -20,7 +20,7 @@ export class CustomDialogComponent {
     this.position = position;
     this.visible = true;
   }
-  onHide($event: any){
+  onHide(){
     this.visible = false
     
   }

@@ -37,6 +37,7 @@ export class ProductService {
     let params: HttpParams = new HttpParams({
       fromObject: {
         $top: pagination.top,
+        $expand: "Sizes($expand=Size),Colors($expand=Color)"
       },
     });
     if(pagination && pagination.orderBy){
