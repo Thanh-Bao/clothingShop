@@ -200,7 +200,7 @@ annotate service.ProductSize with {
 };
 
 annotate service.ProductColor with {
-    color @(common: {
+    color @(Common: {
         ValueListWithFixedValues: true,
         ValueList               : {
             $Type         : 'Common.ValueListType',
