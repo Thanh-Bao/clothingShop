@@ -264,7 +264,8 @@ export class CheckoutComponent {
     }
     this.sortField = "product." + this.sortField;
   }
-  updateQuantity(productID: string, colorID: string, sizeID: string, quantity: number) {
+  updateQuantity(productID: string, colorID: string, sizeID: string, event: any) {
+    let quantity: number = event.value
     this._cartService.updateQuantity({productID, colorID, sizeID, quantity});
   }
   removeCartProduct(productID: string) {
