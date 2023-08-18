@@ -20,7 +20,7 @@
 .sidebar__wrapper {
   padding-left: 64px;
   animation: b 300ms forwards linear;
-  position: sticky;
+position: sticky;
   top: 56px;
   max-height: 781px;
   overflow: hidden;
@@ -80,6 +80,52 @@
 .product-item__wrapper .img__wrapper:hover img:first-child {
   z-index: 1;
 }
+.product-item__wrapper .img__wrapper .size__list {
+  width: 90%;
+  height: 100px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  backdrop-filter: blur(20px);
+  background: linear-gradient(0deg,rgba(0,0,0,.1),rgba(0,0,0,.1)),hsla(0,0%,100%,.4);
+  border-radius: 8px;
+  padding: 12px;
+  display: none;
+}
+
+.product-item__wrapper .img__wrapper:hover .size__list {
+  z-index: 2;
+  display: block;
+  animation: slideUp .1s linear forwards
+}
+
+@keyframes slideUp {
+   from{
+    opacity: 0;
+    bottom: -20px;
+   }
+   to{
+    opacity: 1;
+    bottom: 20px;
+   }
+}
+
+
+.product-item__wrapper .img__wrapper:hover .size__list .size__item{
+  width: 40px;
+  height: 35px;
+  background-color: var(--surface-0);
+  color: var(--surface-900);
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  border-radius: 12px;
+}
+.product-item__wrapper .img__wrapper:hover .size__list .size__item:hover{
+  background: var(--surface-900);
+  color: var(--surface-0);
+}
+
 .product-item__wrapper .product-info .product-info__price{
   margin-top: 10px;
 }
@@ -90,6 +136,43 @@
 .product-item__wrapper.result-no-sidebar {
   animation: d 300ms forwards linear;
 }
+.color .color__list {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+.color .color__list .color__item {
+  width: 43px;
+  height: 28px;
+  background-color: var(--surface-0);
+  position: relative;
+  border-radius: 16px;
+  margin-right: 10px;
+  cursor: pointer;
+  padding: 4px;
+}
+.color .color__list .color__item .color__item-slt{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--surface-900);
+  display: none;
+  top: 0;
+  left: 0;
+  border-radius: 16px;
+}
+.color .color__list .color__item .color__item-slt.show{
+  display: block;
+}
+.color .color__list .color__item .color__item--background{
+  height: 100%;
+  width: 100%;
+  border-radius: inherit;
+}
+.color .color__list .color__item:last-child {
+  margin-right: unset;
+}
+
 /* slider wrapper */
 .slider__wrapper p-inputNumber{
   width: 45%;

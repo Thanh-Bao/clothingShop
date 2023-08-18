@@ -100,6 +100,7 @@
   position: relative;
   border-radius: 16px;
   margin-right: 10px;
+  cursor: pointer
 }
 .overview .product-detail__info .color .color__list .color__item:last-child {
   margin-right: unset;
@@ -142,6 +143,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 .overview .product-detail__info .size .size__list .size__item.slt {
   background-color: var(--primary-color);

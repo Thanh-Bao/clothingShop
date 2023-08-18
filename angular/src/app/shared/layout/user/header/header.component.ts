@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { Observable, map, switchMap, tap } from "rxjs";
-import { Category, Product } from "src/app/models/response";
+import { Category, Color, ColorItem, Product, Size, SizeItem } from "src/app/models/response";
 import { ThemeService } from "src/app/theme.service";
 import {
   CartService,
@@ -12,6 +12,8 @@ import { FilterService } from "src/app/user/services/filter.service";
 import { ProductService } from "src/app/user/services/product.service";
 export interface CartItem {
   product: Product;
+  colorItem: ColorItem | undefined;
+  sizeItem: SizeItem | undefined;
   quantity: number;
 }
 @Component({
@@ -26,38 +28,41 @@ export class HeaderComponent implements OnInit {
   isShowClear = true;
   categories$!: Observable<Category[]>;
   selectedCategory$!: Observable<Category | null>;
-  cartProducts$!: Observable<CartItem[] | []>
-  cartProducts: CartItem[] = []
-  cartProductTotal: number = 0
-  addedCartProduct!: CartItem
+  cartProducts$!: Observable<CartItem[] | []>;
+  cartProducts: CartItem[] = [];
+  addedCartProduct!: CartItem;
+  quantityTotal: number = 0
   constructor(
     private _categoryService: CategoryService,
     private _filterService: FilterService,
     private _productService: ProductService,
-    public cartService: CartService,
+    public cartService: CartService
   ) {
     this.selectedCategory$ = this._categoryService.selectedCateogry$;
     this.selectedCategory$.subscribe((val) => console.log(val));
   }
   search(event: any) {
-    console.log(event)
     let filter = this._filterService.filterVal;
     filter.search = event.query;
-    this._productService.findAll(filter).subscribe(val => {
-      this.suggestions = val.value.map(val => val.name)
-    })
+    this._productService.findAll(filter).subscribe((val) => {
+      this.suggestions = val.value.map((val) => val.name);
+    });
   }
   ngOnInit(): void {
     this.categories$ = this._categoryService
       .findAll()
       .pipe(map((res) => res.value));
-    this.cartProducts$ = this.cartService.cartProducts$ 
-    this.cartProducts$.subscribe(val => {
-      this.cartProducts = val
-      val.forEach(v => {
-        this.cartProductTotal += v.quantity
-      })
-    })
+    this.cartService.cartProducts$
+      .pipe(
+        tap((cartProducts) => {
+          this.quantityTotal = 0
+          this.cartProducts = cartProducts;
+          cartProducts.forEach(cartProduct => {
+            this.quantityTotal += cartProduct.quantity
+          })
+        })
+      )
+      .subscribe();
   }
   selectCategory(cateogry: Category) {
     if (this._categoryService.selectedCategoryVal != cateogry) {
@@ -70,7 +75,6 @@ export class HeaderComponent implements OnInit {
   @ViewChild("overlayPanel")
   overlayPanel: any;
   toggleCart(event: any) {
-    this.cartProducts$ = this.cartService.cartProducts$
     this.overlayPanel.toggle(event);
   }
 }

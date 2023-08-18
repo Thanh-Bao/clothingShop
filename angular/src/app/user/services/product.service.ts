@@ -4,7 +4,7 @@ import { Filter, Pagination } from "src/app/models/model";
 import { SAP_API_DOMAIN, PRODUCT_API } from "src/app/models/constance";
 import { HttpParams } from "@angular/common/http";
 import { BehaviorSubject, Observable, map } from "rxjs";
-import { ODataResponse, Product } from "src/app/models/response";
+import { ODataResponse, Product, SizeItem } from "src/app/models/response";
 import { FormatStringUtilsService } from "./format-string-utils.service";
 
 @Injectable({
@@ -24,7 +24,18 @@ export class ProductService {
     private _formatStringUtilsService: FormatStringUtilsService
   ) {
     this.productsBSub = new BehaviorSubject<Product[] | null>(null);
-    this.products$ = this.productsBSub.asObservable();
+    this.products$ = this.productsBSub.asObservable().pipe(
+      map((products) => {
+        if (products) {
+          products!.map((product) => {
+            let sizeItems: SizeItem[] = product.Sizes;
+            sizeItems.sort((a, b) => a.Size.height - b.Size.height);
+          });
+          return products;
+        }
+        return null;
+      })
+    );
   }
   nextProducts(products: Product[] | null) {
     this.productsBSub.next(products);
@@ -37,10 +48,11 @@ export class ProductService {
     let params: HttpParams = new HttpParams({
       fromObject: {
         $top: pagination.top,
+        $expand: "Sizes($expand=Size),Colors($expand=Color)",
       },
     });
-    if(pagination && pagination.orderBy){
-      let queryString = filter.pagination.orderBy!
+    if (pagination && pagination.orderBy) {
+      let queryString = filter.pagination.orderBy!;
       params = params.append("$orderby", queryString);
     }
 
@@ -67,7 +79,6 @@ export class ProductService {
     }
     this.httpOptions.params = params;
     console.log(params);
-   
 
     return this._httpClient.get<ODataResponse<Product[]>>(
       PRODUCT_API,
@@ -98,11 +109,11 @@ export class ProductService {
         filterValue = filterValue.concat(`ID eq '${id}' or `);
       }
     });
-    
+
     this.httpOptions.params = new HttpParams({
       fromObject: {
         $filter: filterValue,
-        $expand: "Sizes($expand=Size),Colors($expand=Color)"
+        $expand: "Sizes($expand=Size),Colors($expand=Color)",
       },
     });
     return this._httpClient.get<ODataResponse<Product[]>>(

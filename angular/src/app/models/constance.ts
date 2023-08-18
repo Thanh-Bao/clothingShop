@@ -1,5 +1,5 @@
 export const API_DOMAIN: string = "/api" //! comment this line while in development mode
-export const SAP_API_DOMAIN: string = "https://cors-anywhere.herokuapp.com/https://backend.baobaostore.com/odata/v4/api"
+export const SAP_API_DOMAIN: string = "https://backend.baobaostore.com/odata/v4/api"
 export const PRODUCT_API: string = SAP_API_DOMAIN + "/Product"
 export const CATEGORY_API: string = SAP_API_DOMAIN + "/Category"
 export const SALE_ORDER_API: string = SAP_API_DOMAIN + "/SaleOrder"
@@ -10,4 +10,4 @@ export const ALBUM_API: string = SAP_API_DOMAIN + "/Album"
 export const USER_API: string = SAP_API_DOMAIN + "/User"
 export const PRODUCT_SIZE_API: string = SAP_API_DOMAIN + "/ProductSize"
 export const PRODUCT_COLOR_API: string = SAP_API_DOMAIN + "/ProductColor"
-export const TTDN_API: string = "https://cors-anywhere.herokuapp.com/https://thongtindoanhnghiep.co/api"
+export const TTDN_API: string = "https://thongtindoanhnghiep.co/api"

@@ -264,15 +264,28 @@ export class CheckoutComponent {
     }
     this.sortField = "product." + this.sortField;
   }
-  updateQuantity(product: Product, quantity: string) {
-    this._cartService.updateCart(product.ID, Number.parseInt(quantity));
+  updateQuantity(
+    productID: string,
+    colorID: string,
+    sizeID: string,
+    event: any
+  ) {
+    let quantity: number = event.value;
+    this._cartService.updateQuantity({ productID, colorID, sizeID, quantity });
   }
-  removeCartProduct(productID: string) {
+  removeCartProduct(cartProduct: CartItem) {
+    const { product, colorItem, sizeItem } = cartProduct;
+    console.log(cartProduct);
+
     let pendingProducts: PendingProduct[] =
       this._cartService.pendingProductsVal;
-    pendingProducts = pendingProducts.filter(
-      (pendingProduct) => pendingProduct.productID !== productID
+    let removedIdx = pendingProducts.findIndex(
+      (pendingProduct) =>
+        pendingProduct.productID === product.ID &&
+        pendingProduct.sizeID === sizeItem?.ID &&
+        pendingProduct.colorID === colorItem?.ID
     );
+    pendingProducts.splice(removedIdx, 1);
     this._cartService.pendingProductsBSub.next(pendingProducts);
   }
 }
