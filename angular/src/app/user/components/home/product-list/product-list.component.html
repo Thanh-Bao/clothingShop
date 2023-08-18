@@ -149,9 +149,9 @@
                       <div class="flex flex-column align-items-center justify-content-center">
                         <strong>Thêm nhanh vào giỏ hàng</strong>
                         <div class="flex mt-2">
-                          <ng-container *ngFor="let size of product.Sizes">
-                            <div class="size__item mr-2" (click)="selectSize($event, product, size.ID)">
-                              <strong>{{size.size}}</strong>
+                          <ng-container *ngFor="let sizeItem of product.Sizes">
+                            <div class="size__item mr-2" (click)="selectSize($event, product, sizeItem)">
+                              <strong>{{sizeItem.size}}</strong>
                             </div>
                           </ng-container>
                           </div>
@@ -164,11 +164,11 @@
               <div class="product-info">
                 <div class="color">
                   <div class="color__list">
-                    <ng-container *ngFor="let color of product.Colors; index as idx">
-                      <ng-container *ngIf="color && color.Color">
-                        <div class="color__item" (click)="product.sltColorID = color.ID">
-                          <div class="color__item-slt" [class.show]="color.ID === product.sltColorID"></div>
-                          <div class="color__item--background" [style]="{backgroundColor: color.Color.hexColorCode }"></div>
+                    <ng-container *ngFor="let colorItem of product.Colors; index as idx">
+                      <ng-container *ngIf="colorItem && colorItem.Color">
+                        <div class="color__item" (click)="product.sltColorItem = colorItem">
+                          <div class="color__item-slt" [class.show]="colorItem.ID === product.sltColorItem.ID"></div>
+                          <div class="color__item--background" [style]="{backgroundColor: colorItem.Color.hexColorCode }"></div>
                         </div>
                       </ng-container>
                     </ng-container>
@@ -262,7 +262,7 @@
           </td>
           <td class="text-center">
             <span>
-              {{ addedPendingProduct.color.color }}/ {{ addedPendingProduct.size.size }}
+              {{ addedPendingProduct.colorItem.color }}/ {{ addedPendingProduct.sizeItem.size }}
             </span>
           </td>
           <td class="text-center">

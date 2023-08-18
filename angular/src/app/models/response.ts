@@ -19,8 +19,8 @@ export interface Product {
   HasDraftEntity: boolean;
   Sizes: SizeItem[]
   Colors: ColorItem[]
-  sltColorID: string,
-  sltSizeID: string,
+  sltColorItem: ColorItem,
+  sltSizeItem: SizeItem,
 }
 export interface Category {
     ID: string 

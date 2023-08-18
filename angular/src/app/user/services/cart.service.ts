@@ -60,14 +60,14 @@ export class CartService {
                       foundProduct.Colors.find(
                         (ColorItem) => ColorItem.ID === pendingProduct.colorID
                       );
-                    let foundSize: SizeItem | undefined =
+                    let foundSizeItem: SizeItem | undefined =
                       foundProduct.Sizes.find(
                         (SizeItem) => SizeItem.ID === pendingProduct.sizeID
                       );
                     cartItems.push({
                       product: foundProduct,
-                      color: foundColorItem!.Color!,
-                      size: foundSize!.Size!,
+                      colorItem: foundColorItem!,
+                      sizeItem: foundSizeItem!,
                       quantity: pendingProduct.quantity,
                     });
                   }
@@ -112,13 +112,13 @@ export class CartService {
           let foundColorItem: ColorItem | undefined = val[0].Colors.find(
             (ColorItem) => ColorItem.ID === pendingProduct.colorID
           );
-          let foundSize: SizeItem | undefined = val[0].Sizes.find(
+          let foundSizeItem: SizeItem | undefined = val[0].Sizes.find(
             (SizeItem) => SizeItem.ID === pendingProduct.sizeID
           );
           let cartItem: CartItem = {
             product: val[0],
-            color: foundColorItem!.Color,
-            size: foundSize!.Size,
+            colorItem: foundColorItem,
+            sizeItem: foundSizeItem,
             quantity: pendingProduct.quantity,
           };
           this.addedCartProductBSub.next([cartItem]);

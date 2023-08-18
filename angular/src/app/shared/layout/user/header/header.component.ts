@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { Observable, map, switchMap, tap } from "rxjs";
-import { Category, Color, Product, Size } from "src/app/models/response";
+import { Category, Color, ColorItem, Product, Size, SizeItem } from "src/app/models/response";
 import { ThemeService } from "src/app/theme.service";
 import {
   CartService,
@@ -12,8 +12,8 @@ import { FilterService } from "src/app/user/services/filter.service";
 import { ProductService } from "src/app/user/services/product.service";
 export interface CartItem {
   product: Product;
-  color: Color | undefined;
-  size: Size | undefined;
+  colorItem: ColorItem | undefined;
+  sizeItem: SizeItem | undefined;
   quantity: number;
 }
 @Component({

@@ -12,7 +12,7 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { DialogService } from "primeng/dynamicdialog";
 import { Observable, concatMap, forkJoin, map, switchMap, tap } from "rxjs";
 import { Filter } from "src/app/models/model";
-import { Product } from "src/app/models/response";
+import { Product, SizeItem } from "src/app/models/response";
 import { CustomDialogComponent } from "src/app/shared/custom-dialog/custom-dialog.component";
 import { CartItem } from "src/app/shared/layout/user/header/header.component";
 import {
@@ -222,8 +222,8 @@ export class ProductListComponent {
       map((products) => {
         if (products) {
           products.map((product) => {
-            product.sltColorID = product.Colors[0].ID;
-            product.sltSizeID = product.Sizes[0].ID;
+            product.sltColorItem = product.Colors[0];
+            product.sltSizeItem = product.Sizes[0];
             return product;
           });
         }
@@ -249,17 +249,12 @@ export class ProductListComponent {
       });
 
     this.cartService.addedCartProduct$.subscribe((addedProduct) => {
-      this.addedPendingProduct = addedProduct!;
-      let ref = this._dialogService.open(AddToCartNotifycationComponent, {
-        header: "Đã thêm vào giỏ hàng",
-        position: "topright",
-        modal: false,
-        data: addedProduct![0],
-        showHeader: false
-      });
-      setTimeout(() => {
-        ref.close()
-      }, 2000);
+      if (addedProduct) {
+        this.addedPendingProduct = addedProduct!;
+        // setTimeout(() => {
+        //   ref.close()
+        // }, 2000);
+      }
     });
   }
   a() {
@@ -281,15 +276,32 @@ export class ProductListComponent {
     filter.priceRanges = this.rangeValues;
     this._filterSerivce.nextFilter(filter);
   }
-  selectSize(event: MouseEvent, product: Product, sltSizeID: string) {
+  selectSize(event: MouseEvent, product: Product, sltSizeItem: SizeItem) {
     event.preventDefault();
     event.stopPropagation();
-    product.sltSizeID = sltSizeID;
+    product.sltSizeItem = sltSizeItem;
     this.cartService.addToCart({
       productID: product.ID,
-      sizeID: sltSizeID,
-      colorID: product.sltColorID,
+      sizeID: sltSizeItem.ID,
+      colorID: product.sltColorItem.ID,
       quantity: 1,
     });
+    let cartItem: CartItem = {
+      product,
+      colorItem: product.sltColorItem,
+      sizeItem: product.sltSizeItem,
+      quantity: 1,
+    };
+    let ref = this._dialogService.open(AddToCartNotifycationComponent, {
+      header: "Đã thêm vào giỏ hàng",
+      position: "topright",
+      modal: false,
+      data: cartItem,
+      showHeader: false,
+      closeOnEscape: true,
+    });
+    setTimeout(() => {
+      ref.close();
+    }, 1000);
   }
 }

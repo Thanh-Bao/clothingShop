@@ -174,7 +174,7 @@
                     <div
                       class="flex flex-column justify-content-between align-items-center xl:align-items-end gap-4"
                     >
-                      <i class="pi pi-trash text-xl cursor-pointer" (click)="removeCartProduct(cartProduct.product.ID)"></i>
+                      <i class="pi pi-trash text-xl cursor-pointer" (click)="removeCartProduct(cartProduct)"></i>
                       <span class="text-base">{{
                         cartProduct.product.price | currency : "VND"
                       }}</span>
