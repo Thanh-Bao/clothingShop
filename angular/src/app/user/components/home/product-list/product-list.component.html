@@ -116,7 +116,7 @@
       <div class="grid">
         <div
           class="lg:col-4 md:col-6 col-12"
-          *ngFor="let product of products$ | async; index as idx"
+          *ngFor="let product of products; index as idx"
         >
           <div id="productItemWrapper" class="product-item__wrapper">
             <div class="product-item">
@@ -181,6 +181,18 @@
             </div>
           </div>
         </div>
+        <ng-container *ngIf="!products">
+          <div
+            class="lg:col-4 md:col-6 col-12"
+            *ngFor="let sk of [1, 1, 1, 1, 1, 1]; index as idx"
+          >
+            <p-skeleton
+              width="100%"
+              height="500px"
+              styleClass="mb-2"
+            ></p-skeleton>
+          </div>
+        </ng-container>
       </div>
     </div>
   </div>

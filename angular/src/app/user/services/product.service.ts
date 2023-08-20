@@ -142,6 +142,7 @@ export class ProductService {
         map((res) => {
           let products: Product[] = res.value;
           products = products.map((product) => {
+            product.Sizes.sort((a, b) => a.Size.height - b.Size.height);
             product.sltColorItem = product.Colors[0];
             product.sltSizeItem = product.Sizes[0];
             return product;

@@ -253,6 +253,7 @@ export class ProductListComponent {
       this.filterSidebarFG = this._fb.group(constrols);
     });
   }
+  products!: Product[]
   ngOnInit() {
     this.filterSidebarFG.get("priceRanges")?.valueChanges.subscribe(val => {
       this.filterSidebarFG.patchValue({
@@ -276,11 +277,13 @@ export class ProductListComponent {
         });
       this._filterSerivce.nextFilter(filterVal);
     });
-    this.products$ = this._filterSerivce.filter$.pipe(
+   this._filterSerivce.filter$.pipe(
       switchMap((filter: Filter) => {
         return this._productService.findAllProduct(filter);
       })
-    );
+    ).subscribe(products => {
+      this.products = products
+    });
 
     this.cartService.addedCartProduct$.subscribe((addedProduct) => {
       if (addedProduct) {
