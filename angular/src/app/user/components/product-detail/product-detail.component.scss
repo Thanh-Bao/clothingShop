@@ -96,7 +96,6 @@
 .overview .product-detail__info .color .color__list .color__item {
   height: 32px;
   width: 51px;
-  background-color: red;
   position: relative;
   border-radius: 16px;
   margin-right: 10px;
@@ -105,8 +104,7 @@
 .overview .product-detail__info .color .color__list .color__item:last-child {
   margin-right: unset;
 }
-.overview .product-detail__info .color .color__list .color__item::before {
-  content: "";
+.overview .product-detail__info .color .color__list .color__item .color__item--border {
   border: 4px solid #fff;
   position: absolute;
   top: 0;
@@ -115,15 +113,16 @@
   right: 0;
   border-radius: 1.125rem;
 }
-.overview .product-detail__info .color .color__list .color__item::after {
-  content: "";
-  border: 2px solid var(--primary-color);
+.overview .product-detail__info .color .color__list .color__item .color__item--slt {
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   border-radius: 1.125rem;
+}
+.overview .product-detail__info .color .color__list .color__item .color__item--slt.show {
+  border: 2px solid var(--primary-color);
 }
 
 .overview .product-detail__info .size {

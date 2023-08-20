@@ -35,6 +35,8 @@ export class ProductDetailComponent implements OnInit {
         })
       )
       .subscribe((product) => {
+        product.sltColorItem = product.Colors[0]
+        product.sltSizeItem = product.Sizes[0]
         this.product = product;
       });
   }

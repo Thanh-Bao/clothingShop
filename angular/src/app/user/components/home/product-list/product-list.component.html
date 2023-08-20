@@ -38,38 +38,30 @@
   <div class="grid">
     <!-- sidebar -->
     <div id="sidebarWrapper" #sidebarWrapper class="sidebar__wrapper lg:col-3">
-      <div class="sidebar">
+      <form class="sidebar" [formGroup]="filterSidebarFG">
         <div class="flex align-items-center justify-content-between pb-4">
-          <h3 class="font-bold text-xl">Bộ lọc</h3>
-          <div class="flex align-items-center">
-            <p-button label="Xoá tất cả" styleClass="p-button-text"></p-button>
-            <p-button
-              label="Áp dụng"
-              styleClass="p-button-raised ml-2"
-              (click)="applySidebarFilter()"
-            ></p-button>
-          </div>
+          <h2 class="font-bold">Bộ lọc</h2>
         </div>
         <div class="slider__wrapper py-4">
-          <p-slider
-            [(ngModel)]="rangeValues"
-            [range]="true"
-            [min]="minPrice"
-            [max]="maxPrice"
-          ></p-slider>
+          <div class="px-2">
+            <p-slider
+              formControlName="priceRanges"
+              [range]="true"
+              [min]="minPrice"
+              [max]="maxPrice"
+            ></p-slider>
+          </div>
           <div
             class="price-range__group flex align-items-center justify-content-between mt-4"
           >
             <p-inputNumber
               inputId="integeronly"
-              [(ngModel)]="rangeValues[0]"
-              [min]="minPrice"
-              [max]="maxPrice - 1"
+              formControlName="priceFrom"
               mode="currency"
               currency="VND"
               locale="vi-VN"
               styleClass="custom-input"
-              (onBlur)="updateSliderRanges()"
+              [readonly]="true"
             >
             </p-inputNumber>
             <div class="line">
@@ -77,56 +69,44 @@
             </div>
             <p-inputNumber
               inputId="integeronly"
-              [(ngModel)]="rangeValues[1]"
-              [min]="minPrice + 1"
-              [max]="maxPrice"
+              formControlName="priceTo"
               mode="currency"
               currency="VND"
               locale="vi-VN"
               styleClass="custom-input"
-              (onBlur)="updateSliderRanges()"
+              [readonly]="true"
             >
             </p-inputNumber>
           </div>
         </div>
-        <p-scroller
-          [items]="filterOptions"
-          [itemSize]="50"
-          scrollHeight="781px"
-          styleClass="surface-border"
-        >
-          <ng-template pTemplate="item" let-item let-options="options">
-            <div
-              class="flex align-items-center p-2"
-              [ngClass]="{ 'surface-ground': options.odd }"
-            >
-              <div class="card w-full">
-                <p-panel
-                  styleClass="custom-p-panel"
-                  [header]="item.label"
-                  [toggleable]="true"
-                >
-                  <ng-container *ngIf="item.type === 'checkbox'">
-                    <div
-                      *ngFor="let option of item.options"
-                      class="field-checkbox"
-                    >
+        <div>
+          <ng-container *ngFor="let item of filterOptions; index as idx">
+            <ng-container *ngIf="item.type === 'checkbox'">
+              <p-card class="card w-full" [styleClass]="'shadow-none'">
+                <ng-template pTemplate="header">
+                  <h3 class="">{{ item.label }}</h3>
+                </ng-template>
+                <div [formArrayName]="item.fieldName">
+                  <ng-container
+                    *ngFor="let option of item.options; index as idx"
+                  >
+                    <div class="field-checkbox">
                       <p-checkbox
-                        name="group"
-                        [inputId]="option.value"
+                        [formControlName]="idx"
+                        [value]="option.value"
                       ></p-checkbox>
-                      <label [for]="option.value">{{ option.name }}</label>
+                      <label [for]="option.value" class="capitalize">{{
+                        option.name
+                      }}</label>
                     </div>
                   </ng-container>
-                  <ng-container *ngIf="item.type !== 'checkbox'">
-                    b
-                  </ng-container>
-                </p-panel>
-              </div>
-            </div>
-          </ng-template>
-        </p-scroller>
-      </div>
+                </div>
+                <!-- <ng-container *ngIf="item.type !== 'checkbox'"> b </ng-container> -->
+              </p-card>
+            </ng-container>
+          </ng-container>
+        </div>
+      </form>
     </div>
     <div
       id="productGridWrapper"
@@ -141,34 +121,53 @@
           <div id="productItemWrapper" class="product-item__wrapper">
             <div class="product-item">
               <div class="product__image">
-                <div class="img__wrapper"  >
+                <div class="img__wrapper">
                   <a [routerLink]="['/product', product.ID]">
                     <img [src]="product.thumbnailURL" />
                     <img [src]="product.hoverImageURL" />
                     <div class="size__list">
-                      <div class="flex flex-column align-items-center justify-content-center">
+                      <div
+                        class="flex flex-column align-items-center justify-content-center"
+                      >
                         <strong>Thêm nhanh vào giỏ hàng</strong>
                         <div class="flex mt-2">
                           <ng-container *ngFor="let sizeItem of product.Sizes">
-                            <div class="size__item mr-2" (click)="selectSize($event, product, sizeItem)">
-                              <strong>{{sizeItem.size}}</strong>
+                            <div
+                              class="size__item mr-2"
+                              (click)="selectSize($event, product, sizeItem)"
+                            >
+                              <strong>{{ sizeItem.size }}</strong>
                             </div>
                           </ng-container>
-                          </div>
+                        </div>
                       </div>
                     </div>
                   </a>
                 </div>
-             
               </div>
               <div class="product-info">
                 <div class="color">
                   <div class="color__list">
-                    <ng-container *ngFor="let colorItem of product.Colors; index as idx">
+                    <ng-container
+                      *ngFor="let colorItem of product.Colors; index as idx"
+                    >
                       <ng-container *ngIf="colorItem && colorItem.Color">
-                        <div class="color__item" (click)="product.sltColorItem = colorItem">
-                          <div class="color__item-slt" [class.show]="colorItem.ID === product.sltColorItem.ID"></div>
-                          <div class="color__item--background" [style]="{backgroundColor: colorItem.Color.hexColorCode }"></div>
+                        <div
+                          class="color__item"
+                          (click)="product.sltColorItem = colorItem"
+                        >
+                          <div
+                            class="color__item-slt"
+                            [class.show]="
+                              colorItem.ID === product.sltColorItem.ID
+                            "
+                          ></div>
+                          <div
+                            class="color__item--background"
+                            [style]="{
+                              backgroundColor: colorItem.Color.hexColorCode
+                            }"
+                          ></div>
                         </div>
                       </ng-container>
                     </ng-container>
@@ -191,7 +190,7 @@
   #filterDialogComp
   [header]="filterLabel"
   [modal]="true"
-  [customStyle]="{ width: '100%'}"
+  [customStyle]="{ width: '100%' }"
 >
   <div class="dialog-header">
     <h1>
@@ -207,15 +206,16 @@
           [toggleable]="true"
         >
           <ng-container *ngIf="item.type === 'checkbox'">
-            <div *ngFor="let option of item.options" class="field-checkbox">
+            {{ item.options | json }}
+            <!-- <div *ngFor="let option of item.options" class="field-checkbox">
+              {{option}}
               <p-checkbox
                 name="group"
                 [value]="option.value"
                 [(ngModel)]="item.value"
-                [inputId]="option.value"
               ></p-checkbox>
               <label [for]="option.value">{{ option.name }}</label>
-            </div>
+            </div> -->
           </ng-container>
           <ng-container *ngIf="item.type !== 'checkbox'"> b </ng-container>
         </p-panel>
@@ -240,12 +240,17 @@
   </div>
 </custom-dialog>
 
-<custom-dialog #addedPendingProductDialog >
+<custom-dialog #addedPendingProductDialog>
   <div class="dialog-header">
     <h3>Đã thêm vào giỏ hàng</h3>
   </div>
   <div class="dialog-content">
-    <p-table [value]="addedPendingProduct" selectionMode="single" [rows]="1" class="added-cart-product">
+    <p-table
+      [value]="addedPendingProduct"
+      selectionMode="single"
+      [rows]="1"
+      class="added-cart-product"
+    >
       <ng-template pTemplate="body" let-rowData let-addedPendingProduct>
         <tr [pSelectableRow]="rowData">
           <td class="text-center">
@@ -262,12 +267,14 @@
           </td>
           <td class="text-center">
             <span>
-              {{ addedPendingProduct.colorItem.color }}/ {{ addedPendingProduct.sizeItem.size }}
+              {{ addedPendingProduct.colorItem.color }}/
+              {{ addedPendingProduct.sizeItem.size }}
             </span>
           </td>
           <td class="text-center">
             <span>
-              <strong>{{addedPendingProduct.quantity}}</strong>x
+              <strong>{{ addedPendingProduct.quantity }}</strong
+              >x
               {{ addedPendingProduct.product.price | currency : "VND" }}
             </span>
           </td>

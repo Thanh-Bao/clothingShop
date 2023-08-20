@@ -1,5 +1,6 @@
 import { DOCUMENT } from "@angular/common";
 import {
+  ChangeDetectorRef,
   Component,
   ComponentRef,
   ElementRef,
@@ -8,11 +9,27 @@ import {
   Renderer2,
   ViewChild,
 } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+} from "@angular/forms";
 import { DialogService } from "primeng/dynamicdialog";
-import { Observable, concatMap, forkJoin, map, switchMap, tap } from "rxjs";
+import {
+  Observable,
+  concatMap,
+  debounceTime,
+  filter,
+  forkJoin,
+  map,
+  of,
+  switchMap,
+  tap,
+} from "rxjs";
 import { Filter } from "src/app/models/model";
-import { Product, SizeItem } from "src/app/models/response";
+import { Category, Product, SizeItem } from "src/app/models/response";
 import { CustomDialogComponent } from "src/app/shared/custom-dialog/custom-dialog.component";
 import { CartItem } from "src/app/shared/layout/user/header/header.component";
 import {
@@ -24,9 +41,21 @@ import { FilterService } from "src/app/user/services/filter.service";
 import { FormatStringUtilsService } from "src/app/user/services/format-string-utils.service";
 import { ProductService } from "src/app/user/services/product.service";
 import { AddToCartNotifycationComponent } from "./add-to-cart-notifycation/add-to-cart-notifycation.component";
+import { ActivatedRoute } from "@angular/router";
 interface SortCritera {
   name: string;
   code: string;
+}
+interface Option {
+  name: string;
+  value: any;
+}
+interface FilterGroup {
+  label: string;
+  type: string;
+  value: any;
+  fieldName: string;
+  options?: Option[];
 }
 @Component({
   selector: "product-list",
@@ -40,7 +69,8 @@ export class ProductListComponent {
   productGridWrapper!: ElementRef;
   @ViewChild("addedPendingProductDialog")
   addedProductDialog!: CustomDialogComponent;
-
+  fromPrice!: number;
+  toPrice!: number;
   sortCritera: SortCritera[] = [
     {
       name: "Mặc định",
@@ -64,96 +94,86 @@ export class ProductListComponent {
   rangeValues: number[] = [0, 100];
   minPrice!: number;
   maxPrice!: number;
-  filterOptions = [
+  filterOptions: FilterGroup[] = [
+    {
+      label: "Giá",
+      type: "slider",
+      value: "",
+      fieldName: "priceRanges",
+    },
+    {
+      label: "Giá từ",
+      type: "input",
+      value: "",
+      fieldName: "priceFrom",
+    },
+    {
+      label: "Giá đến",
+      type: "input",
+      value: "",
+      fieldName: "priceTo",
+    },
     {
       label: "Chiều cao",
       type: "checkbox",
-      fieldName: "height",
-      value: [],
+      value: "",
+      fieldName: "heightRanges",
       options: [
         {
           name: "Dưới 150 cm",
-          value: "under150",
+          value: [0, 150],
         },
         {
           name: "150 - 160 cm",
-          value: "150-160",
+          value: [150, 160],
         },
         {
           name: "160 - 170 cm",
-          value: "160-170",
+          value: [160, 170],
         },
         {
           name: "170 - 180 cm",
-          value: "170-180",
+          value: [170, 180],
         },
         {
           name: "Trên 180 cm",
-          value: "over180",
+          value: [180, 250],
         },
       ],
     },
     {
       label: "Cân nặng",
       type: "checkbox",
-      value: [],
-      fieldName: "weight",
+      value: "",
+      fieldName: "weightRanges",
       options: [
         {
           name: "Dưới 40 kg",
-          value: "under40",
+          value: [0, 39],
         },
         {
           name: "40 - 55 kg",
-          value: "40-55",
+          value: [40, 55],
         },
         {
           name: "55 - 65 kg",
-          value: "55-65",
+          value: [55, 65],
         },
         {
           name: "65 - 80 kg",
-          value: "65-80",
+          value: [65, 80],
         },
         {
-          name: "Trên 80 kgg",
-          value: "over50",
-        },
-      ],
-    },
-    {
-      label: "Kích thước",
-      type: "checkbox",
-      fieldName: "size",
-      value: [],
-      options: [
-        {
-          name: "S",
-          value: "s",
-        },
-        {
-          name: "M",
-          value: "m",
-        },
-        {
-          name: "L",
-          value: "l",
-        },
-        {
-          name: "XL",
-          value: "xl",
-        },
-        {
-          name: "XXL",
-          value: "xxl",
+          name: "Trên 80 kg",
+          value: [80, 300],
         },
       ],
     },
     {
       label: "Giới tính",
       type: "checkbox",
-      fieldName: "sex",
-      value: [],
+      fieldName: "genders",
+      value: "",
       options: [
         {
           name: "Nam",
@@ -170,30 +190,18 @@ export class ProductListComponent {
       ],
     },
     {
-      label: "Phân loại",
+      label: "Thể loại",
       type: "checkbox",
-      fieldName: "category",
-      value: [],
-      options: [
-        {
-          name: "Đầm",
-          value: "male",
-        },
-        {
-          name: "Váy",
-          value: "female",
-        },
-        {
-          name: "Chân váy",
-          value: "unisex",
-        },
-      ],
+      fieldName: "categoryIds",
+      value: "",
+      options: [],
     },
   ];
   products$!: Observable<Product[] | null>;
   filterLabel: string = "Bộ lọc";
   items!: string[];
   addedPendingProduct!: CartItem[];
+  filterSidebarFG!: FormGroup;
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private _productService: ProductService,
@@ -201,61 +209,85 @@ export class ProductListComponent {
     private _filterSerivce: FilterService,
     private _formatStringUtilsService: FormatStringUtilsService,
     public cartService: CartService,
-    private _dialogService: DialogService
-  ) {}
-
-  ngOnInit() {
-    this.items = Array.from({ length: 1000 }).map((_, i) => `Item #${i}`);
-    this._filterSerivce.filter$
-      .pipe(
-        switchMap((filter) => {
-          return this._productService
-            .findAll(filter)
-            .pipe(map((res) => res.value));
-        }),
-        tap((products) => {
-          this._productService.nextProducts(products);
-        })
-      )
-      .subscribe();
-    this.products$ = this._productService.products$.pipe(
-      map((products) => {
-        if (products) {
-          products.map((product) => {
-            product.sltColorItem = product.Colors[0];
-            product.sltSizeItem = product.Sizes[0];
-            return product;
+    private _dialogService: DialogService,
+    private _fb: FormBuilder,
+    private _route: ActivatedRoute
+  ) {
+    this._route.data.subscribe((datas) => {
+      let routeResolverDatas = datas["routeResolver"];
+      this.minPrice = routeResolverDatas[1];
+      this.maxPrice = routeResolverDatas[2];
+      let fetchedCategories: Category[] = routeResolverDatas[0];
+      let categoryOptions: Option[] = fetchedCategories.map((category) => {
+        return { name: category.name, value: category.ID };
+      });
+      let categoryGroup = this.filterOptions.find(
+        (option) => option.fieldName === "categoryIds"
+      );
+      if (categoryGroup) {
+        categoryGroup.options = categoryOptions;
+      }
+      let constrols: {
+        [key: string]: AbstractControl;
+      } = {};
+      this.filterOptions.forEach((filterGroup) => {
+        if (filterGroup.type === "checkbox") {
+          let formArray = this._fb.array([]) as FormArray;
+          constrols[filterGroup.fieldName] = formArray;
+          filterGroup.options!.forEach((option, index) => {
+            formArray.push(this._fb.control(undefined));
           });
+        } else if (filterGroup.type === "slider") {
+          constrols[filterGroup.fieldName] = new FormControl([
+            routeResolverDatas[1],
+            routeResolverDatas[2],
+          ]);
+        } else if (filterGroup.type === "input") {
+          if (filterGroup.fieldName === "priceFrom") {
+            constrols[filterGroup.fieldName] = new FormControl(this.minPrice);
+          } else if (filterGroup.fieldName === "priceTo") {
+            constrols[filterGroup.fieldName] = new FormControl(this.maxPrice);
+          }
         }
-        return products;
+      });
+      this.filterSidebarFG = this._fb.group(constrols);
+    });
+  }
+  ngOnInit() {
+    this.filterSidebarFG.get("priceRanges")?.valueChanges.subscribe(val => {
+      this.filterSidebarFG.patchValue({
+        priceFrom: val[0],
+        priceTo: val[1],
+      })
+    })
+    
+    this.filterSidebarFG.valueChanges.pipe().subscribe((val) => {
+      let filterVal: Filter = this._filterSerivce.filterVal;
+      this.filterOptions
+        .map((group) => {
+          return group.fieldName;
+        })
+        .forEach((fieldName: string) => {
+          if (Array.isArray(val[fieldName])) {
+            let arr: any[] = val[fieldName];
+            val[fieldName] = [].concat(...arr.filter((item) => item));
+            filterVal[fieldName] = val[fieldName];
+          }
+        });
+      this._filterSerivce.nextFilter(filterVal);
+    });
+    this.products$ = this._filterSerivce.filter$.pipe(
+      switchMap((filter: Filter) => {
+        return this._productService.findAllProduct(filter);
       })
     );
-    let minPriceProduct$ = this._productService
-      .fetchMinAndMaxPriceProduct("asc")
-      .pipe(map((res) => res.value[0]));
-    let maxPriceProduct$ = this._productService
-      .fetchMinAndMaxPriceProduct("desc")
-      .pipe(map((res) => res.value[0]));
-    forkJoin([minPriceProduct$, maxPriceProduct$])
-      .pipe(
-        map((res) => {
-          return res.map((product) => product.price);
-        })
-      )
-      .subscribe((val) => {
-        this.rangeValues = val;
-        this.minPrice = val[0];
-        this.maxPrice = val[1];
-      });
 
     this.cartService.addedCartProduct$.subscribe((addedProduct) => {
       if (addedProduct) {
         this.addedPendingProduct = addedProduct!;
-        // setTimeout(() => {
-        //   ref.close()
-        // }, 2000);
       }
     });
+    console.log(this.filterOptions);
   }
   a() {
     this.document
@@ -274,8 +306,10 @@ export class ProductListComponent {
   applySidebarFilter() {
     let filter: Filter = this._filterSerivce.filterVal;
     filter.priceRanges = this.rangeValues;
+    filter.heightRanges = this.filterOptions[0].value as number[][];
     this._filterSerivce.nextFilter(filter);
   }
+
   selectSize(event: MouseEvent, product: Product, sltSizeItem: SizeItem) {
     event.preventDefault();
     event.stopPropagation();

@@ -53,7 +53,10 @@
               <p>Màu sắc: <strong>Xanh đậm</strong></p>
               <div class="color__list mt-1">
                 <ng-container *ngFor="let color of product.Colors">
-                    <div class="color__item" [style]="{backgroundColor: color.Color.hexColorCode } "></div>
+                    <div class="color__item" [style]="{backgroundColor: color.Color.hexColorCode } ">
+                      <div class="color__item--border"></div>
+                      <div class="color__item--slt" [class.show]="product.sltColorItem.ID === color.ID"></div>
+                    </div>
                 </ng-container>
               </div>
             </div>
@@ -61,7 +64,7 @@
               <p>Kích thước: <strong>S</strong></p>
               <div class="size__list mt-1">
                 <ng-container *ngFor="let size of product.Sizes">
-                    <div class="size__item slt">
+                    <div class="size__item" [class.slt]="product.sltSizeItem.ID === size.ID">
                       <strong>{{size.size}}</strong>
                     </div>
                 </ng-container>

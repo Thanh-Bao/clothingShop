@@ -1,10 +1,19 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Filter, Pagination } from "src/app/models/model";
-import { SAP_API_DOMAIN, PRODUCT_API } from "src/app/models/constance";
+import {
+  SAP_API_DOMAIN,
+  PRODUCT_API,
+  SIZE_API,
+} from "src/app/models/constance";
 import { HttpParams } from "@angular/common/http";
-import { BehaviorSubject, Observable, map } from "rxjs";
-import { ODataResponse, Product, SizeItem } from "src/app/models/response";
+import { BehaviorSubject, Observable, map, of, switchMap } from "rxjs";
+import {
+  ODataResponse,
+  Product,
+  SizeItem,
+  SizeResponse,
+} from "src/app/models/response";
 import { FormatStringUtilsService } from "./format-string-utils.service";
 
 @Injectable({
@@ -47,7 +56,7 @@ export class ProductService {
     const { search, categoryId, pagination, priceRanges } = filter;
     let params: HttpParams = new HttpParams({
       fromObject: {
-        $top: pagination.top,
+        $top: pagination.top!,
         $expand: "Sizes($expand=Size),Colors($expand=Color)",
       },
     });
@@ -120,5 +129,104 @@ export class ProductService {
       PRODUCT_API,
       this.httpOptions
     );
+  }
+  findAllProduct(filter: Filter): Observable<Product[]> {
+    this.httpOptions.params = new HttpParams({
+      fromObject: {
+        $expand: "Sizes($expand=Size),Colors($expand=Color),Category",
+      },
+    });
+    return this._httpClient
+      .get<ODataResponse<Product[]>>(PRODUCT_API, this.httpOptions)
+      .pipe(
+        map((res) => {
+          let products: Product[] = res.value;
+          products = products.map((product) => {
+            product.sltColorItem = product.Colors[0];
+            product.sltSizeItem = product.Sizes[0];
+            return product;
+          });
+          let filterProducts: Product[] | undefined;
+          if (filter.heightRanges?.length) {
+            let heightProducts = products.filter((product) => {
+              return filter.heightRanges!.some((heightRange: number[]) => {
+                if (heightRange) {
+                  return product.Sizes.some((size) => {
+                    return (
+                      size.Size.height >= heightRange[0] &&
+                      size.Size.height <= heightRange[1]
+                    );
+                  });
+                } else {
+                  return false;
+                }
+              });
+            });
+            filterProducts = [];
+            filterProducts.push(...heightProducts);
+          }
+          if (filter.weightRanges?.length) {
+            let weightProducts = products.filter((product) => {
+              return filter.weightRanges!.some((weightRange: number[]) => {
+                if (weightRange) {
+                  return product.Sizes.some((size) => {
+                    return (
+                      size.Size.weight >= weightRange[0] &&
+                      size.Size.weight <= weightRange[1]
+                    );
+                  });
+                } else {
+                  return false;
+                }
+              });
+            });
+            if (filterProducts === undefined) {
+              filterProducts = [];
+            }
+            filterProducts.push(...weightProducts);
+          }
+
+          if (filter.categoryIds?.length) {
+            let categoryProducts = products.filter((product) => {
+              return filter.categoryIds!.some((categoryId: string) => {
+                console.log(categoryId);
+
+                return categoryId === product.Category.ID;
+              });
+            });
+            if (filterProducts === undefined) {
+              filterProducts = [];
+            }
+            filterProducts.push(...categoryProducts);
+          }
+          if (filter.priceRanges?.length) {
+            let priceProducts = products.filter((product) => {
+              return (
+                product.price >= filter.priceRanges![0] &&
+                product.price <= filter.priceRanges![1]
+              );
+            });
+            if (filterProducts === undefined) {
+              filterProducts = [];
+            }
+            filterProducts.push(...priceProducts);
+          }
+
+          if (filterProducts != undefined) {
+            return filterProducts;
+          } else {
+            return products;
+          }
+        })
+      );
+  }
+  findAllSize(): Observable<SizeResponse[]> {
+    return this._httpClient
+      .get<ODataResponse<SizeResponse[]>>(SIZE_API, {
+        headers: new HttpHeaders({
+          responseType: "json",
+        }),
+      })
+      .pipe(map((res) => res.value));
   }
 }

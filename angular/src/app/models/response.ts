@@ -8,7 +8,6 @@ export interface Product {
   shortDesc: string;
   longDesc: string;
   quantity: number;
-  category: string;
   isActive: boolean;
   thumbnailURL: string;
   thumbnail_alt: string;
@@ -17,43 +16,51 @@ export interface Product {
   IsActiveEntity: boolean;
   HasActiveEntity: boolean;
   HasDraftEntity: boolean;
-  Sizes: SizeItem[]
-  Colors: ColorItem[]
-  sltColorItem: ColorItem,
-  sltSizeItem: SizeItem,
+  Sizes: SizeItem[];
+  Colors: ColorItem[];
+  sltColorItem: ColorItem;
+  sltSizeItem: SizeItem;
+  Category: Category
 }
 export interface Category {
-    ID: string 
-    name: string 
-    description?: string 
-    IsActiveEntity?: boolean 
-    HasActiveEntity?: boolean 
-    HasDraftEntity?: boolean 
+  ID: string;
+  name: string;
+  description?: string;
+  
 }
-export interface SizeItem{
-  ID: string
-  productID: string
-  size: string
-  Size: Size
+export interface SizeItem {
+  ID: string;
+  productID: string;
+  size: string;
+  Size: Size;
 }
-export interface ColorItem{
-  ID: string
-  color: string
-  Color: Color
+export interface ColorItem {
+  ID: string;
+  color: string;
+  Color: Color;
 }
-export interface Color{
-  color: string
-  hexColorCode: string
+export interface Color {
+  color: string;
+  hexColorCode: string;
 }
-export interface Size{
-  size: string
-  height: number
-  weight: number
-  bust: number
-  waist: number
-  hip: number
+export interface Size {
+  size: string;
+  height: number;
+  weight: number;
+  bust: number;
+  waist: number;
+  hip: number;
 }
 
-export interface ODataResponse<T>{
-    value: T
+export interface ODataResponse<T> {
+  value: T;
+}
+
+export interface SizeResponse {
+  size: string;
+  height: number;
+  weight: number;
+  bust: number;
+  waist: number;
+  hip: number;
 }

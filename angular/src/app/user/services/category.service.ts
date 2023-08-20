@@ -29,22 +29,15 @@ export class CategoryService {
     params: new HttpParams(),
   };
   constructor(private _httpClient: HttpClient) {}
-  findAll(pagination?: Pagination): Observable<ODataResponse<Category[]>> {
+  findAll(pagination?: Pagination): Observable<Category[]> {
     if (pagination) {
-      let params: HttpParams = new HttpParams({
-        fromObject: {
-          $top: pagination.top,
-        },
-      });
-      this.httpOptions.params = params;
+      let params: HttpParams = new HttpParams();
     }
     return this._httpClient
       .get<ODataResponse<Category[]>>(CATEGORY_API, this.httpOptions)
       .pipe(
         map((res) => {
-          let val = res.value;
-          val.unshift(this.defaultCategory);
-          return res;
+          return res.value;
         })
       );
   }

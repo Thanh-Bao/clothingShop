@@ -51,7 +51,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.categories$ = this._categoryService
       .findAll()
-      .pipe(map((res) => res.value));
     this.cartService.cartProducts$
       .pipe(
         tap((cartProducts) => {
@@ -65,12 +64,12 @@ export class HeaderComponent implements OnInit {
       .subscribe();
   }
   selectCategory(cateogry: Category) {
-    if (this._categoryService.selectedCategoryVal != cateogry) {
-      this._categoryService.nextSelectedCategory(cateogry);
-      let filterVal = this._filterService.filterVal;
-      filterVal.categoryId = cateogry.ID === "all" ? undefined : cateogry.ID;
-      this._filterService.nextFilter(filterVal);
-    }
+    // if (this._categoryService.selectedCategoryVal != cateogry) {
+    //   this._categoryService.nextSelectedCategory(cateogry);
+    //   let filterVal = this._filterService.filterVal;
+    //   filterVal.categoryId = cateogry.ID === "all" ? undefined : cateogry.ID;
+    //   this._filterService.nextFilter(filterVal);
+    // }
   }
   @ViewChild("overlayPanel")
   overlayPanel: any;
