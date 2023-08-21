@@ -8,9 +8,10 @@ annotate service.Product with @(
     },
     UI.LineItem       : [
         {
-            $Type: 'UI.DataField',
-            Label: 'ID',
-            Value: ID,
+            $Type             : 'UI.DataField',
+            Label             : 'ID',
+            Value             : ID,
+            @HTML5.CssDefaults: {width: '10em'}
         },
         {
             $Type: 'UI.DataField',
@@ -19,13 +20,19 @@ annotate service.Product with @(
         },
         {
             $Type             : 'UI.DataField',
-            Label             : 'price',
-            Value             : price,
+            Label             : 'giá thật',
+            Value             : realPrice,
             @HTML5.CssDefaults: {width: '10em'}
         },
         {
             $Type             : 'UI.DataField',
-            Label             : 'isActive',
+            Label             : 'giá ảo',
+            Value             : fakePrice,
+            @HTML5.CssDefaults: {width: '10em'}
+        },
+        {
+            $Type             : 'UI.DataField',
+            Label             : 'còn hàng?',
             Value             : isActive,
             Criticality       : {$edmJson: {$If: [
                 {$Eq: [
@@ -46,7 +53,7 @@ annotate service.Product with @(
         },
         {
             $Type: 'UI.DataField',
-            Label: 'category',
+            Label: 'phân loại',
             Value: category,
         },
     ],
@@ -54,7 +61,7 @@ annotate service.Product with @(
     UI.SelectionFields: [
         category,
         isActive,
-        price,
+        realPrice,
     ]
 );
 
@@ -69,18 +76,8 @@ annotate service.Product with @(
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'price',
-                Value: price,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'short description',
-                Value: shortDesc,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'full description (HTML format)',
-                Value: longDesc,
+                Label: 'description',
+                Value: description,
             },
             {
                 $Type: 'UI.DataField',
@@ -89,18 +86,53 @@ annotate service.Product with @(
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'isActive',
+                Label: 'Còn hàng?',
                 Value: isActive,
             },
         ],
+    },
+    UI.FieldGroup #Pricing            : {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type: 'UI.DataField',
+                Label: 'giá thật',
+                Value: realPrice,
+            },
+            {
+                $Type: 'UI.DataField',
+                Label: 'giá ảo (giá discount phải lớn hơn giá thật)',
+                Value: fakePrice,
+            },
+            {
+                $Type: 'UI.DataField',
+                Label: '% giảm giá',
+                Value: discountPercent,
+            },
+        ]
     },
     UI.FieldGroup #GeneratedGroupImage: {
         $Type: 'UI.FieldGroupType',
         Data : [{
             $Type: 'UI.DataField',
-            Label: 'thumbnail URL',
-            Value: thumbnailURL,
+            Label: 'link ảnh đại diện',
+            Value: img,
         }, ]
+    },
+    UI.FieldGroup #GeneratedGroup3    : {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type: 'UI.DataField',
+                Label: 'Ngày đăng',
+                Value: createdAt,
+            },
+            {
+                $Type: 'UI.DataField',
+                Label: 'Ngày chỉnh sửa',
+                Value: modifiedAt,
+            },
+        ],
     },
     UI.Facets                         : [
         {
@@ -108,6 +140,12 @@ annotate service.Product with @(
             ID    : 'GeneratedFacet1',
             Label : 'General Information',
             Target: '@UI.FieldGroup#GeneratedGroup1',
+        },
+           {
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'GeneratedFacetPrice',
+            Label : 'Nhập giá',
+            Target: '@UI.FieldGroup#Pricing',
         },
         {
             $Type : 'UI.ReferenceFacet',
@@ -118,17 +156,51 @@ annotate service.Product with @(
         {
             $Type : 'UI.ReferenceFacet',
             ID    : 'GeneratedFacet5',
-            Label : 'Album',
+            Label : 'List ảnh mô tả (optinal)',
             Target: 'Album/@UI.LineItem',
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'GeneratedFacet6',
+            Label : 'Link youtube (optinal)',
+            Target: 'Video/@UI.LineItem',
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'GeneratedGroup3',
+            Label : 'Ngày tạo',
+            Target: '@UI.FieldGroup#GeneratedGroup3',
         },
     ]
 );
 
-annotate service.Album with @(UI.LineItem: [{
-    $Type: 'UI.DataField',
-    Label: 'absoluteURL',
-    Value: absoluteURL,
-}, ]);
+annotate service.Album with @(UI.LineItem: [
+    {
+        $Type             : 'UI.DataField',
+        Label             : 'link ảnh',
+        Value             : url,
+        @HTML5.CssDefaults: {width: '40em'}
+    },
+    {
+        $Type: 'UI.DataField',
+        Label: 'Mô tả (optional)',
+        Value: description,
+    },
+]);
+
+annotate service.Video with @(UI.LineItem: [
+    {
+        $Type             : 'UI.DataField',
+        Label             : 'link youtube',
+        Value             : url,
+        @HTML5.CssDefaults: {width: '40em'}
+    },
+    {
+        $Type: 'UI.DataField',
+        Label: 'Mô tả (optional)',
+        Value: description,
+    },
+]);
 
 //********************/ value help *******************
 

@@ -31,20 +31,20 @@ entity SaleOrderItem {
 
 
 entity Product : common {
-    key ID          : String(99) @mandatory;
-        name        : String(60) @mandatory;
-        realPrice   : Decimal(8) @mandatory;
-        fakePrice   : Decimal(8);
-        description : String;
-        category    : String;
-        isActive    : Boolean    @mandatory default true;
-        img         : String     @mandatory;
-        Category    : Association to one Category
-                          on Category.ID = $self.category;
-        Album       : Composition of many Album
-                          on Album.productID = $self.ID;
-        Video       : Composition of many Video
-                          on Video.productID = $self.ID;
+    key ID                      : String(99)  @mandatory  @title: 'Nhập ID sản phẩm';
+        name                    : String(60)  @mandatory;
+        realPrice               : Decimal(8)  @mandatory;
+        fakePrice               : Decimal(8);
+        description             : String;
+        category                : String default 'NewDevice';
+        isActive                : Boolean     @mandatory default true;
+        img                     : String      @mandatory;
+        Category                : Association to one Category
+                                      on Category.ID = $self.category;
+        Album                   : Composition of many Album
+                                      on Album.productID = $self.ID;
+        Video                   : Composition of many Video
+                                      on Video.productID = $self.ID;
 }
 
 
@@ -55,15 +55,17 @@ entity Category {
 
 
 entity Album {
-    key ID        : UUID;
-        productID : String(99) @mandatory;
-        url       : String     @mandatory;
+    key ID          : UUID;
+        productID   : String(99) @mandatory;
+        url         : String     @mandatory;
+        description : String;
 }
 
 entity Video {
-    key ID        : UUID;
-        productID : String(99) @mandatory;
-        url       : String     @mandatory;
+    key ID          : UUID;
+        productID   : String(99) @mandatory;
+        url         : String     @mandatory;
+        description : String;
 }
 
 

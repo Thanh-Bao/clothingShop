@@ -139,7 +139,7 @@ annotate service.SaleOrderItem with @(UI.LineItem: [
     {
         $Type             : 'UI.DataField',
         Label             : 'price',
-        Value             : price,
+        Value             : realPrice,
         @HTML5.CssDefaults: {width: '15em'}
     },
 ]);
