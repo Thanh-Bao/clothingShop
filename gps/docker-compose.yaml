@@ -1,0 +1,10 @@
+version: '3'
+services:
+  gps_shop:
+    image: gps_shop
+    build:
+      context: backend/
+      dockerfile: ./Dockerfile
+    ports:
+      - 4004:4004
+  
