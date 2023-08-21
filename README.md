@@ -41,6 +41,11 @@ services:
 
 ```
 
+```
+docker run -d -p 4004:4004 thanhbao/gps_shop
+
+```
+
 
 
 
