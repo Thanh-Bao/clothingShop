@@ -1,4 +1,4 @@
-using APIService as service from '../../srv/Controller';
+using APIService as service from '../../srv/Service';
 
 annotate service.SaleOrder with @(
     UI.HeaderInfo     : {
@@ -33,20 +33,10 @@ annotate service.SaleOrder with @(
             Label: 'total',
             Value: total,
         },
-         {
-            $Type: 'UI.DataField',
-            Label: 'note',
-            Value: note,
-        },
         {
             $Type: 'UI.DataField',
             Label: 'modifiedAt',
             Value: modifiedAt,
-        },
-        {
-            $Type: 'UI.DataField',
-            Label: 'note',
-            Value: note,
         },
         {
             $Type: 'UI.DataField',
@@ -78,11 +68,6 @@ annotate service.SaleOrder with @(
                 $Type: 'UI.DataField',
                 Label: 'name',
                 Value: name,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'note',
-                Value: note,
             },
             {
                 $Type: 'UI.DataField',
@@ -157,46 +142,10 @@ annotate service.SaleOrderItem with @(UI.LineItem: [
         Value             : price,
         @HTML5.CssDefaults: {width: '15em'}
     },
-    {
-        $Type             : 'UI.DataField',
-        Label             : 'color',
-        Value             : color,
-        @HTML5.CssDefaults: {width: '15em'}
-    },
-    {
-        $Type             : 'UI.DataField',
-        Label             : 'size',
-        Value             : size,
-        @HTML5.CssDefaults: {width: '15em'}
-    },
 ]);
 
 
 annotate service.SaleOrderItem with {
-    size      @(Common: {
-        ValueListWithFixedValues: true,
-        ValueList               : {
-            $Type         : 'Common.ValueListType',
-            CollectionPath: 'Size',
-            Parameters    : [{
-                $Type            : 'Common.ValueListParameterInOut',
-                LocalDataProperty: size,
-                ValueListProperty: 'size'
-            }, ]
-        },
-    });
-    color     @(Common: {
-        ValueListWithFixedValues: true,
-        ValueList               : {
-            $Type         : 'Common.ValueListType',
-            CollectionPath: 'Color',
-            Parameters    : [{
-                $Type            : 'Common.ValueListParameterInOut',
-                LocalDataProperty: color,
-                ValueListProperty: 'color'
-            }, ]
-        },
-    });
     productID @(Common: {
         ValueListWithFixedValues: true,
         ValueList               : {
