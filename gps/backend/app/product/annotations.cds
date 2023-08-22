@@ -1,4 +1,4 @@
-using APIService as service from '../../srv/Service.cds';
+using API as service from '../../srv/Service.cds';
 
 annotate service.Product with @(
     UI.HeaderInfo     : {

@@ -3,7 +3,7 @@
     
 
 @protocol: ['rest','odata-v4']
-service APIService {
+service API {
     @odata.draft.enabled
     entity SaleOrder : common {
         key ID             : UUID;

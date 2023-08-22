@@ -1,4 +1,4 @@
-using APIService as service from '../../srv/Service';
+using API as service from '../../srv/Service';
 
 annotate service.SaleOrder with @(
     UI.HeaderInfo     : {
