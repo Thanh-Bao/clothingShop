@@ -20,22 +20,11 @@
   "scripts": {
     "start": "cds-serve",
     "watch-product": "cds watch --open product/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-saleorder": "cds watch --open saleorder/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-user": "cds watch --open user/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-saleoder": "cds watch --open saleoder/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-category": "cds watch --open category/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-size": "cds watch --open size/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-color": "cds watch --open color/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-material": "cds watch --open material/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-saleorder": "cds watch --open saleorder/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "sapux": [
     "app/product",
-    "app/saleorder",
-    "app/user",
-    "app/category",
-    "app/size",
-    "app/color",
-    "app/material"
+    "app/saleorder"
   ],
   "cds": {
     "requires": {

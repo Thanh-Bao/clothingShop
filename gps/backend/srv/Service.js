@@ -1,6 +1,6 @@
 module.exports = srv => {
 
-    const { SaleOrder, Product, Color } = srv.entities;
+    const { SaleOrder, Product } = srv.entities;
 
     srv.after('READ', Product, async res => {
         console.log(999);
@@ -9,6 +9,15 @@ module.exports = srv => {
     srv.on('FilterProduct', async req => {
 
         return "AAA";
+    })
+
+    // srv.on('NEW', SaleOrder, async req => {
+    //     console.log(req)
+    //     console.log("0944aa");
+    // })
+    srv.before('READ', SaleOrder, async req => {
+        // console.log(req)
+        console.log("0944aa");
     })
 
 }
