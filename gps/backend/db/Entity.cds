@@ -15,6 +15,7 @@ entity SaleOrder : common {
         } default 'PROCESSING';
         SaleOrderItems : Composition of many SaleOrderItem
                              on SaleOrderItems.saleOrderID = $self.ID;
+        OrderStatus   : Association to one OrderStatus on OrderStatus.status = $self.status;
 }
 
 entity SaleOrderItem {
@@ -29,22 +30,28 @@ entity SaleOrderItem {
                           on Product.ID = $self.productID;
 }
 
+entity OrderStatus {
+    key status : String;
+    description : String;
+
+}
+
 
 entity Product : common {
-    key ID                      : String(99)  @mandatory  @title: 'Nhập ID sản phẩm';
-        name                    : String(60)  @mandatory;
-        realPrice               : Decimal(8)  @mandatory;
-        fakePrice               : Decimal(8);
-        description             : String;
-        category                : String default 'NewDevice';
-        isActive                : Boolean     @mandatory default true;
-        img                     : String      @mandatory;
-        Category                : Association to one Category
-                                      on Category.ID = $self.category;
-        Album                   : Composition of many Album
-                                      on Album.productID = $self.ID;
-        Video                   : Composition of many Video
-                                      on Video.productID = $self.ID;
+    key ID          : String(99)  @mandatory  @title: 'Nhập ID sản phẩm';
+        name        : String(60)  @mandatory;
+        realPrice   : Decimal(8)  @mandatory;
+        fakePrice   : Decimal(8);
+        description : String;
+        category    : String default 'NewDevice';
+        isActive    : Boolean     @mandatory default true;
+        img         : String      @mandatory;
+        Category    : Association to one Category
+                          on Category.ID = $self.category;
+        Album       : Composition of many Album
+                          on Album.productID = $self.ID;
+        Video       : Composition of many Video
+                          on Video.productID = $self.ID;
 }
 
 

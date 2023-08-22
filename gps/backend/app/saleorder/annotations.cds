@@ -117,7 +117,7 @@ annotate service.SaleOrder with @(
         {
             $Type : 'UI.ReferenceFacet',
             ID    : 'GeneratedFacet3',
-            Label : 'Meta data',
+            Label : 'Thông tin bổ sung',
             Target: '@UI.FieldGroup#GeneratedGroup3',
         },
     ]
@@ -159,3 +159,26 @@ annotate service.SaleOrderItem with {
         },
     });
 }
+
+annotate service.SaleOrder with {
+    status @(Common: {
+        Text                    : OrderStatus.description,
+        TextArrangement         : #TextLast,
+        ValueListWithFixedValues: true,
+        ValueList               : {
+            $Type         : 'Common.ValueListType',
+            CollectionPath: 'OrderStatus',
+            Parameters    : [
+                {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: status,
+                    ValueListProperty: 'status'
+                },
+                {
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'description'
+                }
+            ]
+        },
+    });
+};

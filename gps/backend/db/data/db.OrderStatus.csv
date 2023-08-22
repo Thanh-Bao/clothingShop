@@ -1,0 +1,5 @@
+status;description;
+PROCESSING; mới tạo - chờ xử lý;
+SUCCESS; đã giao hàng - đã nhận;
+CANCEL; đã hủy;
+RETURN; đã trả hàng;
