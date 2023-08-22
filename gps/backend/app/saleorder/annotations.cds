@@ -35,14 +35,15 @@ annotate service.SaleOrder with @(
         },
         {
             $Type: 'UI.DataField',
-            Label: 'modifiedAt',
-            Value: modifiedAt,
+            Label: 'status',
+            Value: status,
         },
         {
             $Type: 'UI.DataField',
-            Label: 'total',
-            Value: total,
+            Label: 'modifiedAt',
+            Value: modifiedAt,
         },
+
     ],
     UI.SelectionFields: [
         createdAt,
@@ -66,12 +67,12 @@ annotate service.SaleOrder with @(
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'name',
+                Label: 'Tên người nhận',
                 Value: name,
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'address',
+                Label: 'địa chỉ giao hàng',
                 Value: address,
             },
             {
@@ -96,7 +97,7 @@ annotate service.SaleOrder with @(
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'Total (VNĐ)',
+                Label: 'Tổng tiền (VNĐ)',
                 Value: total,
             },
         ],
@@ -111,7 +112,7 @@ annotate service.SaleOrder with @(
         {
             $Type : 'UI.ReferenceFacet',
             ID    : 'GeneratedFacet2',
-            Label : 'List Product',
+            Label : 'Danh sách sản phẩm',
             Target: 'SaleOrderItems/@UI.LineItem',
         },
         {
@@ -126,9 +127,10 @@ annotate service.SaleOrder with @(
 
 annotate service.SaleOrderItem with @(UI.LineItem: [
     {
-        $Type: 'UI.DataField',
-        Label: 'product ID',
-        Value: productID,
+        $Type             : 'UI.DataField',
+        Label             : 'product ID',
+        Value             : productID,
+        @HTML5.CssDefaults: {width: '40em'}
     },
     {
         $Type             : 'UI.DataField',
@@ -138,24 +140,33 @@ annotate service.SaleOrderItem with @(UI.LineItem: [
     },
     {
         $Type             : 'UI.DataField',
-        Label             : 'price',
+        Label             : 'đơn giá (realPrice)',
         Value             : realPrice,
-        @HTML5.CssDefaults: {width: '15em'}
+        @HTML5.CssDefaults: {width: '20em'}
     },
 ]);
 
 
 annotate service.SaleOrderItem with {
+
     productID @(Common: {
+        Text                    : Product.name,
+        TextArrangement         : #TextLast,
         ValueListWithFixedValues: true,
         ValueList               : {
             $Type         : 'Common.ValueListType',
             CollectionPath: 'Product',
-            Parameters    : [{
-                $Type            : 'Common.ValueListParameterInOut',
-                LocalDataProperty: productID,
-                ValueListProperty: 'ID'
-            }, ]
+            Parameters    : [
+                {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: productID,
+                    ValueListProperty: 'ID'
+                },
+                {
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'name'
+                },
+            ]
         },
     });
 }

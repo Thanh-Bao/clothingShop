@@ -27,7 +27,7 @@ entity SaleOrderItem {
         fakePrice   : Decimal(8) @readonly;
         SaleOrder   : Association to one SaleOrder;
         Product     : Association to one Product
-                          on Product.ID = $self.productID;
+                          on Product.ID = $self.productID @readonly;
 }
 
 entity OrderStatus {
