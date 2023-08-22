@@ -1,15 +1,11 @@
 # To run backend
 
 ```
-cd backend
+npm i -g @sap/cds-dk
 ```
 
 ```
 npm i
-```
-
-```
-npm i -g @sap/cds-dk
 ```
 
 ```

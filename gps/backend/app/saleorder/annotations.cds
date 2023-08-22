@@ -10,7 +10,7 @@ annotate service.SaleOrder with @(
     UI.LineItem       : [
         {
             $Type: 'UI.DataField',
-            Label: 'createdAt',
+            Label: 'Ngày mua',
             Value: createdAt,
         },
         {
@@ -25,13 +25,14 @@ annotate service.SaleOrder with @(
         },
         {
             $Type: 'UI.DataField',
-            Label: 'address',
+            Label: 'Địa chỉ nhận hàng',
             Value: address,
         },
         {
-            $Type: 'UI.DataField',
-            Label: 'total',
-            Value: total,
+            $Type             : 'UI.DataField',
+            Label             : 'Tổng tiền',
+            Value             : total,
+            @HTML5.CssDefaults: {width: '15em'}
         },
         {
             $Type: 'UI.DataField',
@@ -40,7 +41,7 @@ annotate service.SaleOrder with @(
         },
         {
             $Type: 'UI.DataField',
-            Label: 'modifiedAt',
+            Label: 'Ngày cập nhật',
             Value: modifiedAt,
         },
 

@@ -141,7 +141,7 @@ annotate service.Product with @(
             Label : 'General Information',
             Target: '@UI.FieldGroup#GeneratedGroup1',
         },
-           {
+        {
             $Type : 'UI.ReferenceFacet',
             ID    : 'GeneratedFacetPrice',
             Label : 'Nhập giá',
