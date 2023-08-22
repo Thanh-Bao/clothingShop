@@ -12,7 +12,8 @@ module.exports = srv => {
         console.log(999);
     });
 
-    srv.before('NEW', SaleOrder, async req => {
+    // NEW == POST (SaleOrder.drafts, syntax since 7.1.2 july 2023) 
+    srv.before('NEW', SaleOrder.drafts, async req => {
         console.log("0944aa#####");
     })
 
