@@ -1,5 +1,5 @@
     @open
-    type object : {};
+    type object : array of {};
     
 
 @protocol: ['rest','odata-v4']

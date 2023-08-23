@@ -71,7 +71,7 @@ annotate service.Product with @(
         Data : [
             {
                 $Type: 'UI.DataField',
-                Label: 'name',
+                Label: 'Tên sản phẩm',
                 Value: name,
             },
             {

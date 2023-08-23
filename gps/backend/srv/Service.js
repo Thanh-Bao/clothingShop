@@ -3,9 +3,12 @@ module.exports = srv => {
     const { SaleOrder, Product } = srv.entities;
 
     srv.on('FilterProduct', async req => {
-        return {
-            "a" : 1
-        };
+        try {
+            const { category } = req.data;
+            return await SELECT.from(Product).where({category});
+        } catch (error) {
+            req.error(error.toString());
+        }
     })
 
     srv.after('READ', Product, async res => {
