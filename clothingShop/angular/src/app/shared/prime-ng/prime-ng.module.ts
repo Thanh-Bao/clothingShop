@@ -50,8 +50,9 @@ import { SkeletonModule } from 'primeng/skeleton';
     DropdownModule,
     InputTextareaModule,
     DataViewModule,
+    SkeletonModule,
     DynamicDialogModule,
-    SkeletonModule
+
   ]
 })
 export class PrimeNgModule { }

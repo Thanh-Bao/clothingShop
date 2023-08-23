@@ -16,7 +16,7 @@ import {
   FormControl,
   FormGroup,
 } from "@angular/forms";
-import { DialogService } from "primeng/dynamicdialog";
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import {
   Observable,
   concatMap,
@@ -207,11 +207,10 @@ export class ProductListComponent {
     private _productService: ProductService,
     private _categoryService: CategoryService,
     private _filterSerivce: FilterService,
-    private _formatStringUtilsService: FormatStringUtilsService,
     public cartService: CartService,
-    private _dialogService: DialogService,
     private _fb: FormBuilder,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    public dialogService: DialogService
   ) {
     this._route.data.subscribe((datas) => {
       let routeResolverDatas = datas["routeResolver"];
@@ -234,7 +233,7 @@ export class ProductListComponent {
         if (filterGroup.type === "checkbox") {
           let formArray = this._fb.array([]) as FormArray;
           constrols[filterGroup.fieldName] = formArray;
-          filterGroup.options!.forEach((option, index) => {
+          filterGroup.options!.forEach((option) => {
             formArray.push(this._fb.control(undefined));
           });
         } else if (filterGroup.type === "slider") {
@@ -250,6 +249,9 @@ export class ProductListComponent {
           }
         }
       });
+      let filter: Filter = this._filterSerivce.filterVal
+      filter.priceRanges = [this.minPrice, this.maxPrice]
+      this._filterSerivce.nextFilter(filter)
       this.filterSidebarFG = this._fb.group(constrols);
     });
   }
@@ -277,6 +279,7 @@ export class ProductListComponent {
         });
       this._filterSerivce.nextFilter(filterVal);
     });
+
     this._filterSerivce.filter$
       .pipe(
         switchMap((filter: Filter) => {
@@ -287,14 +290,6 @@ export class ProductListComponent {
         this.products = products;
       });
 
-    this.cartService.addedCartProduct$.subscribe(
-      (addedProduct: CartItem | null) => {
-        if (addedProduct) {
-          this.addedPendingProduct = addedProduct!;
-        }
-      }
-    );
-    console.log(this.filterOptions);
   }
   a() {
     this.document
@@ -328,5 +323,22 @@ export class ProductListComponent {
       quantity: 1,
     };
     this.cartService.addToCart(cartItem);
+     this.cartService.addedCartProduct$.subscribe(
+      (addedProduct: CartItem | null) => {
+        if (addedProduct) {
+          let ref = this.dialogService.open(AddToCartNotifycationComponent, {
+            header: "Đã thêm vào giỏ hàng",
+            position: "topright",
+            modal: false,
+            data: addedProduct,
+            showHeader: false,
+            closeOnEscape: true,
+          });
+          setTimeout(() => {
+            ref.close();
+          }, 1000);
+        }
+      }
+    );
   }
 }

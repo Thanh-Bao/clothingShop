@@ -14,10 +14,10 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { HttpClientModule } from '@angular/common/http';
 import { CookieModule } from 'ngx-cookie';
 import { CustomDialogModule } from './shared/custom-dialog/custom-dialog.module';
+import { DialogService } from 'primeng/dynamicdialog';
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
     AppRoutingModule,
     InputTextModule,

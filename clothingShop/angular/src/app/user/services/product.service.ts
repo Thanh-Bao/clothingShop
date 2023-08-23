@@ -140,6 +140,7 @@ export class ProductService {
       .get<ODataResponse<Product[]>>(PRODUCT_API, this.httpOptions)
       .pipe(
         map((res) => {
+          console.log(filter);
           let products: Product[] = res.value;
           products = products.map((product) => {
             product.Sizes.sort((a, b) => a.Size.height - b.Size.height);
@@ -147,9 +148,19 @@ export class ProductService {
             product.sltSizeItem = product.Sizes[0];
             return product;
           });
-          let filterProducts: Product[] | undefined;
+          
+          products = products.filter((product) => {
+            return (
+              product.price >= filter.priceRanges![0] &&
+              product.price <= filter.priceRanges![1]
+            );
+          });
+
+          let isFilter = false;
+          let filterProducts: Product[] = [...products];
           if (filter.heightRanges?.length) {
-            let heightProducts = products.filter((product) => {
+            isFilter = true;
+            products = filterProducts.filter((product) => {
               return filter.heightRanges!.some((heightRange: number[]) => {
                 if (heightRange) {
                   return product.Sizes.some((size) => {
@@ -163,11 +174,10 @@ export class ProductService {
                 }
               });
             });
-            filterProducts = [];
-            filterProducts.push(...heightProducts);
           }
+
           if (filter.weightRanges?.length) {
-            let weightProducts = products.filter((product) => {
+            products = products.filter((product) => {
               return filter.weightRanges!.some((weightRange: number[]) => {
                 if (weightRange) {
                   return product.Sizes.some((size) => {
@@ -181,43 +191,19 @@ export class ProductService {
                 }
               });
             });
-            if (filterProducts === undefined) {
-              filterProducts = [];
-            }
-            filterProducts.push(...weightProducts);
           }
 
           if (filter.categoryIds?.length) {
-            let categoryProducts = products.filter((product) => {
+            products = products.filter((product) => {
               return filter.categoryIds!.some((categoryId: string) => {
                 console.log(categoryId);
 
                 return categoryId === product.Category.ID;
               });
             });
-            if (filterProducts === undefined) {
-              filterProducts = [];
-            }
-            filterProducts.push(...categoryProducts);
-          }
-          if (filter.priceRanges?.length) {
-            let priceProducts = products.filter((product) => {
-              return (
-                product.price >= filter.priceRanges![0] &&
-                product.price <= filter.priceRanges![1]
-              );
-            });
-            if (filterProducts === undefined) {
-              filterProducts = [];
-            }
-            filterProducts.push(...priceProducts);
           }
 
-          if (filterProducts != undefined) {
-            return filterProducts;
-          } else {
-            return products;
-          }
+          return products;
         })
       );
   }

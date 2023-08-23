@@ -29,8 +29,6 @@ import { DialogService } from 'primeng/dynamicdialog';
     PrimeNgModule,
     CustomDialogModule,
   ],
-  providers: [
-    DialogService
-  ]
+  providers: [DialogService]
 })
 export class HomeModule {}

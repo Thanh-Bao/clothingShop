@@ -1,7 +1,7 @@
 <div class="product-list__wrapper">
   <div class="nav__wrapper mb-4">
     <nav class="navbar grid flex justify-content-between align-items-center">
-      <h2 class="" (click)="filterDialogComp.showDialog('left')">
+      <h2 class="">
         Tất cả sản phẩm
       </h2>
       <div
@@ -30,7 +30,6 @@
           styleClass="p-button-rounded p-button-outlined"
           icon="pi pi-filter"
           iconPos="right"
-          (click)="filterDialogComp.showDialog('left')"
         ></p-button>
       </div>
     </nav>
@@ -135,7 +134,7 @@
                             <div
                               class="size__item mr-2"
                               (click)="selectSize($event, product, sizeItem)"
-                            >
+                              >
                               <strong>{{ sizeItem.size }}</strong>
                             </div>
                           </ng-container>
@@ -198,7 +197,7 @@
   </div>
 </div>
 
-<custom-dialog
+<!-- <custom-dialog
   #filterDialogComp
   [header]="filterLabel"
   [modal]="true"
@@ -219,7 +218,7 @@
         >
           <ng-container *ngIf="item.type === 'checkbox'">
             {{ item.options | json }}
-            <!-- <div *ngFor="let option of item.options" class="field-checkbox">
+            <div *ngFor="let option of item.options" class="field-checkbox">
               {{option}}
               <p-checkbox
                 name="group"
@@ -227,7 +226,7 @@
                 [(ngModel)]="item.value"
               ></p-checkbox>
               <label [for]="option.value">{{ option.name }}</label>
-            </div> -->
+            </div>
           </ng-container>
           <ng-container *ngIf="item.type !== 'checkbox'"> b </ng-container>
         </p-panel>
@@ -251,47 +250,4 @@
     </div>
   </div>
 </custom-dialog>
-
-<custom-dialog #addedPendingProductDialog>
-  <div class="dialog-header">
-    <h3>Đã thêm vào giỏ hàng</h3>
-  </div>
-  <div class="dialog-content">
-    <p-table
-      [value]="[addedPendingProduct]"
-      selectionMode="single"
-      [rows]="1"
-      class="added-cart-product"
-    >
-      <ng-template pTemplate="body" let-rowData let-addedPendingProduct>
-        <tr [pSelectableRow]="rowData">
-          <td class="text-center">
-            <img
-              [src]="addedPendingProduct.product.thumbnailURL"
-              [alt]="addedPendingProduct.product.thumbnailURL"
-              class="w-5rem shadow-2"
-            />
-          </td>
-          <td>
-            <span>
-              {{ addedPendingProduct.product.name }}
-            </span>
-          </td>
-          <td class="text-center">
-            <span>
-              {{ addedPendingProduct.colorItem.color }}/
-              {{ addedPendingProduct.sizeItem.size }}
-            </span>
-          </td>
-          <td class="text-center">
-            <span>
-              <strong>{{ addedPendingProduct.quantity }}</strong
-              >x
-              {{ addedPendingProduct.product.price | currency : "VND" }}
-            </span>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
-</custom-dialog>
+ -->

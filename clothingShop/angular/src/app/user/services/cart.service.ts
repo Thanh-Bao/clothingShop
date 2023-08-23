@@ -14,8 +14,6 @@ import {
 import { CartItem } from "src/app/shared/layout/user/header/header.component";
 import { ProductService } from "./product.service";
 import { Color, ColorItem, Product, SizeItem } from "src/app/models/response";
-import { DialogService } from "primeng/dynamicdialog";
-import { AddToCartNotifycationComponent } from "../components/home/product-list/add-to-cart-notifycation/add-to-cart-notifycation.component";
 export interface PendingProduct {
   productID: string;
   sizeID: string;
@@ -37,27 +35,12 @@ export class CartService {
   addedCartProduct$!: Observable<CartItem | null>;
   constructor(
     private _cookieService: CookieService,
-    private _productService: ProductService,
+    private _productService: ProductService
   ) {
     this.pendingProductsBSub = new BehaviorSubject<PendingProduct[] | []>([]);
     this.pendingProducts$ = this.pendingProductsBSub.asObservable();
     this.addedCartProductBSub = new BehaviorSubject<CartItem | null>(null);
-    this.addedCartProduct$ = this.addedCartProductBSub.asObservable().pipe(
-      concatMap((addedProduct) => {
-        // let ref = this._dialogService.open(AddToCartNotifycationComponent, {
-        //   header: "Đã thêm vào giỏ hàng",
-        //   position: "topright",
-        //   modal: false,
-        //   data: addedProduct,
-        //   showHeader: false,
-        //   closeOnEscape: true,
-        // });
-        // setTimeout(() => {
-        //   ref.close();
-        // }, 1000);
-        return of(addedProduct);
-      })
-    );
+    this.addedCartProduct$ = this.addedCartProductBSub.asObservable();
 
     this.cartProducts$ = this.pendingProducts$.pipe(
       switchMap((pendingProducts: PendingProduct[]) => {
@@ -128,9 +111,10 @@ export class CartService {
       JSON.stringify(pendingProducts)
     );
 
-    this.addedCartProductBSub.next(cartItem);
     this.pendingProductsBSub.next(pendingProducts);
-    this.cartProducts$.subscribe(v => console.log(v))
+    this.cartProducts$.subscribe((val) =>
+      this.addedCartProductBSub.next(cartItem)
+    );
   }
   updateQuantity(pendingProduct: PendingProduct) {
     let pendingProducts: PendingProduct[] = this.pendingProductsVal;
