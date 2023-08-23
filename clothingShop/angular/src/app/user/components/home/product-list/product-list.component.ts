@@ -200,7 +200,7 @@ export class ProductListComponent {
   products$!: Observable<Product[] | null>;
   filterLabel: string = "Bộ lọc";
   items!: string[];
-  addedPendingProduct!: CartItem[];
+  addedPendingProduct!: CartItem;
   filterSidebarFG!: FormGroup;
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -253,15 +253,15 @@ export class ProductListComponent {
       this.filterSidebarFG = this._fb.group(constrols);
     });
   }
-  products!: Product[]
+  products!: Product[];
   ngOnInit() {
-    this.filterSidebarFG.get("priceRanges")?.valueChanges.subscribe(val => {
+    this.filterSidebarFG.get("priceRanges")?.valueChanges.subscribe((val) => {
       this.filterSidebarFG.patchValue({
         priceFrom: val[0],
         priceTo: val[1],
-      })
-    })
-    
+      });
+    });
+
     this.filterSidebarFG.valueChanges.pipe().subscribe((val) => {
       let filterVal: Filter = this._filterSerivce.filterVal;
       this.filterOptions
@@ -277,19 +277,23 @@ export class ProductListComponent {
         });
       this._filterSerivce.nextFilter(filterVal);
     });
-   this._filterSerivce.filter$.pipe(
-      switchMap((filter: Filter) => {
-        return this._productService.findAllProduct(filter);
-      })
-    ).subscribe(products => {
-      this.products = products
-    });
+    this._filterSerivce.filter$
+      .pipe(
+        switchMap((filter: Filter) => {
+          return this._productService.findAllProduct(filter);
+        })
+      )
+      .subscribe((products) => {
+        this.products = products;
+      });
 
-    this.cartService.addedCartProduct$.subscribe((addedProduct) => {
-      if (addedProduct) {
-        this.addedPendingProduct = addedProduct!;
+    this.cartService.addedCartProduct$.subscribe(
+      (addedProduct: CartItem | null) => {
+        if (addedProduct) {
+          this.addedPendingProduct = addedProduct!;
+        }
       }
-    });
+    );
     console.log(this.filterOptions);
   }
   a() {
@@ -317,28 +321,12 @@ export class ProductListComponent {
     event.preventDefault();
     event.stopPropagation();
     product.sltSizeItem = sltSizeItem;
-    this.cartService.addToCart({
-      productID: product.ID,
-      sizeID: sltSizeItem.ID,
-      colorID: product.sltColorItem.ID,
-      quantity: 1,
-    });
     let cartItem: CartItem = {
       product,
       colorItem: product.sltColorItem,
       sizeItem: product.sltSizeItem,
       quantity: 1,
     };
-    let ref = this._dialogService.open(AddToCartNotifycationComponent, {
-      header: "Đã thêm vào giỏ hàng",
-      position: "topright",
-      modal: false,
-      data: cartItem,
-      showHeader: false,
-      closeOnEscape: true,
-    });
-    setTimeout(() => {
-      ref.close();
-    }, 1000);
+    this.cartService.addToCart(cartItem);
   }
 }

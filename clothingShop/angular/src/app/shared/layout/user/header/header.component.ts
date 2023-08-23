@@ -12,8 +12,8 @@ import { FilterService } from "src/app/user/services/filter.service";
 import { ProductService } from "src/app/user/services/product.service";
 export interface CartItem {
   product: Product;
-  colorItem: ColorItem | undefined;
-  sizeItem: SizeItem | undefined;
+  colorItem: ColorItem ;
+  sizeItem: SizeItem ;
   quantity: number;
 }
 @Component({
@@ -39,7 +39,6 @@ export class HeaderComponent implements OnInit {
     public cartService: CartService
   ) {
     this.selectedCategory$ = this._categoryService.selectedCateogry$;
-    this.selectedCategory$.subscribe((val) => console.log(val));
   }
   search(event: any) {
     let filter = this._filterService.filterVal;
@@ -67,7 +66,7 @@ export class HeaderComponent implements OnInit {
     // if (this._categoryService.selectedCategoryVal != cateogry) {
     //   this._categoryService.nextSelectedCategory(cateogry);
     //   let filterVal = this._filterService.filterVal;
-    //   filterVal.categoryId = cateogry.ID === "all" ? undefined : cateogry.ID;
+    //   filterVal.categoryIds = cateogry.ID === "all" ? undefined : cateogry.ID;
     //   this._filterService.nextFilter(filterVal);
     // }
   }

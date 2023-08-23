@@ -3,15 +3,19 @@ import { CookieService } from "ngx-cookie";
 import {
   BehaviorSubject,
   Observable,
+  concat,
   concatMap,
   map,
   of,
   switchMap,
   tap,
+  timeout,
 } from "rxjs";
 import { CartItem } from "src/app/shared/layout/user/header/header.component";
 import { ProductService } from "./product.service";
 import { Color, ColorItem, Product, SizeItem } from "src/app/models/response";
+import { DialogService } from "primeng/dynamicdialog";
+import { AddToCartNotifycationComponent } from "../components/home/product-list/add-to-cart-notifycation/add-to-cart-notifycation.component";
 export interface PendingProduct {
   productID: string;
   sizeID: string;
@@ -29,16 +33,31 @@ export class CartService {
 
   cartProducts$: Observable<CartItem[] | []>;
 
-  addedCartProductBSub!: BehaviorSubject<CartItem[] | null>;
-  addedCartProduct$!: Observable<CartItem[] | null>;
+  addedCartProductBSub!: BehaviorSubject<CartItem | null>;
+  addedCartProduct$!: Observable<CartItem | null>;
   constructor(
     private _cookieService: CookieService,
-    private _productService: ProductService
+    private _productService: ProductService,
   ) {
     this.pendingProductsBSub = new BehaviorSubject<PendingProduct[] | []>([]);
     this.pendingProducts$ = this.pendingProductsBSub.asObservable();
-    this.addedCartProductBSub = new BehaviorSubject<CartItem[] | null>(null);
-    this.addedCartProduct$ = this.addedCartProductBSub.asObservable();
+    this.addedCartProductBSub = new BehaviorSubject<CartItem | null>(null);
+    this.addedCartProduct$ = this.addedCartProductBSub.asObservable().pipe(
+      concatMap((addedProduct) => {
+        // let ref = this._dialogService.open(AddToCartNotifycationComponent, {
+        //   header: "Đã thêm vào giỏ hàng",
+        //   position: "topright",
+        //   modal: false,
+        //   data: addedProduct,
+        //   showHeader: false,
+        //   closeOnEscape: true,
+        // });
+        // setTimeout(() => {
+        //   ref.close();
+        // }, 1000);
+        return of(addedProduct);
+      })
+    );
 
     this.cartProducts$ = this.pendingProducts$.pipe(
       switchMap((pendingProducts: PendingProduct[]) => {
@@ -83,20 +102,25 @@ export class CartService {
     );
   }
 
-  addToCart(pendingProduct: PendingProduct) {
+  addToCart(cartItem: CartItem) {
     let pendingProducts: PendingProduct[] = this.pendingProductsVal;
-    const { productID, colorID, sizeID, quantity } = pendingProduct;
+    const { product, colorItem, sizeItem, quantity } = cartItem;
     let foundPendingProduct = pendingProducts.find(
       (p) =>
-        p.productID === productID &&
-        p.sizeID === sizeID &&
-        p.colorID === colorID
+        p.productID === product.ID &&
+        p.sizeID === sizeItem!.ID &&
+        p.colorID === colorItem!.ID
     );
 
     if (foundPendingProduct) {
       foundPendingProduct.quantity = foundPendingProduct.quantity + quantity;
     } else {
-      pendingProducts.push({ productID, quantity, sizeID, colorID });
+      pendingProducts.push({
+        productID: product.ID,
+        quantity,
+        sizeID: sizeItem!.ID,
+        colorID: colorItem!.ID,
+      });
     }
 
     this._cookieService.put(
@@ -104,29 +128,9 @@ export class CartService {
       JSON.stringify(pendingProducts)
     );
 
-    this._productService
-      .findAllByIds([pendingProduct.productID])
-      .pipe(
-        map((res) => res.value),
-        tap((val) => {
-          let foundColorItem: ColorItem | undefined = val[0].Colors.find(
-            (ColorItem) => ColorItem.ID === pendingProduct.colorID
-          );
-          let foundSizeItem: SizeItem | undefined = val[0].Sizes.find(
-            (SizeItem) => SizeItem.ID === pendingProduct.sizeID
-          );
-          let cartItem: CartItem = {
-            product: val[0],
-            colorItem: foundColorItem,
-            sizeItem: foundSizeItem,
-            quantity: pendingProduct.quantity,
-          };
-          this.addedCartProductBSub.next([cartItem]);
-        })
-      )
-      .subscribe();
-
+    this.addedCartProductBSub.next(cartItem);
     this.pendingProductsBSub.next(pendingProducts);
+    this.cartProducts$.subscribe(v => console.log(v))
   }
   updateQuantity(pendingProduct: PendingProduct) {
     let pendingProducts: PendingProduct[] = this.pendingProductsVal;
