@@ -1,0 +1,14 @@
+<core:FragmentDefinition
+xmlns="sap.m"
+xmlns:core="sap.ui.core"
+xmlns:l="sap.ui.layout"
+>
+<l:VerticalLayout id="idVerticalLayout" class="sapUiContentPadding" width="100%">
+		<HBox alignItems="Center">
+<Select id="idSelect" change="handleSelect">
+	<core:Item id="idRichTextEditorWithTinyMCE123Item" key="TinyMCE6" text="RichTextEditor with TinyMCE6"/>
+	<core:Item id="idRichTextEditorWithTinyMCE124Item" key="TinyMCE5" text="RichTextEditor with TinyMCE5"/>
+</Select>
+</HBox>
+</l:VerticalLayout>
+</core:FragmentDefinition>

@@ -113,7 +113,22 @@
                   }
                 }
               },
-              "initialLoad": true
+              "initialLoad": true,
+              "content": {
+                "body": {
+                  "sections": {
+                    "RichTextEditor": {
+                      "template": "product.ext.view.RichTextEditor",
+                      "title": "Mô tả chi tiết",
+                      "position": {
+                        "placement": "Before",
+                        "anchor": "GeneratedGroup3"
+                      },
+                      "type": "XMLFrament"
+                    }
+                  }
+                }
+              }
             }
           }
         },
