@@ -1,6 +1,5 @@
 "use client";
 import { Label, TextInput } from "flowbite-react";
-import { CgMail } from "react-icons/cg";
 import { FaPhoneVolume } from "react-icons/fa";
 import { HiMail } from "react-icons/hi";
 import { MdAddHomeWork } from "react-icons/md";
@@ -40,16 +39,6 @@ export const PayInfor = () => {
         />
       </div>
 
-      {/*Địa chỉ gmail */}
-      <div className="w-full pr-10 pt-2">
-        <TextInput
-          icon={CgMail}
-          id="email4"
-          placeholder="name@gamil.com"
-          required
-          type="email"
-        />
-      </div>
     </div>
   );
 };

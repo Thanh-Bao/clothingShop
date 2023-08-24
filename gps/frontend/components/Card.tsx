@@ -1,29 +1,28 @@
 "use client";
-import { ProductList } from "@/constants";
-import { CardProps } from "@/types";
+
+import { CardProps, Product } from "@/types";
 import { Rating } from "flowbite-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { AddToCart } from "./AddToCart";
 
-
-export const ProductCard = ({ product_name, group }: CardProps) => {
+export const ProductCard = ({ product_name, group, products }: CardProps) => {
   const router = useRouter();
 
-  // Tìm danh mục sản phẩm tương ứng với tên thực thể truyền vào
-  const productCategory = ProductList.find((category) =>
-    category.hasOwnProperty(product_name)
+  const locale = "vi-VN";
+  const options = {
+    style: "currency",
+    currency: "VND",
+  };
+
+  // Filter products with the specified category
+
+  const selectedProducts = products.filter(
+    (product: Product) => product.category === product_name
   );
 
-  if (!productCategory) {
-    return null; // Xử lý trường hợp không tìm thấy danh mục sản phẩm
-  }
-
-  // Sử dụng kiểu "index signature" để truy cập vào thuộc tính của đối tượng
-  const selectedProducts =
-    productCategory[product_name as keyof typeof productCategory];
-
   // Kiểm tra số lượng sản phẩm và thiết lập lớp cho grid
+
   const gridClass =
     selectedProducts.length < 4 ? "justify-start" : "justify-between";
   const productClass = selectedProducts.length < 4 ? "mr-3" : "";
@@ -32,17 +31,20 @@ export const ProductCard = ({ product_name, group }: CardProps) => {
   return (
     <div className="container mx-auto">
       <div className={`lg:grid-cols-4 ${gridClass} flex`}>
-        {selectedProducts.map((properties, index) => (
-          // eslint-disable-next-line react/jsx-key
+        {selectedProducts.map((filteredProduct) => (
           <div
             className={`${groupClass} ${productClass} card`}
-            key={properties.id}
+            key={filteredProduct.ID}
           >
-            <div>
+            <div
+              onClick={() => {
+                router.push("/DetailPage");
+              }}
+            >
               <div className="group overflow-hidden">
                 {/* ảnh sản phẩm */}
                 <Image
-                  src={properties.url}
+                  src={filteredProduct.img}
                   alt=""
                   width={134}
                   height={187}
@@ -51,25 +53,32 @@ export const ProductCard = ({ product_name, group }: CardProps) => {
                 />
               </div>
               {/* tên sản phẩm */}
-              <button
-                className="product_title h-10 mt-2 px-2"
-                onClick={() => {
-                  router.push("/DetailPage");
-                }}
-              >
-                {properties.title}
+              <button className="product_title h-10 mt-2 px-2">
+                {filteredProduct.name}
               </button>
             </div>
             <div className="pb-2 px-2">
               {/* Giá sản phẩm */}
               <div className="">
-                <span className="text-xl font-bold text-red-700">
-                  {properties.discount}
-                </span>
-                <div className="flex items-center gap-2  py-1">
-                  <span className="text-xs line-through opacity-50">
-                    {properties.price}
+                {filteredProduct.fakePrice !== null ? (
+                  <span className="text-xl font-bold text-red-700">
+                    {new Intl.NumberFormat(locale, options).format(
+                      filteredProduct.realPrice
+                    )}
                   </span>
+                ) : (
+                  <span className="text-xs line-through opacity-50">N/A</span>
+                )}
+                <div className="flex items-center gap-2  py-1">
+                  {filteredProduct.fakePrice !== null ? (
+                    <span className="text-xs line-through opacity-50">
+                      {new Intl.NumberFormat(locale, options).format(
+                        filteredProduct.fakePrice
+                      )}
+                    </span>
+                  ) : (
+                    <span className="text-xs line-through opacity-50">N/A</span>
+                  )}
                   <span className="discount_percents">Save 20%</span>
                 </div>
               </div>
@@ -87,7 +96,7 @@ export const ProductCard = ({ product_name, group }: CardProps) => {
                 </Rating>
               </div>
               {/* phần này là phần button action */}
-              <AddToCart product={properties} />
+              <AddToCart product={filteredProduct} />
             </div>
           </div>
         ))}

@@ -55,9 +55,9 @@ export const CartView = () => {
       ) : (
         <div className="relative w-full">
           {/* phần list cart */}
-          <div className="w-full my-5 border p-5">
+          <div className="w-full my-5 border px-5 pt-5">
             {cartItems.map((item: any) => (
-              <div key={item.product.id}>
+              <div key={item.product.ID}>
                 <CartItemView item={item} />
               </div>
             ))}

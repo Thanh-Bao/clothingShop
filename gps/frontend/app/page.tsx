@@ -1,17 +1,11 @@
 import { Hero } from "@/components/Hero";
+import { getProducts } from "./products-service";
 
 
-
-export default function Home({ products, categories }:any) {
-console.log(products)
+export default async function Home() {
+  const products = await getProducts();
   return (
-    <Hero categories={categories}
-          products={products} />
-       
+    <Hero products={products} />
   );
   
 }
-
-
-
-

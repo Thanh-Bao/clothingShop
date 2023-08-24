@@ -34,8 +34,10 @@ export const CartProvider = ({ children }: Props) => {
 
   const addToCart = (product: Product) => {
     const existingCartItemIndex = cartItems.findIndex(
-      (item) => item.product.id === product.id
+      (item) => item.product.ID === product.ID
     );
+console.log(`Adding ${existingCartItemIndex}`)
+
     if (existingCartItemIndex !== -1) {
       const existingCartItem = cartItems[existingCartItemIndex];
       const updatedCartItem = {
@@ -52,14 +54,14 @@ export const CartProvider = ({ children }: Props) => {
 
   const removeFromCart = (productId: number) => {
     const updatedCartItems = cartItems.filter(
-      (item) => item.product.id !== productId
+      (item) => item.product.ID !== productId
     );
     setCartItems(updatedCartItems);
   };
 
   const updateCartItemQuantity = (productId: number, quantity: number) => {
     const existingCartItemIndex = cartItems.findIndex(
-      (item) => item.product.id === productId
+      (item) => item.product.ID === productId
     );
     if (existingCartItemIndex !== -1) {
       const existingCartItem = cartItems[existingCartItemIndex];
@@ -74,7 +76,7 @@ export const CartProvider = ({ children }: Props) => {
   };
 
   const cartTotal = cartItems.reduce(
-    (total, item) => total + item.product.price * item.quantity,
+    (total, item) => total + item.product.realPrice * item.quantity,
     0
   );
 

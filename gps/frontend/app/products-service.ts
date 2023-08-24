@@ -1,29 +1,27 @@
-import axios from "axios";
-
-const API_URL = "/https://gps.bao.name.vn/rest/api/";
+const API_URL = "https://gps.bao.name.vn/rest/api";
 
 // Getting all products from fake store API
-export const getProducts = async () => {
-  const { data } = await axios.get(`${API_URL}/product`);
-  return data;
+export async function getProducts() {
+  const data = await fetch(`${API_URL}/Product`);
+  return data.json();
 };
 
 // Getting all categories from fake store API
-export const getCategories = async () => {
-  const { data } = await axios.get(`${API_URL}/products/category`);
-  return data;
+export async function getCategories() {
+  const data = await fetch(`${API_URL}/Category`);
+  return data.json();
 };
 
 // Getting all produts in a specfic category from fake store API
-export const getCategoyProducts = async (categoryName: string) => {
-  const { data } = await axios.get(
-    `${API_URL}/products/category/${categoryName}`
+export async function getCategoyProducts(categoryName: string){
+  const data = await fetch(
+    `${API_URL}/Products/category/${categoryName}`
   );
-  return data;
+  return data.json();
 };
 
 // Getting specific product by id
-export const getProduct = async (id: number | string) => {
-  const { data } = await axios.get(`${API_URL}/products/${id}`);
-  return data;
+export async function getProduct(id: number | string) {
+  const data = await fetch(`${API_URL}/products/${id}`);
+  return data.json();
 };

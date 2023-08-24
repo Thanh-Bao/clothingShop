@@ -11,6 +11,7 @@ export interface CustomButtonProps {
 export interface CardProps {
     product_name : string;
     group :number;
+    products: Product[];
 }
 
 export interface ListBarProps {
@@ -27,12 +28,19 @@ export interface CartItemPropos {
 }
 
 export type Product = {
-    id: number;
-    title: string;
-    price: number;
-    description: string;
+    createdAt: string;
+    modifiedAt: string;
+    ID: number;
+    name: string;
+    realPrice: number;
+    fakePrice: number | null;
+    description: string | null;
     category: string;
-    url: string;
+    isActive: boolean;
+    img: string;
+    IsActiveEntity: boolean;
+    HasActiveEntity: boolean;
+    HasDraftEntity: boolean;
   };
   
   export type CartItem = {
@@ -41,3 +49,7 @@ export type Product = {
   };
 
 
+  export type Category = {
+    ID: string;
+    name: string;
+  };
