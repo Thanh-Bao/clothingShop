@@ -11,6 +11,10 @@ module.exports = srv => {
         } catch (error) {
             req.error(error.toString());
         }
+    });
+
+    srv.on('posvnWebHook', async req => {
+        console.log("WEBHOOK --->", req.data);
     })
 
     srv.after('READ', Product, async res => {
@@ -35,7 +39,5 @@ module.exports = srv => {
             }).then(r => console.log("@@@", r))
             .catch(err => req.error("ERROR"))
             ;
-
-    })
-
+    });
 }

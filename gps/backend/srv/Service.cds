@@ -76,4 +76,6 @@ service API {
     }
 
     function FilterProduct(category : String) returns object;
+
+    action posvnWebHook(data : object);
 }
