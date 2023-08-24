@@ -18,7 +18,7 @@ service API {
     entity SaleOrderItem {
         key ID          : UUID;
             saleOrderID : UUID;
-            productID   : String(99);
+            productID   : Integer;
             quantity    : Decimal(2)                          @mandatory default 1;
             realPrice   : Decimal(8)                          @readonly;
             fakePrice   : Decimal(8)                          @readonly;
@@ -35,7 +35,7 @@ service API {
 
     @odata.draft.enabled
     entity Product : common {
-        key ID          : String(99)  @mandatory  @title: 'Nhập ID sản phẩm';
+        key ID          : Integer     @mandatory  @title: 'Nhập ID sản phẩm';
             name        : String(60)  @mandatory;
             realPrice   : Decimal(8)  @mandatory;
             fakePrice   : Decimal(8);
@@ -76,4 +76,6 @@ service API {
     }
 
     function FilterProduct(category : String) returns object;
+
+    action posvnWebHook(data : object);
 }
