@@ -19,6 +19,7 @@ type Props = {
   
 
 export const Hero = ({ categories,products }: Props) => {
+  console.log(categories,products);
   return (
     <div className="relative -z-40 ">
     <div className="m-auto min-h-[1000px] max-w-[1122px] mt-5">

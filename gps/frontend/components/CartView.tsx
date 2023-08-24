@@ -21,7 +21,7 @@ export const CartView = () => {
           <Breadcrumb.Item href="#" icon={HiHome}>
             <p>Home</p>
           </Breadcrumb.Item>
-          <Breadcrumb.Item href="#">Giỏ hàng 123</Breadcrumb.Item>
+          <Breadcrumb.Item href="#">Giỏ hàng</Breadcrumb.Item>
         </Breadcrumb>
 
         <h1 className="w-full items-center text-xl font-bold">
