@@ -1,12 +1,8 @@
 import { Hero } from "@/components/Hero";
-import { Product } from "@/types";
 
-type Props = {
-  products: Product[];
-  categories: string[];
-};
 
-export default function Home({ products, categories }: Props) {
+
+export default function Home({ products, categories }:any) {
 console.log(products)
   return (
     <Hero categories={categories}
