@@ -8,7 +8,7 @@ import { useCart } from "../styles/CartContext";
 import { Paytotal } from "./Paytotal";
 
 export const CartView = () => {
-  const { cartItems, cartTotal } = useCart();
+  const { cartItems } = useCart();
   const router = useRouter();
   return (
     <div className="max-w-[1150px] mx-auto px-4 relative -z-10 mb-16">
@@ -50,8 +50,6 @@ export const CartView = () => {
         </div>
 
         </div>
-        
-        
       ) : (
         <div className="relative w-full">
           {/* phần list cart */}

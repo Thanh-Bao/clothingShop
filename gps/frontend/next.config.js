@@ -4,6 +4,8 @@ const nextConfig = {}
 module.exports = nextConfig
 module.exports = {
     images: {
-      domains: ['cdn.pixabay.com'], // Thêm domain của nguồn hình ảnh vào đây
+      domains: ['cdn.pixabay.com', 'cdnimg.vietnamplus.vn', 'haycafe.vn'],
     },
   };
+
+  

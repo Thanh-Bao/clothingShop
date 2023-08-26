@@ -1,6 +1,7 @@
 import { Detail } from "@/components/Detail";
 
 const ProductDetail = () => {
+  
   return (
     <>
     <Detail/>
