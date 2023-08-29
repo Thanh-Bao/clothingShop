@@ -66,6 +66,7 @@ annotate service.Product with @(
 );
 
 annotate service.Product with @(
+
     UI.FieldGroup #GeneratedGroup1    : {
         $Type: 'UI.FieldGroupType',
         Data : [
@@ -96,6 +97,7 @@ annotate service.Product with @(
             },
         ],
     },
+
     UI.FieldGroup #Pricing            : {
         $Type: 'UI.FieldGroupType',
         Data : [
@@ -111,6 +113,7 @@ annotate service.Product with @(
             },
         ]
     },
+
     UI.FieldGroup #GeneratedGroupImage: {
         $Type: 'UI.FieldGroupType',
         Data : [{
@@ -119,6 +122,19 @@ annotate service.Product with @(
             Value: img,
         }, ]
     },
+
+     UI.FieldGroup #GeneratedGroupdescription: {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type: 'UI.DataField',
+                Label: 'mô tả khuyến mãi',
+                Value: description,
+            },
+           
+        ]
+    },
+
     UI.FieldGroup #GeneratedGroup3    : {
         $Type: 'UI.FieldGroupType',
         Data : [
@@ -134,6 +150,7 @@ annotate service.Product with @(
             },
         ],
     },
+
     UI.Facets                         : [
         {
             $Type : 'UI.ReferenceFacet',
@@ -152,6 +169,12 @@ annotate service.Product with @(
             ID    : 'GeneratedFacet4',
             Label : 'Image',
             Target: '@UI.FieldGroup#GeneratedGroupImage',
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'GeneratedGroupdescription',
+            Label : 'nhập mô tả khuyến mãi',
+            Target: 'Offer/@UI.LineItem',
         },
         {
             $Type : 'UI.ReferenceFacet',
@@ -185,6 +208,15 @@ annotate service.Album with @(UI.LineItem: [
         $Type: 'UI.DataField',
         Label: 'Mô tả (optional)',
         Value: description,
+    },
+]);
+
+annotate service.Specialoffer with @(UI.LineItem: [
+    {
+        $Type             : 'UI.DataField',
+        Label             : 'Mô tả khuyến mãi',
+        Value             : des,
+        @HTML5.CssDefaults: {width: '40em'}
     },
 ]);
 

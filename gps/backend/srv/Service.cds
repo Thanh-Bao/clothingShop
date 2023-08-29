@@ -51,6 +51,7 @@ service API {
             Category    : Association to one Category  on Category.ID = $self.category;
             Album       : Composition of many Album on Album.productID = $self.ID;
             Video       : Composition of many Video  on Video.productID = $self.ID;
+            Offer       : Composition of many Specialoffer on Offer.productID = $self.ID
     }
 
 
@@ -82,7 +83,11 @@ service API {
         } default '1 năm (12 tháng)';
     }
 
-
+    entity Specialoffer {
+        key ID          : UUID;
+            productID   : Integer;
+            des         : String;
+    }
 
     aspect common : {
         createdAt  : Timestamp  @cds.on.insert: $now;
