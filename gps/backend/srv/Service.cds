@@ -1,5 +1,10 @@
     @open
     type object : array of {};
+
+using {
+   sap.common.CodeList
+} from '@sap/cds/common';
+
     
 
 @protocol: ['rest','odata-v4']
@@ -32,7 +37,6 @@ service API {
 
     }
 
-
     @odata.draft.enabled
     entity Product : common {
         key ID          : Integer     @mandatory  @title: 'Nhập ID sản phẩm';
@@ -40,6 +44,7 @@ service API {
             realPrice   : Decimal(8)  @mandatory;
             fakePrice   : Decimal(8);
             description : String;
+            guarantee   : Association to Guarantee;
             category    : String default 'NewDevice';
             isActive    : Boolean     @mandatory default true;
             img         : String      @mandatory;
@@ -57,17 +62,26 @@ service API {
 
     entity Album {
         key ID          : UUID;
-            productID   : String(99) @mandatory;
+            productID   : Integer    @mandatory;
             url         : String     @mandatory;
             description : String;
     }
 
     entity Video {
         key ID          : UUID;
-            productID   : String(99) @mandatory;
+        key productID   : Integer    @mandatory;
             url         : String     @mandatory;
             description : String;
     }
+
+    entity Guarantee : CodeList {
+        key code : String enum {
+        sixMounth  = '6 tháng';
+        oneyears = '1 năm (12 tháng)';
+        twoyears = '2 năm (24 tháng)';
+        } default '1 năm (12 tháng)';
+    }
+
 
 
     aspect common : {
@@ -78,4 +92,6 @@ service API {
     function FilterProduct(category : String) returns object;
 
     action posvnWebHook(data : object);
+
+
 }

@@ -1,4 +1,4 @@
-const API_URL = "http://gps.bao.name.vn/rest/api";
+const API_URL = "http://localhost:4004/rest/api";
 
 // Getting all products from fake store API
 export async function getProducts() {
@@ -22,10 +22,16 @@ export async function getCategoyProducts(categoryName: string){
 
 // Getting specific product by id
 export async function getProduct(id: number | string) {
-  const data = await fetch(`${API_URL}/products/${id}`);
-  return data.json();
+  const data = await fetch(`${API_URL}/Product(ID='${id}',IsActiveEntity=true)`);
+   return data.json();
 };
 
+
+// Getting all Albulm from fake store API
+export async function getAlbum() {
+  const data = await fetch(`${API_URL}/Album`);
+  return data.json();
+};
 
 // {
 //   "name"           : "Thanh Tung",
@@ -47,3 +53,19 @@ export async function getProduct(id: number | string) {
 //       }
 //   ]
 // }
+
+
+// http://localhost:4004/rest/api/SaleOrder
+// {
+//  "phone"          : "0934565431",
+//  "address"        : "Lô T2-1.2, Đường D1, Đ. D1, P.Tân Phú, TP.Thủ Đức, TP.Hồ Chí Minh.",
+//  "name"           :"Thanh Tung",
+//  "SaleOrderItems" : [
+//   {
+//     //           "productID"    : 10003,
+//     //           "quantity"     : 2,
+//                   "realPrice" : 123,
+//                 "fakePrice"   : 456
+//  ]
+// }
+

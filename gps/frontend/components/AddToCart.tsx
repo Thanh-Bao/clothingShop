@@ -10,19 +10,15 @@ interface Props {
 export const AddToCart = ({ product }: Props) => {
 
     const router = useRouter();
-
     const { addToCart } = useCart();
+    
     const handleAddToCartClick = (product: Product) => {
-      
-          addToCart(product);
-          
-       
+        addToCart(product);
       };
     
-      const handleBuyClick = (product: Product) => {
+    const handleBuyClick = (product: Product) => {
         addToCart(product);
         router.push("/CartPage");
-
       };
 
   return (

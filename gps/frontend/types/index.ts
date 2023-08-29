@@ -33,7 +33,8 @@ export type Product = {
     ID: number;
     name: string;
     realPrice: number;
-    fakePrice: number | null;
+    fakePrice: number;
+    guarantee_code: string;
     description: string | null;
     category: string;
     isActive: boolean;

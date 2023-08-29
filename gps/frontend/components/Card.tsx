@@ -23,10 +23,16 @@ export const ProductCard = ({ product_name, group, products }: CardProps) => {
 
   // Kiểm tra số lượng sản phẩm và thiết lập lớp cho grid
 
+  
   const gridClass =
     selectedProducts.length < 4 ? "justify-start" : "justify-between";
   const productClass = selectedProducts.length < 4 ? "mr-3" : "";
   const groupClass = group == 2 ? "card1" : "card";
+
+  const handleClickDetail = (filteredProduct:Product) => {
+    router.push(`/product/${filteredProduct.ID}/Detail`)
+};
+
 
   return (
     <div className="container mx-auto">
@@ -37,9 +43,7 @@ export const ProductCard = ({ product_name, group, products }: CardProps) => {
             key={filteredProduct.ID}
           >
             <div
-              onClick={() => {
-                router.push("/DetailPage");
-              }}
+            onClick={() => handleClickDetail(filteredProduct)}
             >
               <div className="group overflow-hidden">
                 {/* ảnh sản phẩm */}

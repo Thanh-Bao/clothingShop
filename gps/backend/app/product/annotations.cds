@@ -84,6 +84,11 @@ annotate service.Product with @(
                 Label: 'category',
                 Value: category,
             },
+             {
+                $Type: 'UI.DataField',
+                Label: 'Thời Hạn Bảo Hành',
+                Value: guarantee_code,
+            },
             {
                 $Type: 'UI.DataField',
                 Label: 'Còn hàng?',
@@ -103,11 +108,6 @@ annotate service.Product with @(
                 $Type: 'UI.DataField',
                 Label: 'giá ảo (giá discount phải lớn hơn giá thật)',
                 Value: fakePrice,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: '% giảm giá',
-                Value: discountPercent,
             },
         ]
     },
@@ -205,9 +205,12 @@ annotate service.Video with @(UI.LineItem: [
 //********************/ value help *******************
 
 annotate service.Product with {
+
+    guarantee @Common.ValueListWithFixedValues;
+
     category @(Common: {
         Text                    : Category.name,
-        TextArrangement         : #TextLast,
+        TextArrangement         : #TextFirst,
         ValueListWithFixedValues: true,
         ValueList               : {
             $Type         : 'Common.ValueListType',
@@ -226,3 +229,13 @@ annotate service.Product with {
         },
     });
 };
+
+annotate service.Product with @title: '{i18n>Product}' {
+
+    guarantee @title: '{i18n>Bảo Hành}'     @Common.Text: guarantee.name     @Common.TextArrangement: #TextOnly;
+}
+
+
+annotate service.Guarantee with {
+  code @Common.Text: name @Common.TextArrangement: #TextOnly
+}
