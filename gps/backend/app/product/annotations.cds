@@ -67,7 +67,7 @@ annotate service.Product with @(
 
 annotate service.Product with @(
 
-    UI.FieldGroup #GeneratedGroup1    : {
+    UI.FieldGroup #ProductDetails    : {
         $Type: 'UI.FieldGroupType',
         Data : [
             {
@@ -84,6 +84,11 @@ annotate service.Product with @(
                 $Type: 'UI.DataField',
                 Label: 'category',
                 Value: category,
+            },
+            {
+                $Type: 'UI.DataField',
+                Label: 'link ảnh chính',
+                Value: img,
             },
              {
                 $Type: 'UI.DataField',
@@ -114,28 +119,43 @@ annotate service.Product with @(
         ]
     },
 
-    UI.FieldGroup #GeneratedGroupImage: {
-        $Type: 'UI.FieldGroupType',
-        Data : [{
-            $Type: 'UI.DataField',
-            Label: 'link ảnh đại diện',
-            Value: img,
-        }, ]
-    },
-
-     UI.FieldGroup #GeneratedGroupdescription: {
+     UI.FieldGroup #OfferDescription: {
         $Type: 'UI.FieldGroupType',
         Data : [
             {
                 $Type: 'UI.DataField',
                 Label: 'mô tả khuyến mãi',
-                Value: description,
-            },
+                Value: Offer.des,
+            }
            
         ]
     },
 
-    UI.FieldGroup #GeneratedGroup3    : {
+    UI.FieldGroup #ListImage: {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type: 'UI.DataField',
+                Label: 'mô tả khuyến mãi',
+                Value: Album.url,
+            }
+           
+        ]
+    },
+
+    UI.FieldGroup #textdescription: {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type: 'UI.DataField',
+                Label: 'mô tả sản phẩm',
+                Value: textdescription.txt,
+            }
+           
+        ]
+    },
+
+    UI.FieldGroup #GroupDateTime    : {
         $Type: 'UI.FieldGroupType',
         Data : [
             {
@@ -154,31 +174,31 @@ annotate service.Product with @(
     UI.Facets                         : [
         {
             $Type : 'UI.ReferenceFacet',
-            ID    : 'GeneratedFacet1',
-            Label : 'General Information',
-            Target: '@UI.FieldGroup#GeneratedGroup1',
+            ID    : 'ProductDetails',
+            Label : 'Thông tin chung',
+            Target: '@UI.FieldGroup#ProductDetails',
         },
         {
             $Type : 'UI.ReferenceFacet',
-            ID    : 'GeneratedFacetPrice',
-            Label : 'Nhập giá',
+            ID    : 'Pricing',
+            Label : 'Giá sản phẩm',
             Target: '@UI.FieldGroup#Pricing',
         },
         {
             $Type : 'UI.ReferenceFacet',
-            ID    : 'GeneratedFacet4',
-            Label : 'Image',
-            Target: '@UI.FieldGroup#GeneratedGroupImage',
-        },
-        {
-            $Type : 'UI.ReferenceFacet',
-            ID    : 'GeneratedGroupdescription',
-            Label : 'nhập mô tả khuyến mãi',
+            ID    : 'OfferDescription',
+            Label : 'Mô tả khuyến mãi',
             Target: 'Offer/@UI.LineItem',
         },
         {
             $Type : 'UI.ReferenceFacet',
-            ID    : 'GeneratedFacet5',
+            ID    : 'textdescription',
+            Label : 'Mô tả sản phẩm',
+            Target: 'textdescription/@UI.LineItem',
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'ListImage',
             Label : 'List ảnh mô tả (optinal)',
             Target: 'Album/@UI.LineItem',
         },
@@ -192,7 +212,7 @@ annotate service.Product with @(
             $Type : 'UI.ReferenceFacet',
             ID    : 'GeneratedGroup3',
             Label : 'Ngày tạo',
-            Target: '@UI.FieldGroup#GeneratedGroup3',
+            Target: '@UI.FieldGroup#GroupDateTime',
         },
     ]
 );
@@ -216,6 +236,15 @@ annotate service.Specialoffer with @(UI.LineItem: [
         $Type             : 'UI.DataField',
         Label             : 'Mô tả khuyến mãi',
         Value             : des,
+        @HTML5.CssDefaults: {width: '40em'}
+    },
+]);
+
+annotate service.Text with @(UI.LineItem: [
+    {
+        $Type             : 'UI.DataField',
+        Label             : 'Text mô tả sản Phẩm',
+        Value             : txt,
         @HTML5.CssDefaults: {width: '40em'}
     },
 ]);

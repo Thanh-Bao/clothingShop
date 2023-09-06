@@ -12,7 +12,7 @@ import Listgroup1 from "./Listgroup1";
 import Listgroup2 from "./Listgroup2";
 import Listgroup3 from "./Listgroup3";
 import { Media } from "./Media";
-import { PayInfor } from './PayInfor';
+import Popup from './Popup';
 import { Searchbar } from './Searchbar';
 
 
@@ -29,7 +29,7 @@ export {
     Listgroup1,
     Listgroup2,
     Listgroup3,
-    Media, PayInfor,
+    Media, Popup,
     ProductCard,
     Searchbar
 };

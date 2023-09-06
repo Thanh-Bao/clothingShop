@@ -51,7 +51,8 @@ service API {
             Category    : Association to one Category  on Category.ID = $self.category;
             Album       : Composition of many Album on Album.productID = $self.ID;
             Video       : Composition of many Video  on Video.productID = $self.ID;
-            Offer       : Composition of many Specialoffer on Offer.productID = $self.ID
+            Offer       : Composition of many Specialoffer on Offer.productID = $self.ID;
+            textdescription        : Composition of many Text  on textdescription.productID = $self.ID;
     }
 
 
@@ -87,6 +88,12 @@ service API {
         key ID          : UUID;
             productID   : Integer;
             des         : String;
+    }
+
+     entity Text {
+        key ID          : UUID;
+            productID   : Integer;
+            txt         : String;
     }
 
     aspect common : {

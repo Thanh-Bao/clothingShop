@@ -19,7 +19,7 @@ export interface ListBarProps {
 }
 
 export interface MediaProps {
-    MediaUrl : string;
+    MediaUrl : video[];
 }
 
 export interface CartItemPropos {
@@ -53,4 +53,8 @@ export type Product = {
   export type Category = {
     ID: string;
     name: string;
+  };
+
+  export type video = {
+    url: string;
   };

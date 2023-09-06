@@ -30,22 +30,22 @@ export const Dropdown = () => {
       </button>
       {isDropdownOpen && (
         <div
-          className="absolute top-full min-w-full w-max bg-white shadow-md rounde"
+          className="absolute top-full min-w-full w-max bg-white shadow-md "
           onMouseEnter={handleDropdownOpen} // Để dropdown mở khi rê chuột vào danh sách
           onMouseLeave={handleDropdownClose} // Đóng dropdown khi chuột rời khỏi danh sách
         >
-          <ul className="text-left border rounded">
-            <li className="px-4 py-2 hover:bg-gray-100 border-b">
-              thiết bị định vị
+          <ul className="text-left font-medium">
+            <li className="px-4 py-2 hover:bg-gray-100">
+              Thiết bị định vị
             </li>
-            <li className="px-4 py-2 hover:bg-gray-100 border-b">
-              camera hành trình
+            <li className="px-4 py-2 hover:bg-gray-100">
+              Camera hành trình
             </li>
-            <li className="px-4 py-2 hover:bg-gray-100 border-b">
-              camera nghị định 10
+            <li className="px-4 py-2 hover:bg-gray-100">
+              Camera nghị định 10
             </li>
-            <li className="px-4 py-2 hover:bg-gray-100 border-b">androidbox</li>
-            <li className="px-4 py-2 hover:bg-gray-100 border-b">tin tức</li>
+            <li className="px-4 py-2 hover:bg-gray-100">Androidbox</li>
+            <li className="px-4 py-2 hover:bg-gray-100">Tin tức</li>
           </ul>
         </div>
       )}

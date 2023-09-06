@@ -1,5 +1,8 @@
 import { useCart } from "@/styles/CartContext";
 
+import { Button } from 'flowbite-react';
+
+
 export const Paytotal = () => {
     const { cartItems, cartTotal } = useCart();
    
@@ -30,6 +33,11 @@ export const Paytotal = () => {
             <span className="text-xs">Tổng</span>
             <span className="text-sm text-red-500 font-bold">{new Intl.NumberFormat(locale, options).format(cartTotal)}</span>
         </div>
+        <div className="flex justify-end items-end mt-6">
+    <Button gradientDuoTone="purpleToPink">
+        Đặt Hàng
+    </Button>
+</div>
 
 
     </div>

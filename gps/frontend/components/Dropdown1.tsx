@@ -26,7 +26,7 @@ export const Dropdown1 = () => {
          onMouseEnter={handleDropdownOpen} // Để dropdown mở khi rê chuột vào danh sách
          onMouseLeave={handleDropdownClose} // Đóng dropdown khi chuột rời khỏi danh sách
           >
-      <ul className="text-left border rounded">
+      <ul className="text-left font-medium">
         <li className="px-4 py-2 hover:bg-gray-100 bg-sky-600 ">Thiết Bị Định Vị Xe Máy</li>
         <li className="px-4 py-2 hover:bg-gray-100 bg-sky-600 ">Thiết Bị Định Vị Xe Hơi</li>
         <li className="px-4 py-2 hover:bg-gray-100 bg-sky-600 ">Thiết Bị Định Vị Xe Tải</li>

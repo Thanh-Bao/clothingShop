@@ -1,5 +1,5 @@
 "use client";
-import { getAlbum } from "@/app/products-service";
+import { getAlbum, getDes, getOffer } from "@/app/products-service";
 import { useCart } from "@/styles/CartContext";
 import { Product } from "@/types";
 import { Breadcrumb, Button, Sidebar } from "flowbite-react";
@@ -8,6 +8,10 @@ import { useEffect, useState } from "react";
 import { BsFillPhoneVibrateFill } from "react-icons/bs";
 import { FaShippingFast } from "react-icons/fa";
 import { GiCardExchange, GiRotaryPhone } from "react-icons/gi";
+
+import { Tabs } from 'flowbite-react';
+import { BsTicketDetailed } from 'react-icons/bs';
+import { MdDashboard } from 'react-icons/md';
 
 import {
   HiChartPie,
@@ -30,11 +34,27 @@ interface AlbumItem {
   url: string;
   // ... Các thuộc tính khác
 }
+
+interface OfferItem {
+  productID: string;
+  ID : number;
+  des :String;
+  // Các thuộc tính khác của OfferItem
+}
+
+interface textdesItem {
+  productID: string;
+  ID : number;
+  txt :String;
+}
+
 export const Detail = ({ product, id }: Props) => {
   const { addToCart } = useCart();
-  console.log(product);
   const [urlArray, setUrlArray] = useState<string[]>([]);
+  const [filteredOffers, setFilteredOffers] = useState<OfferItem[]>([]);
+  const [filteredtxt, setFilteredtxt] = useState<textdesItem[]>([]);
   const [selectedImage, setSelectedImage] = useState<string>(`${product.img}`);
+  
 
   const locale = "vi-VN";
   const options = {
@@ -47,19 +67,33 @@ export const Detail = ({ product, id }: Props) => {
       if (id) {
         const targetID = `${id}`;
         const album: AlbumItem[] = await getAlbum();
+        const offers: OfferItem[] = await getOffer();
+        const textdes: textdesItem[] = await getDes();
         const newUrlArray: string[] = [];
 
+        
+       // lọc ảnh
         album.forEach((item: AlbumItem) => {
           if (item.productID == targetID) {
             newUrlArray.push(item.url);
           }
         });
-
         setUrlArray([product.img, ...newUrlArray]);
+
+         // Lọc các phần tử từ offers có thuộc tính ID bằng id và đặt vào filteredOffers
+        const filteredOffers = offers.filter((offer) => offer.productID == targetID);
+        setFilteredOffers(filteredOffers);
+
+         // Lọc các phần tử từ mô tả có thuộc tính ID bằng id 
+         const filteredtxt = textdes.filter((text) => text.productID == targetID);
+         setFilteredtxt(filteredtxt);
+
       }
+      
     };
     fetchAlbum();
   }, [id]);
+
 
   const handleThumbnailClick = (image: string) => {
     setSelectedImage(image);
@@ -81,7 +115,7 @@ export const Detail = ({ product, id }: Props) => {
         <Breadcrumb.Item href="#">{product.category}</Breadcrumb.Item>
         <Breadcrumb.Item href="#">{product.name}</Breadcrumb.Item>
       </Breadcrumb>
-      <div className="flex space-x-5 mt-5">
+      <div className="flex space-x-5 my-6">
         {/* Cột 1: Hiển thị ảnh */}
         <div className="w-1/4">
           <Image src={selectedImage} alt="Product" width={500} height={500} />
@@ -147,9 +181,19 @@ export const Detail = ({ product, id }: Props) => {
                   <HiOutlineFire className="w-[30px] h-[30px] mx-2 text-orange-500" />
                   <span className="text-blue-600">
                     Tặng gói BẢO HÀNH VÀNG có thời hạn {product.guarantee_code}{" "}
-                    tháng - Cam kết 1 đổi 1 - Bảo hành miễn phí tại xe.
+                     - Cam kết 1 đổi 1 - Bảo hành miễn phí tại xe.
                   </span>
                 </li>
+              {/* phần genaral ra các offer khuyến mãi */}
+                {filteredOffers.map((offer) => (
+                  <li className="flex items-center" key={offer.ID}>
+                    <HiOutlineFire className="w-5 h-5 mx-2 text-orange-500" />
+                    <span className="text-blue-600">
+                      {offer.des}
+                    </span>
+                  </li>
+                ))}
+
                 <li className="flex items-center space-x-1 py-5">
                   <GiRotaryPhone className="w-5 h-5 mx-2 text-orange-500" />
                   <span className="text-red-600 text-lg font-bold">
@@ -242,6 +286,26 @@ export const Detail = ({ product, id }: Props) => {
             </Sidebar.Items>
           </Sidebar>
         </div>
+      </div>
+      <div>
+
+        
+      <Tabs.Group aria-label="Tabs with underline" style="underline" className="">
+        <Tabs.Item active icon={BsTicketDetailed  } title="MÔ TẢ">
+            
+        {filteredtxt.map((txtItem) => (
+          <div className="" key={txtItem.ID}>
+          <div className ="px-4 py-2 "  dangerouslySetInnerHTML={{ __html: txtItem.txt }} />
+          </div>
+        ))}
+            
+        </Tabs.Item>
+        <Tabs.Item icon={MdDashboard} title="THÔNG SỐ KỸ THUẬT">
+            <p className="  ">
+              dfgf
+            </p>
+        </Tabs.Item>
+    </Tabs.Group>
       </div>
     </div>
   );

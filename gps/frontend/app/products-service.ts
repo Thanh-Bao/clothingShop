@@ -33,6 +33,21 @@ export async function getAlbum() {
   return data.json();
 };
 
+export async function getYoutube() {
+  const data = await fetch(`${API_URL}/Video`);
+  return data.json();
+};
+
+export async function getOffer() {
+  const data = await fetch(`${API_URL}/Specialoffer`);
+  return data.json();
+};
+
+export async function getDes() {
+  const data = await fetch(`${API_URL}/Text`);
+  return data.json();
+};
+
 // {
 //   "name"           : "Thanh Tung",
 //   "phone"          : "0934565431",
