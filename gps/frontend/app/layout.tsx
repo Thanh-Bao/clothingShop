@@ -1,4 +1,3 @@
-"use client"
 import { Navibar } from '@/components/Navibar'
 import SocialButtons from '@/components/SocialButton'
 import { FooterSitemapLinks } from '@/components/footer1'
