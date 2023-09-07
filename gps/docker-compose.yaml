@@ -1,7 +1,7 @@
 version: '3'
 services:
   gps_shop:
-    image: gps_shop
+    image: thanhbao/gps_shop
     build:
       context: backend/
       dockerfile: ./Dockerfile
