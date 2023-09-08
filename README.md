@@ -49,10 +49,6 @@ docker compose build
 ```
 
 ```
-docker compose up -d
-```
-
-```
 version: '3'
 services:
   gps_shop:
