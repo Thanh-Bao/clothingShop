@@ -16,7 +16,7 @@ export const CartView = () => {
   const [shippingAddress, setShippingAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isPopupVisible, setPopupVisible] = useState(false); // Thêm biến trạng thái cho hiển thị popup
-  const url = "http://thanhconggps.com/rest/api/SaleOrder";
+  const url = "https://thanhconggps.com/rest/api/SaleOrder";
 
   const locale = "vi-VN";
   const options = {
