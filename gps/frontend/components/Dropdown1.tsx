@@ -15,7 +15,7 @@ export const Dropdown1 = () => {
 
   return (
 <div className="relative">
-    <button className="px-5 flex justify-center items-center bg-gray-800 focus:outline-none rounded-none h-10 hover:bg-sky-600"
+    <button className="px-5 flex justify-center items-center bg-gray-800 focus:outline-none rounded-none h-10 hover:bg-orange-400"
         onMouseEnter={handleDropdownOpen} // Mở dropdown khi rê chuột vào
         onMouseLeave={handleDropdownClose} // Đóng dropdown khi chuột rời khỏi
       >
@@ -27,9 +27,9 @@ export const Dropdown1 = () => {
          onMouseLeave={handleDropdownClose} // Đóng dropdown khi chuột rời khỏi danh sách
           >
       <ul className="text-left font-medium">
-        <li className="px-4 py-2 hover:bg-gray-100 bg-sky-600 ">Thiết Bị Định Vị Xe Máy</li>
-        <li className="px-4 py-2 hover:bg-gray-100 bg-sky-600 ">Thiết Bị Định Vị Xe Hơi</li>
-        <li className="px-4 py-2 hover:bg-gray-100 bg-sky-600 ">Thiết Bị Định Vị Xe Tải</li>
+        <li className="px-4 py-2 hover:bg-gray-100 bg-orange-400 ">Thiết Bị Định Vị Xe Máy</li>
+        <li className="px-4 py-2 hover:bg-gray-100 bg-orange-400 ">Thiết Bị Định Vị Xe Hơi</li>
+        <li className="px-4 py-2 hover:bg-gray-100 bg-orange-400 ">Thiết Bị Định Vị Xe Tải</li>
       </ul>
     </div>
 

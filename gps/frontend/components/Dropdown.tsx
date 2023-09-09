@@ -16,7 +16,7 @@ export const Dropdown = () => {
   return (
     <div className="relative">
       <button
-        className="flex justify-center items-center bg-sky-600 focus:outline-none shadow text-white rounded-none ring-gray-200 h-10"
+        className="flex justify-center items-center bg-orange-400 focus:outline-none shadow text-white rounded-none ring-gray-200 h-10"
         onMouseEnter={handleDropdownOpen} // Mở dropdown khi rê chuột vào
         onMouseLeave={handleDropdownClose} // Đóng dropdown khi chuột rời khỏi
       >

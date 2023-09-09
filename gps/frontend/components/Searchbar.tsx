@@ -16,10 +16,10 @@ export const Searchbar = () => {
             <input
                 value={searchQuery}
                 placeholder="Bạn đang tìm kiếm gì?"
-                className="bg-white h-11 px-5 pr-10 w-full text-sm focus:outline-none border border-stone-800 p-2 rounded "
+                className="bg-white h-11 px-5 pr-10 w-full text-sm focus:outline-none border border-stone-800 p-2 rounded-md "
                 onChange={(event) => setsearchQuery(event.target.value)}
             />
-            <button onSubmit={onSearch} className="absolute bg-primary-blue text-white rounded-r right-0 h-full px-2 hover:bg-sky-700">
+            <button onSubmit={onSearch} className="absolute bg-orange-400 text-white rounded-r-md right-0 h-full px-2 hover:bg-sky-700">
                <p>Tìm Kiếm</p>
             </button>
         </form>

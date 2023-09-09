@@ -17,11 +17,11 @@
 
 /* START: Car Card styles */
 .card {
-  @apply bg-white text-black-100 w-[195px] min-h-[10rem] border shadow-md hover:shadow-2xl rounded-md overflow-hidden;
+  @apply bg-white text-black-100 min-h-[300px] border shadow-md hover:shadow-2xl rounded-md;
 }
 
 .card1 {
-  @apply bg-white text-black-100 w-[270px] min-h-[10rem] border shadow-md hover:shadow-2xl rounded-md overflow-hidden;
+  @apply bg-white text-black-100 min-h-[10rem] border shadow-md hover:shadow-2xl rounded-md overflow-hidden;
 }
 
 
@@ -140,3 +140,18 @@
   margin-top: 10px;
 }
 
+/* Trong file CSS của bạn */
+.menu-container {
+  width: 0;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #fff; /* Màu nền của danh sách danh mục sản phẩm */
+  transition: width 0.3s ease-in-out; /* Thời gian và hiệu ứng chuyển đổi */
+}
+
+.menu-container.open {
+  width: 100%; /* Khi mở menu, danh sách sẽ mở rộng sang phải */
+}

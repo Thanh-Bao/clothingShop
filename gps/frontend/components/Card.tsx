@@ -21,12 +21,6 @@ export const ProductCard = ({ product_name, group, products }: CardProps) => {
     (product: Product) => product.category === product_name
   );
 
-  // Kiểm tra số lượng sản phẩm và thiết lập lớp cho grid
-
-  
-  const gridClass =
-    selectedProducts.length < 4 ? "justify-start" : "justify-between";
-  const productClass = selectedProducts.length < 4 ? "mr-3" : "";
   const groupClass = group == 2 ? "card1" : "card";
 
   const handleClickDetail = (filteredProduct:Product) => {
@@ -35,23 +29,18 @@ export const ProductCard = ({ product_name, group, products }: CardProps) => {
 
 
   return (
-    <div className="container mx-auto">
-      <div className={`lg:grid-cols-4 ${gridClass} flex`}>
+    <div className="container">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {selectedProducts.map((filteredProduct) => (
-          <div
-            className={`${groupClass} ${productClass} card`}
-            key={filteredProduct.ID}
-          >
-            <div
-            onClick={() => handleClickDetail(filteredProduct)}
-            >
+          <div className={`${groupClass}`} key={filteredProduct.ID}>
+            <div onClick={() => handleClickDetail(filteredProduct)}>
               <div className="group overflow-hidden">
                 {/* ảnh sản phẩm */}
                 <Image
                   src={filteredProduct.img}
                   alt=""
-                  width={134}
-                  height={187}
+                  width={150}
+                  height={150}
                   layout="responsive"
                   className="transform-gpu transition-transform duration-300 scale-100 group-hover:scale-125"
                 />

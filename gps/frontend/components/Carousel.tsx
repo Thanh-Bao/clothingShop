@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 export default function StaticCarousel() {
   return (
-    <Carousel className="sm:h-64 xl:h-80 2xl:h-96 mx-4 ">
+    <Carousel className="sm:h-[272px] xl:h-[336px] 2xl:h-[368px] ">
       <Image
             src="/slider2.png"
             alt="clothes shop logo"
@@ -30,7 +30,6 @@ export default function StaticCarousel() {
             height={400}
             className="object-contain"
           />
-
     </Carousel>
   )
 }

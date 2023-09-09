@@ -12,13 +12,13 @@ import { GrSend } from "react-icons/gr";
 import { HiMail } from "react-icons/hi";
 import { LuLocateFixed } from "react-icons/lu";
 import { MdOutgoingMail } from "react-icons/md";
-export const FooterSitemapLinks = () => {
+export const FooterSitemapLinks = () => { 
   return (
     <div className=" bg-black text-white">
       <div className="flex justify-between p-4 max-w-[1300px] mx-auto space-x-6">
         <div className="w-1/3">
           <h1 className="text-xl font-bold my-3">
-            Công Ty TNHH TMDV Thành Nam
+            Công Ty TNHH TMDV Thành Công
           </h1>
           <h2 className="font-bold">Trụ sở chính:</h2>
           <div className="flex items-center">
