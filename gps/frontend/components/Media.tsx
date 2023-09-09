@@ -3,8 +3,17 @@ import { MediaProps } from "@/types";
 import { useEffect, useState } from "react";
 
 export const Media = ({ MediaUrl }: MediaProps) => {
-	const [isMobile, setIsMobile] = useState(process.browser && window.innerWidth <= 768);
 
+  const modifiedUrls = MediaUrl.map((item) =>
+  item.url.replace(
+  "https://www.youtube.com/watch?v=",
+  "https://www.youtube.com/embed/"
+  )
+);
+
+  // ##################################################################################################
+
+	const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth <= 768);
 	const handleResize = () => {
 	  if (window.innerWidth <= 768) {
 		setIsMobile(true);
@@ -25,13 +34,9 @@ export const Media = ({ MediaUrl }: MediaProps) => {
 		window.removeEventListener("resize", handleResize);
 	  };
 	}, []);
-  
-	const modifiedUrls = MediaUrl.map((item) =>
-	  item.url.replace(
-		"https://www.youtube.com/watch?v=",
-		"https://www.youtube.com/embed/"
-	  )
-	);
+
+// ########################################################################################################
+
 
   return (
     <div>
@@ -41,8 +46,7 @@ export const Media = ({ MediaUrl }: MediaProps) => {
             <div key={index} className="w-full h-full">
               {"url" in media ? (
                 <iframe
-                  width="650"
-                  height="350"
+                  className="w-[400px] h-[230px]"
                   src={modifiedUrls[index]}
                   title="YouTube Video Player"
                   frameBorder="0"

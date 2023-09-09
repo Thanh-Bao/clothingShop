@@ -10,16 +10,14 @@ import { TbHomeSignal } from "react-icons/tb";
 import { Dropdown, Dropdown1 } from ".";
 import { Searchbar } from "./Searchbar";
 
-
-
-
 export const Navibar = () => {
 
   const { cartCount } = useCart();
   const router = useRouter();
   const [isSticky, setIsSticky] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(process.browser && window.innerWidth <= 768);
+  
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth <= 768);
 
   const handleScroll2 = () => {
     if (window.scrollY >= 120) {
@@ -61,34 +59,33 @@ export const Navibar = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
+    
   return (
+    
     // đây là phần logo và searchbar
     <header className="w-full bg-white relative">
         {isMobile ? (
-          
-          <div className="max-w-[650px] mx-auto flex justify-between items-center my-3">
+          <div className="min-[768px]:max-w-[650px] min-[480px]:max-w-[360px] mx-auto flex justify-between items-center my-2">
 
             <div className="w-1/3">
               <AiOutlineMenuUnfold className="w-10 h-10" onClick={toggleMenu}/>
             </div>
 
             {isMenuOpen && (
-        <div className="w-2/3 flex justify-end">
-          {/* Danh sách danh mục sản phẩm */}
-          <div className="menu-container">
-          
-          </div>
-        </div>
-      )}
+              <div className="w-2/3 flex justify-end">
+                {/* Danh sách danh mục sản phẩm */}
+                <div className="menu-container">
+                </div>
+              </div>
+            )}
 
-            <div className="w-1/3">
+            <div className="w-1/3 h-14 flex items-center">
               <Image
                 src="/logo5.png"
                 alt="clothes shop logo"
-                width={300}
-                height={150}
-                className="object-contain"
+                width={650}
+                height={450}
+                className=""
               />
             </div>
 
@@ -161,7 +158,7 @@ export const Navibar = () => {
                   </div>
                 </div>
               </div>
-            </div>
+          </div>
         )}
     </header>
   );

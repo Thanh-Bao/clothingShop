@@ -61,7 +61,7 @@ export const Detail = ({ product, id }: Props) => {
     currency: "VND",
   };
 
-  const [isMobile, setIsMobile] = useState(process.browser && window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth <= 768);
 
   const handleResize = () => {
     console.log(window.innerWidth);
@@ -125,10 +125,11 @@ export const Detail = ({ product, id }: Props) => {
     addToCart(product);
   };
 
+
   return (
     <div className="relative -z-10 mb-16">
       {isMobile ? (
-        <div className="max-w-[650px] mx-auto">
+        <div className="min-[768px]:max-w-[650px] min-[480px]:max-w-[400px] mx-auto">
           <Breadcrumb
             aria-label="Solid background breadcrumb example"
             className="bg-gray-50 px-5 py-3 dark:bg-gray-900 mb-3"

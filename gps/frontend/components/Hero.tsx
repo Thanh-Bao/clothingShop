@@ -21,10 +21,10 @@ type Props={
 }
 
 export const Hero = ({products,video}:Props) => {
-  const [isMobile, setIsMobile] = useState(process.browser && window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth <= 768);
+
 
   const handleResize = () => {
-    console.log(window.innerWidth);
     if (window.innerWidth <= 768) {
       setIsMobile(true);
     } else {
@@ -45,13 +45,14 @@ export const Hero = ({products,video}:Props) => {
 	  };
 	}, []);
 
+
   return (
     <div className="relative -z-40 ">
 
 {/* ############################################--Mobile--############################################# */}
         {isMobile ? (
-         <div className="m-auto max-w-[650px] mt-5"> 
-            <div className="w-full mt-5">
+         <div className="m-auto min-[768px]:max-w-[650px] min-[480px]:max-w-[400px]"> 
+            <div className="w-full mt-2">
             {/* phần slider */}
             <div className="w-full h-auto">
               <SlideAsAnything />

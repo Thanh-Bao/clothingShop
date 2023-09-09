@@ -16,11 +16,26 @@ export const CartView = () => {
   const [shippingAddress, setShippingAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isPopupVisible, setPopupVisible] = useState(false); // Thêm biến trạng thái cho hiển thị popup
-  const url = "https://thanhconggps.com/rest/api/SaleOrder";
+  const url = "https://thanhconggps.com/rest/api";
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth <= 768);
 
-  const [isMobile, setIsMobile] = useState(
-    process.browser && window.innerWidth <= 768
-  );
+  const data = {
+    phone: phoneNumber,
+    address: shippingAddress,
+    name: fullName,
+    SaleOrderItems: cartItems.map((item) => ({
+      productID: item.product.ID,
+      quantity: item.quantity,
+      realPrice: item.product.realPrice,
+    })),
+  };
+
+  const locale = "vi-VN";
+  const options = {
+    style: "currency",
+    currency: "VND",
+  };
+
 
   const handleResize = () => {
     console.log(window.innerWidth);
@@ -44,27 +59,12 @@ export const CartView = () => {
     };
   }, []);
 
-  const locale = "vi-VN";
-  const options = {
-    style: "currency",
-    currency: "VND",
-  };
+
   const handlePlaceOrder = (cartItems: CartItem[]) => {
     if (!fullName || !shippingAddress || !phoneNumber) {
       setPopupVisible(true);
       return;
     }
-
-    const data = {
-      phone: phoneNumber,
-      address: shippingAddress,
-      name: fullName,
-      SaleOrderItems: cartItems.map((item) => ({
-        productID: item.product.ID,
-        quantity: item.quantity,
-        realPrice: item.product.realPrice,
-      })),
-    };
 
     fetch(url, {
       method: "POST", // Hoặc GET hoặc phương thức khác nếu cần
@@ -95,7 +95,7 @@ export const CartView = () => {
   return (
     <div className="relative -z-10 mb-16">
       {isMobile ? (
-        <div className="max-w-[650px] mx-auto grid grid-cols-1">
+        <div className="min-[768px]:max-w-[650px] min-[480px]:max-w-[400px] mx-auto grid grid-cols-1">
           {/* phần menu */}
           <div className="">
             <Breadcrumb
@@ -115,11 +115,11 @@ export const CartView = () => {
             </h1>
           </div>
 
-          <div className="flex text-sm font-bold mt-5">
+          {/* <div className="flex text-sm font-bold mt-5">
             <div className="flex w-5/12">Sản Phẩm</div>
             <div className="flex pl-12 w-1/5">Giá</div>
             <div className="flex pl-24">Số lượng</div>
-          </div>
+          </div> */}
           {cartItems.length === 0 ? (
             <div>
               <div className="min-h-[200px] w-full flex justify-center items-center border my-5">
