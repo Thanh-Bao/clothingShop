@@ -12,49 +12,10 @@ npm i
 npm start
 ```
 
-# Cách lấy data JSON
-
-### Lấy sản phẩm NewDevice
-
-```
-https://gps.bao.name.vn/rest/api/FilterProduct(category='NewDevice')
-
-```
-
-### Lấy sản phẩm GPSMoto 
-
-```
-https://gps.bao.name.vn/rest/api/FilterProduct(category='GPSMoto')
-
-```
-
-### Lấy tất cả sản phẩm
-
-```
-https://gps.bao.name.vn/rest/api/Product
-
-```
-
-### Lấy ra 1 sản phẩm cho trang "Product detail"
-
-```
-https://gps.bao.name.vn/rest/api/Product(ID='22',IsActiveEntity=true)
-
-```
-
 # to deploy 
 
 ```
 docker compose build
-```
-
-```
-docker compose up -d
-```
-
-
-``` rename
-docker image tag a3dc9803833e813f2b9259d5ae52408931fed50cc12b008fb6f829020fee9a92  thanhbao/gps_shop:latest 
 ```
 
 ```
@@ -67,9 +28,47 @@ services:
 
 ```
 
-```
-docker run -d -p 4004:4004 thanhbao/gps_shop
+#  To config reverse proxy
 
+```
+htpasswd -c /etc/nginx/.htpasswd myUsername123
+```
+
+/etc/nginx/sites-enabled/dedault
+
+```
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+       
+        location /sap/ {
+          limit_except POST PUT PATCH DELETE {
+             auth_basic     "Admin";
+             auth_basic_user_file /etc/nginx/.htpasswd;
+          }
+          proxy_pass http://127.0.0.1:4004/;
+        }
+
+        location /odata/v4/api/SaleOder {
+          limit_except GET  PUT PATCH  {
+             auth_basic       "Admin";
+             auth_basic_user_file /etc/nginx/.htpasswd;
+           }
+           proxy_pass http://127.0.0.1:4004/odata/v4/api/SaleOrder;
+        }
+
+        location /odata/ {
+          proxy_pass http://127.0.0.1:4004/odata/;
+        }
+
+        location /rest/ {
+          proxy_pass http://127.0.0.1:4004/rest/;
+        }
+
+        location / {
+          proxy_pass http://127.0.0.1:3000;
+        }
+}
 ```
 
 
