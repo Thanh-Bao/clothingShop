@@ -40,17 +40,15 @@ htpasswd -c /etc/nginx/.htpasswd myUsername123
 server {
         listen 80 default_server;
         listen [::]:80 default_server;
-       
+
         location /sap/ {
-          limit_except POST PUT PATCH DELETE {
-             auth_basic     "Admin";
-             auth_basic_user_file /etc/nginx/.htpasswd;
-          }
+          auth_basic     "Admin";
+          auth_basic_user_file /etc/nginx/.htpasswd;
           proxy_pass http://127.0.0.1:4004/;
         }
 
-        location /odata/v4/api/SaleOder {
-          limit_except GET  PUT PATCH  {
+         location /odata/v4/api/SaleOder {
+          limit_except POST {
              auth_basic       "Admin";
              auth_basic_user_file /etc/nginx/.htpasswd;
            }
