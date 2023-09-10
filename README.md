@@ -89,6 +89,8 @@ nano nano /etc/nginx/nginx.conf
 ```
 http {
     # other config
+    server_tokens off;
+    more_set_headers 'Server: Windows';
     more_set_headers 'X-Powered-By: ASP.NET';
     # other config
 }
