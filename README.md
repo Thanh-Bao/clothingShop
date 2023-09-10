@@ -36,7 +36,7 @@ htpasswd -c /etc/nginx/.htpasswd myUsername2
 htpasswd -c /etc/nginx/.htpasswd myUsername3
 ```
 
- /etc/nginx/sites-enabled/dedault
+nano /etc/nginx/sites-enabled/dedault
 ```
 server {
         listen 80 default_server;
@@ -76,7 +76,23 @@ server {
         }
 }
 ```
+# to modify http response 
+install HttpHeadersMoreModule
+```
+sudo apt install nginx-extras
+```
+```
+nano nano /etc/nginx/nginx.conf
 
+```
+
+```
+http {
+    # other config
+    more_set_headers 'X-Powered-By: ASP.NET';
+    # other config
+}
+```
 
 
 
