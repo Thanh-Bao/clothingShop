@@ -46,7 +46,7 @@ export const Media = ({ MediaUrl }: MediaProps) => {
             <div key={index} className="w-full h-full">
               {"url" in media ? (
                 <iframe
-                  className="w-[400px] h-[230px]"
+                  className="min-[320px]:w-[280px] min-[320px]:h-[160px] rounded-md"
                   src={modifiedUrls[index]}
                   title="YouTube Video Player"
                   frameBorder="0"
@@ -62,8 +62,7 @@ export const Media = ({ MediaUrl }: MediaProps) => {
             <div key={index} className="w-full h-full">
               {"url" in media ? (
                 <iframe
-                  width="550"
-                  height="350"
+                  className="w-[550px] h-[320px] rounded-md"
                   src={modifiedUrls[index]}
                   title="YouTube Video Player"
                   frameBorder="0"

@@ -65,10 +65,10 @@ export const Navibar = () => {
     // đây là phần logo và searchbar
     <header className="w-full bg-white relative">
         {isMobile ? (
-          <div className="min-[768px]:max-w-[650px] min-[480px]:max-w-[360px] mx-auto flex justify-between items-center my-2">
+          <div className="min-[768px]:max-w-[650px] min-[320px]:max-w-[280px] mx-auto flex justify-between items-center my-2">
 
             <div className="w-1/3">
-              <AiOutlineMenuUnfold className="w-10 h-10" onClick={toggleMenu}/>
+              <AiOutlineMenuUnfold className="w-8 h-8" onClick={toggleMenu}/>
             </div>
 
             {isMenuOpen && (
@@ -85,14 +85,14 @@ export const Navibar = () => {
                 alt="clothes shop logo"
                 width={650}
                 height={450}
-                className=""
+                className="h-[35px]"
               />
             </div>
 
             <div className="w-1/3 flex justify-end">
               <button className="relative" onClick={() => {router.push("/CartPage");}}>
                 <Badge badgeContent={cartCount} color="error">
-                  <BsCart4 className="w-10 h-10" />
+                  <BsCart4 className="w-8 h-8" />
                 </Badge>
               </button>
             </div>

@@ -129,7 +129,7 @@ export const Detail = ({ product, id }: Props) => {
   return (
     <div className="relative -z-10 mb-16">
       {isMobile ? (
-        <div className="min-[768px]:max-w-[650px] min-[480px]:max-w-[400px] mx-auto">
+        <div className="min-[768px]:max-w-[650px] min-[320px]:max-w-[280px] mx-auto">
           <Breadcrumb
             aria-label="Solid background breadcrumb example"
             className="bg-gray-50 px-5 py-3 dark:bg-gray-900 mb-3"
@@ -190,7 +190,7 @@ export const Detail = ({ product, id }: Props) => {
                   </p>
                   <ul className="space-y-2">
                     <li className="flex items-center">
-                      <HiOutlineFire className="w-5 h-5 mx-2 text-orange-500" />
+                      <HiOutlineFire className="min-w-[20px] min-h-[20px] mx-2 text-orange-500" />
                       <span className="text-blue-600">
                         Tặng gói dịch vụ lắp đặt chuyên nghiệp. Nhanh - An Toàn
                         - Bí Mật.
@@ -205,7 +205,7 @@ export const Detail = ({ product, id }: Props) => {
                       </span>
                     </li>
                     <li className="flex items-center">
-                      <HiOutlineFire className="w-5 h-5 mx-2 text-orange-500" />
+                      <HiOutlineFire className="min-w-[20px] min-h-[20px] mx-2 text-orange-500" />
                       <span className="text-blue-600">
                         {" "}
                         Miễn phí ship COD giao hàng trên toàn quốc - Nhận hàng
@@ -213,7 +213,7 @@ export const Detail = ({ product, id }: Props) => {
                       </span>
                     </li>
                     <li className="flex items-center">
-                      <HiOutlineFire className="w-[30px] h-[30px] mx-2 text-orange-500" />
+                      <HiOutlineFire className="min-w-[20px] min-h-[20px] mx-2 text-orange-500" />
                       <span className="text-blue-600">
                         Tặng gói BẢO HÀNH VÀNG có thời hạn{" "}
                         {product.guarantee_code} - Cam kết 1 đổi 1 - Bảo hành
@@ -230,10 +230,10 @@ export const Detail = ({ product, id }: Props) => {
 
                     <li className="flex items-center space-x-1 py-5">
                       <GiRotaryPhone className="w-5 h-5 mx-2 text-orange-500" />
-                      <span className="text-red-600 text-lg font-bold">
+                      <span className="text-red-600 text-sm font-bold">
                         HOTLINE :{" "}
                       </span>
-                      <span className="text-blue-600 text-2xl font-bold">
+                      <span className="text-blue-600 text-xl font-bold">
                         {" "}
                         0373784746
                       </span>

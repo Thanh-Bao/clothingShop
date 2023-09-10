@@ -16,7 +16,7 @@ export const CartView = () => {
   const [shippingAddress, setShippingAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isPopupVisible, setPopupVisible] = useState(false); // Thêm biến trạng thái cho hiển thị popup
-  const url = "https://thanhconggps.com/rest/api";
+  const url = "http://localhost:4004/rest/api/SaleOrder";
   const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth <= 768);
 
   const data = {
@@ -95,7 +95,7 @@ export const CartView = () => {
   return (
     <div className="relative -z-10 mb-16">
       {isMobile ? (
-        <div className="min-[768px]:max-w-[650px] min-[480px]:max-w-[400px] mx-auto grid grid-cols-1">
+        <div className="min-[768px]:max-w-[650px] min-[320px]:max-w-[280px] mx-auto grid grid-cols-1">
           {/* phần menu */}
           <div className="">
             <Breadcrumb

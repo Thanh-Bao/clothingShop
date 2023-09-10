@@ -51,7 +51,7 @@ export const Hero = ({products,video}:Props) => {
 
 {/* ############################################--Mobile--############################################# */}
         {isMobile ? (
-         <div className="m-auto min-[768px]:max-w-[650px] min-[480px]:max-w-[400px]"> 
+         <div className="m-auto min-[768px]:max-w-[650px] min-[320px]:max-w-[280px]"> 
             <div className="w-full mt-2">
             {/* phần slider */}
             <div className="w-full h-auto">

@@ -17,11 +17,11 @@
 
 /* START: Car Card styles */
 .card {
-  @apply bg-white text-black-100 min-h-[300px] border shadow-md hover:shadow-2xl rounded-md;
+  @apply bg-white text-black-100 max-h-[350px] border shadow-md hover:shadow-2xl rounded-md overflow-hidden;
 }
 
 .card1 {
-  @apply bg-white text-black-100 min-h-[10rem] border shadow-md hover:shadow-2xl rounded-md overflow-hidden;
+  @apply bg-white text-black-100 max-h-[450px] border shadow-md hover:shadow-2xl rounded-md overflow-hidden;
 }
 
 
@@ -38,11 +38,11 @@
 }
 
 .button_primary {
-  @apply bg-orange-500/50 hover:bg-orange-500/100 px-5 py-1 rounded-md text-white font-medium tracking-wider transition ;
+  @apply bg-orange-500/50 hover:bg-orange-500/100 w-2/3 py-1 rounded-md text-white font-medium tracking-wider transition ;
 }
 
 .button_icon {
-  @apply flex-grow flex justify-center items-center bg-gray-300/60 hover:bg-gray-300/80 rounded-md ;
+  @apply flex-grow flex justify-center items-center bg-gray-300/60 w-1/3 hover:bg-gray-300/80 rounded-md ;
 }
 
 .media_container {

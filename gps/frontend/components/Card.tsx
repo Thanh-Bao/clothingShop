@@ -30,27 +30,27 @@ export const ProductCard = ({ product_name, group, products }: CardProps) => {
 
   return (
     <div className="container">
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 min-[320px]:grid-cols-1">
         {selectedProducts.map((filteredProduct) => (
-          <div className={`${groupClass}`} key={filteredProduct.ID}>
-            <div onClick={() => handleClickDetail(filteredProduct)}>
-              <div className="group overflow-hidden">
+          <div className={`${groupClass}`} key={filteredProduct.ID} id={filteredProduct.ID.toString()}>
+            <div className="min-h-[150px]" onClick={() => handleClickDetail(filteredProduct)}>
+              <div className="group max-h-[160px] overflow-hidden">
                 {/* ảnh sản phẩm */}
                 <Image
                   src={filteredProduct.img}
                   alt=""
-                  width={150}
-                  height={150}
+                  width={250}
+                  height={250}
                   layout="responsive"
                   className="transform-gpu transition-transform duration-300 scale-100 group-hover:scale-125"
                 />
               </div>
-              {/* tên sản phẩm */}
-              <button className="product_title h-10 mt-2 px-2">
-                {filteredProduct.name}
-              </button>
             </div>
             <div className="pb-2 px-2">
+              {/* tên sản phẩm */}
+              <button className="product_title h-10" onClick={() => handleClickDetail(filteredProduct)}>
+                {filteredProduct.name}
+              </button>
               {/* Giá sản phẩm */}
               <div className="">
                 {filteredProduct.fakePrice !== null ? (
