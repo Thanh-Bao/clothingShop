@@ -27,9 +27,15 @@ export const Dropdown1 = () => {
          onMouseLeave={handleDropdownClose} // Đóng dropdown khi chuột rời khỏi danh sách
           >
       <ul className="text-left font-medium">
-        <li className="px-4 py-2 hover:bg-gray-100 bg-orange-400 ">Thiết Bị Định Vị Xe Máy</li>
-        <li className="px-4 py-2 hover:bg-gray-100 bg-orange-400 ">Thiết Bị Định Vị Xe Hơi</li>
-        <li className="px-4 py-2 hover:bg-gray-100 bg-orange-400 ">Thiết Bị Định Vị Xe Tải</li>
+        <li className="px-4 py-2 hover:bg-gray-100 bg-orange-400 ">
+          <a href="#GPSMoto">Thiết Bị Định Vị Xe Máy</a>
+          </li>
+        <li className="px-4 py-2 hover:bg-gray-100 bg-orange-400 ">
+          <a href="#GPSCar">Thiết Bị Định Vị Ô tô</a>
+        </li>
+        <li className="px-4 py-2 hover:bg-gray-100 bg-orange-400 ">
+          <a href="#GPSMoto">Thiết Bị Định Vị Xe Tải</a>
+        </li>
       </ul>
     </div>
 

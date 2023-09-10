@@ -59,10 +59,11 @@ export const Hero = ({products,video}:Props) => {
             </div>
             
             {/* phần này là thiết bị định vị xe máy */}
-            <div className="w-full mt-5">
+            <div className="w-full mt-5" id="GPSMoto">
                 <ListBar
                   List_name="Thiết bị định vị xe máy"
                   icon={FaMotorcycle}
+                  
                 />
                 <div className="mt-3 rounded-md">
                   <ProductCard
@@ -74,7 +75,7 @@ export const Hero = ({products,video}:Props) => {
             </div>
 
             {/* phần này là thiết bị định vị xe hơi */}
-            <div className="w-full mt-5">
+            <div className="w-full mt-5" id="GPSCar">
               <div className="">
                   <ListBar
                     List_name="thiết bị định vị xe hơi"
@@ -133,7 +134,8 @@ export const Hero = ({products,video}:Props) => {
                 <ListGroupWithLinks1 />
               </div>
               <div className="w-full mb-8">
-                <ListGroupWithLinks2 />
+                <ListGroupWithLinks2 
+                products={products}/>
               </div>
               <div className="w-full mb-8">
                 <ListGroupWithLinks3 />
@@ -166,7 +168,7 @@ export const Hero = ({products,video}:Props) => {
               </div>
 
               {/* phần này là thiết bị định vị xe máy */}
-              <div className="w-full mt-5">
+              <div className="w-full mt-5" id="GPSMoto">
                 <div>
                   <div className="">
                     <ListBar
@@ -185,7 +187,7 @@ export const Hero = ({products,video}:Props) => {
               </div>
 
               {/* phần này là thiết bị định vị xe hơi */}
-              <div className="w-full mt-5">
+              <div className="w-full mt-5" id="GPSCar">
                 <div>
                   <div className="">
                     <ListBar

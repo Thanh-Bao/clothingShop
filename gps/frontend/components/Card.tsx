@@ -32,7 +32,7 @@ export const ProductCard = ({ product_name, group, products }: CardProps) => {
     <div className="container">
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 min-[320px]:grid-cols-1">
         {selectedProducts.map((filteredProduct) => (
-          <div className={`${groupClass}`} key={filteredProduct.ID} id={filteredProduct.ID.toString()}>
+          <div className={`${groupClass}`} key={filteredProduct.ID}>
             <div className="min-h-[150px]" onClick={() => handleClickDetail(filteredProduct)}>
               <div className="group max-h-[160px] overflow-hidden">
                 {/* ảnh sản phẩm */}

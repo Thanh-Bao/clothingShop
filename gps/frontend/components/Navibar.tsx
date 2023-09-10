@@ -102,7 +102,7 @@ export const Navibar = () => {
           <div>
             <div className="max-w-[1120px] mx-auto flex justify-between items-center py-4">
 
-              <div className="w-1/4">
+              <div className="w-1/4" onClick={() => {router.push("/");}}>
                 <Image
                   src="/logo5.png"
                   alt="clothes shop logo"
@@ -136,7 +136,7 @@ export const Navibar = () => {
                   </div>
                   <div className="flex ml-9 w-[1000px] items-center ">
                     <div>
-                      <button className="h-10 px-5 bg-orange-400 text-white flex justify-between items-center text-sm">
+                      <button className="h-10 px-5 bg-orange-400 text-white flex justify-between items-center text-sm" onClick={() => {router.push("/");}}>
                         <span className="px-1">
                           <TbHomeSignal className="w-5 h-5" />
                         </span>
