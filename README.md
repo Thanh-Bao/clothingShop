@@ -37,7 +37,8 @@ htpasswd -c /etc/nginx/.htpasswd myUsername3
 ```
 
 
-```/etc/nginx/sites-enabled/dedault
+```
+# /etc/nginx/sites-enabled/dedault
 server {
         listen 80 default_server;
         listen [::]:80 default_server;
