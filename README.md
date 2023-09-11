@@ -31,30 +31,36 @@ services:
 #  To config reverse proxy
 
 ```
-htpasswd -c /etc/nginx/.htpasswd myUsername123
+htpasswd -c /etc/nginx/.htpasswd myUsername1
+htpasswd -c /etc/nginx/.htpasswd myUsername2
+htpasswd -c /etc/nginx/.htpasswd myUsername3
 ```
 
-/etc/nginx/sites-enabled/dedault
-
+nano /etc/nginx/sites-enabled/dedault
 ```
 server {
         listen 80 default_server;
         listen [::]:80 default_server;
-       
+
         location /sap/ {
-          limit_except POST PUT PATCH DELETE {
-             auth_basic     "Admin";
-             auth_basic_user_file /etc/nginx/.htpasswd;
-          }
+          auth_basic     "Admin";
+          auth_basic_user_file /etc/nginx/.htpasswd;
           proxy_pass http://127.0.0.1:4004/;
         }
 
-        location /odata/v4/api/SaleOder {
-          limit_except GET  PUT PATCH  {
+         location /odata/v4/api/SaleOrder {
+          limit_except POST {
              auth_basic       "Admin";
              auth_basic_user_file /etc/nginx/.htpasswd;
            }
            proxy_pass http://127.0.0.1:4004/odata/v4/api/SaleOrder;
+        }
+         location /rest/api/SaleOrder {
+          limit_except POST {
+             auth_basic       "Admin";
+             auth_basic_user_file /etc/nginx/.htpasswd;
+           }
+           proxy_pass http://127.0.0.1:4004/rest/api/SaleOrder;
         }
 
         location /odata/ {
@@ -70,7 +76,25 @@ server {
         }
 }
 ```
+# to modify http response 
+install HttpHeadersMoreModule
+```
+sudo apt install nginx-extras
+```
+```
+nano nano /etc/nginx/nginx.conf
 
+```
+
+```
+http {
+    # other config
+    server_tokens off;
+    more_set_headers 'Server: Windows';
+    more_set_headers 'X-Powered-By: ASP.NET';
+    # other config
+}
+```
 
 
 
