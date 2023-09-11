@@ -21,6 +21,7 @@ type Props={
 }
 
 export const Hero = ({products,video}:Props) => {
+  
   const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth <= 768);
 
 

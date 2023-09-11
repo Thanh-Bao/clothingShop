@@ -1,6 +1,5 @@
 // const API_URL = "http://localhost:4004/rest/api";
-const API_URL = "https:/thanhconggps.com/rest/api";
-
+const API_URL = "https://thanhconggps.com/rest/api";
 
 // Getting all products from fake store API
 export async function getProducts() {
