@@ -22,7 +22,7 @@ export const Hero = ({products,video}:Props) => {
   return (
     <div className="relative -z-40 ">
 
-        <div className="xl:max-w-[1122px] xl:mt-5 max-[430px]:max-w-[400px] m-auto ">
+        <div className="xl:max-w-[1122px] xl:mt-5 max-[430px]:max-w-[390px] m-auto ">
     
             <div className="xl:flex -z-30">
             {/* ===== phần nội dung bên trái ===== */}

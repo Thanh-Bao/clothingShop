@@ -61,29 +61,6 @@ export const Detail = ({ product, id }: Props) => {
     currency: "VND",
   };
 
-  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth <= 768);
-
-  const handleResize = () => {
-    if (window.innerWidth <= 768) {
-      setIsMobile(true);
-    } else {
-      setIsMobile(false);
-    }
-  };
-
-  useEffect(() => {
-	  window.addEventListener("resize", handleResize);
-  
-	  // Kiểm tra kích thước ban đầu khi trang web được tải
-	  if (window.innerWidth <= 768) {
-		setIsMobile(true);
-	  }
-  
-	  return () => {
-		window.removeEventListener("resize", handleResize);
-	  };
-	}, []);
-
   useEffect(() => {
     const fetchAlbum = async () => {
       if (id) {
@@ -127,155 +104,8 @@ export const Detail = ({ product, id }: Props) => {
 
   return (
     <div className="relative -z-10 mb-16">
-      {isMobile ? (
-        <div className="min-[768px]:max-w-[650px] min-[320px]:max-w-[280px] mx-auto">
-          <Breadcrumb
-            aria-label="Solid background breadcrumb example"
-            className="bg-gray-50 px-5 py-3 dark:bg-gray-900 mb-3"
-          >
-            <Breadcrumb.Item href="#" icon={HiHome}>
-              <p>Home</p>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item href="#">{product.category}</Breadcrumb.Item>
-            <Breadcrumb.Item href="#">{product.name}</Breadcrumb.Item>
-          </Breadcrumb>
-          <div className="grid grid-cols-1">
-            {/* Cột 1: Hiển thị ảnh */}
-            <div className="w-full rounded-md">
-              <Image
-                src={selectedImage}
-                alt="Product"
-                width={700}
-                height={700}
-                className="rounded-md"
-              />
-              <div className="mt-4 space-x-2 flex flex-wrap">
-                {urlArray.map((thumbnail, index) => (
-                  <Image
-                    key={index}
-                    src={thumbnail}
-                    alt={`Thumbnail ${index}`}
-                    width={100}
-                    height={100}
-                    className="w-1/4 cursor-pointer mb-2"
-                    onClick={() => handleThumbnailClick(thumbnail)}
-                  />
-                ))}
-              </div>
-            </div>
 
-            {/* Cột 2: Hiển thị giá cả và thông tin */}
-            <div className="w-full">
-              <h2 className="text-4xl mb-4">{product.name}</h2>
-              <p className="text-red-600 text-3xl font-bold mb-2">
-                {new Intl.NumberFormat(locale, options).format(
-                  product.realPrice
-                )}
-              </p>
-              <p className="text-xl line-through opacity-50 font-bold ml-1">
-                {new Intl.NumberFormat(locale, options).format(
-                  product.fakePrice
-                )}
-              </p>
-              <div className="py-3">
-                <fieldset className="px-2 py-3 border border-orange-500 border-">
-                  <legend className=" font-bold text-lg text-red-600 px-2">
-                    Khuyến Mãi
-                  </legend>
-                  <p className="pb-2">
-                    <span className="text-red-600 text-lg font-bold">
-                      Mua {product.name} - Nhận ưu đãi hấp dẫn tại Thành Nam
-                    </span>
-                  </p>
-                  <ul className="space-y-2">
-                    <li className="flex items-center">
-                      <HiOutlineFire className="min-w-[20px] min-h-[20px] mx-2 text-orange-500" />
-                      <span className="text-blue-600">
-                        Tặng gói dịch vụ lắp đặt chuyên nghiệp. Nhanh - An Toàn
-                        - Bí Mật.
-                      </span>
-                    </li>
-
-                    <li className="flex items-center">
-                      <HiOutlineFire className="w-5 h-5 mx-2 text-orange-500" />
-                      <span className="text-blue-600">
-                        {" "}
-                        Miễn phí lắp đặt tại Sài Gòn.
-                      </span>
-                    </li>
-                    <li className="flex items-center">
-                      <HiOutlineFire className="min-w-[20px] min-h-[20px] mx-2 text-orange-500" />
-                      <span className="text-blue-600">
-                        {" "}
-                        Miễn phí ship COD giao hàng trên toàn quốc - Nhận hàng
-                        trả tiền.
-                      </span>
-                    </li>
-                    <li className="flex items-center">
-                      <HiOutlineFire className="min-w-[20px] min-h-[20px] mx-2 text-orange-500" />
-                      <span className="text-blue-600">
-                        Tặng gói BẢO HÀNH VÀNG có thời hạn{" "}
-                        {product.guarantee_code} - Cam kết 1 đổi 1 - Bảo hành
-                        miễn phí tại xe.
-                      </span>
-                    </li>
-                    {/* phần genaral ra các offer khuyến mãi */}
-                    {filteredOffers.map((offer) => (
-                      <li className="flex items-center" key={offer.ID}>
-                        <HiOutlineFire className="w-5 h-5 mx-2 text-orange-500" />
-                        <span className="text-blue-600">{offer.des}</span>
-                      </li>
-                    ))}
-
-                    <li className="flex items-center space-x-1 py-5">
-                      <GiRotaryPhone className="w-5 h-5 mx-2 text-orange-500" />
-                      <span className="text-red-600 text-sm font-bold">
-                        HOTLINE :{" "}
-                      </span>
-                      <span className="text-blue-600 text-xl font-bold">
-                        {" "}
-                        0373784746
-                      </span>
-                    </li>
-                  </ul>
-                </fieldset>
-              </div>
-
-              <Button
-                gradientDuoTone="pinkToOrange"
-                className="flex items-center h-14 my-4"
-                onClick={() => handleAddToCartClick(product)}
-              >
-                <HiOutlineShoppingCart className="w-6 h-6 mx-3" />
-                <p className="text-lg">Thêm Vào giở hàng</p>
-              </Button>
-              
-            </div>
-          </div>
-          <div>
-            <Tabs.Group
-              aria-label="Tabs with underline"
-              style="underline"
-              className=""
-            >
-              <Tabs.Item active icon={BsTicketDetailed} title="MÔ TẢ">
-                {filteredtxt.map((txtItem) => (
-                  <div className="" key={txtItem.ID}>
-                    <div
-                      className="px-4 py-2 "
-                      dangerouslySetInnerHTML={{ __html: txtItem.txt }}
-                    />
-                  </div>
-                ))}
-              </Tabs.Item>
-              <Tabs.Item icon={MdDashboard} title="THÔNG SỐ KỸ THUẬT">
-                <p className="  ">dfgf</p>
-              </Tabs.Item>
-            </Tabs.Group>
-          </div>
-        </div>
-      ) : (
-        <div className="max-w-[1250px] px-16 mx-auto">
+        <div className="xl:max-w-[1250px] xl:px-16 max-[430px]:max-w-[390px] mx-auto">
           <Breadcrumb
             aria-label="Solid background breadcrumb example"
             className="bg-gray-50 px-5 py-3 dark:bg-gray-900"
@@ -286,9 +116,10 @@ export const Detail = ({ product, id }: Props) => {
             <Breadcrumb.Item href="#">{product.category}</Breadcrumb.Item>
             <Breadcrumb.Item href="#">{product.name}</Breadcrumb.Item>
           </Breadcrumb>
-          <div className="flex space-x-5 my-6">
+
+          <div className="xl:flex xl:space-x-5 xl:my-6">
             {/* Cột 1: Hiển thị ảnh */}
-            <div className="w-1/4">
+            <div className="xl:w-1/4 max-[430px]:w-full max-[430px]:py-3">
               <Image
                 src={selectedImage}
                 alt="Product"
@@ -311,7 +142,7 @@ export const Detail = ({ product, id }: Props) => {
             </div>
 
             {/* Cột 2: Hiển thị giá cả và thông tin */}
-            <div className="w-2/4">
+            <div className="xl:w-2/4 max-[430px]:w-full">
               <h2 className="text-4xl mb-4">{product.name}</h2>
               <p className="text-red-600 text-3xl font-bold mb-2">
                 {new Intl.NumberFormat(locale, options).format(
@@ -335,7 +166,7 @@ export const Detail = ({ product, id }: Props) => {
                   </p>
                   <ul className="space-y-2">
                     <li className="flex items-center">
-                      <HiOutlineFire className="w-5 h-5 mx-2 text-orange-500" />
+                      <HiOutlineFire className="min-w-[20px] min-h-[20px] mx-2 text-orange-500" />
                       <span className="text-blue-600">
                         Tặng gói dịch vụ lắp đặt chuyên nghiệp. Nhanh - An Toàn
                         - Bí Mật.
@@ -343,14 +174,14 @@ export const Detail = ({ product, id }: Props) => {
                     </li>
 
                     <li className="flex items-center">
-                      <HiOutlineFire className="w-5 h-5 mx-2 text-orange-500" />
+                      <HiOutlineFire className="min-w-[20px] min-h-[20px] mx-2 text-orange-500" />
                       <span className="text-blue-600">
                         {" "}
                         Miễn phí lắp đặt tại Sài Gòn.
                       </span>
                     </li>
                     <li className="flex items-center">
-                      <HiOutlineFire className="w-5 h-5 mx-2 text-orange-500" />
+                      <HiOutlineFire className="min-w-[20px] min-h-[20px] mx-2 text-orange-500" />
                       <span className="text-blue-600">
                         {" "}
                         Miễn phí ship COD giao hàng trên toàn quốc - Nhận hàng
@@ -358,7 +189,7 @@ export const Detail = ({ product, id }: Props) => {
                       </span>
                     </li>
                     <li className="flex items-center">
-                      <HiOutlineFire className="w-[30px] h-[30px] mx-2 text-orange-500" />
+                      <HiOutlineFire className="min-w-[20px] min-h-[20px] mx-2 text-orange-500" />
                       <span className="text-blue-600">
                         Tặng gói BẢO HÀNH VÀNG có thời hạn{" "}
                         {product.guarantee_code} - Cam kết 1 đổi 1 - Bảo hành
@@ -375,10 +206,10 @@ export const Detail = ({ product, id }: Props) => {
 
                     <li className="flex items-center space-x-1 py-5">
                       <GiRotaryPhone className="w-5 h-5 mx-2 text-orange-500" />
-                      <span className="text-red-600 text-lg font-bold">
+                      <span className="text-red-600 text-xl font-bold">
                         HOTLINE :{" "}
                       </span>
-                      <span className="text-blue-600 text-2xl font-bold">
+                      <span className="text-blue-600 text-xl font-bold">
                         {" "}
                         0373784746
                       </span>
@@ -398,7 +229,7 @@ export const Detail = ({ product, id }: Props) => {
             </div>
 
             {/* Cột 3: Hiển thị ưu nhược điểm */}
-            <div className="w-1/4">
+            <div className="xl:w-1/4 max-[430px]:hidden">
               <Sidebar
                 aria-label="Sidebar with logo branding example"
                 className="w-full"
@@ -488,7 +319,6 @@ export const Detail = ({ product, id }: Props) => {
             </Tabs.Group>
           </div>
         </div>
-      )}
     </div>
   );
 };

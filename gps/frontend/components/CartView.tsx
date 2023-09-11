@@ -2,7 +2,7 @@
 import { CartItem } from "@/types";
 import { Breadcrumb, Button, TextInput } from "flowbite-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaPhoneVolume } from "react-icons/fa";
 import { HiHome, HiMail } from "react-icons/hi";
 import { MdAddHomeWork, MdArrowBackIosNew } from "react-icons/md";
@@ -18,8 +18,7 @@ export const CartView = () => {
   const [isPopupVisible, setPopupVisible] = useState(false); // Thêm biến trạng thái cho hiển thị popup
   // const url = "http://localhost:4004/rest/api/SaleOrder";
   const url = "https://thanhconggps.com/rest/api/SaleOrder";
-  
-  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth <= 768);
+
 
   const data = {
     phone: phoneNumber,
@@ -37,28 +36,6 @@ export const CartView = () => {
     style: "currency",
     currency: "VND",
   };
-
-
-  const handleResize = () => {
-    if (window.innerWidth <= 768) {
-      setIsMobile(true);
-    } else {
-      setIsMobile(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-
-    // Kiểm tra kích thước ban đầu khi trang web được tải
-    if (window.innerWidth <= 768) {
-      setIsMobile(true);
-    }
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
 
   const handlePlaceOrder = (cartItems: CartItem[]) => {
@@ -89,16 +66,17 @@ export const CartView = () => {
       });
   };
 
+
   const closePopup = () => {
     setPopupVisible(false);
   };
 
   return (
     <div className="relative -z-10 mb-16">
-      {isMobile ? (
-        <div className="min-[768px]:max-w-[650px] min-[320px]:max-w-[280px] mx-auto grid grid-cols-1">
+      
+        <div className="xl:max-w-[1150px] xl:px-4 max-[430px]:max-w-[390px] mx-auto ">
           {/* phần menu */}
-          <div className="">
+          <div className="w-full">
             <Breadcrumb
               aria-label="Solid background breadcrumb example"
               className="bg-gray-50 px-5 py-3 dark:bg-gray-900"
@@ -116,176 +94,7 @@ export const CartView = () => {
             </h1>
           </div>
 
-          {/* <div className="flex text-sm font-bold mt-5">
-            <div className="flex w-5/12">Sản Phẩm</div>
-            <div className="flex pl-12 w-1/5">Giá</div>
-            <div className="flex pl-24">Số lượng</div>
-          </div> */}
-          {cartItems.length === 0 ? (
-            <div>
-              <div className="min-h-[200px] w-full flex justify-center items-center border my-5">
-                <h1>Bạn chưa chọn sản phẩm nào</h1>
-              </div>
-              <div className="mb-5">
-                <Button
-                  className="w-60 border-orange-500 bg-white "
-                  color="red"
-                  onClick={() => {
-                    router.push("/");
-                  }}
-                >
-                  <MdArrowBackIosNew className="mr-2 h-4 w-4 text-orange-500 pt-1" />
-                  <p className="text-orange-500">Tiếp tục xem sản phẩm</p>
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <div className="relative w-full">
-              {/* phần list cart */}
-              <div className="w-full my-5 border px-5 pt-5">
-                {cartItems.map((item: any) => (
-                  <div key={item.product.ID}>
-                    <CartItemView item={item} />
-                  </div>
-                ))}
-              </div>
-
-              <Button
-                className="relative w-60 border-orange-500 bg-white"
-                color="red"
-                onClick={() => {
-                  router.push("/");
-                }}
-              >
-                <MdArrowBackIosNew className="mr-4 h-4 w-4 pt-1 text-orange-500" />
-                <p className="text-orange-500">Tiếp tục xem sản phẩm</p>
-              </Button>
-
-              
-                {/* phần thông tin thanh toán */}
-                <div className="w-full my-5">
-                  <div className="h-[2px] bg-gray-200 mb-2"></div>
-                  <h2 className="text-lg font-bold my-4">
-                    Thông tin thanh toán
-                  </h2>
-
-                  <div>
-                    {/* Họ và tên */}
-                    <div className="w-full pb-2">
-                      <TextInput
-                        icon={HiMail}
-                        id="id1"
-                        placeholder="Họ và Tên"
-                        required
-                        value={fullName}
-                        onChange={(e) => setFullName(e.target.value)}
-                      />
-                    </div>
-
-                    {/* địa chỉ giao hàng */}
-                    <div className="w-full py-2">
-                      <TextInput
-                        icon={MdAddHomeWork}
-                        id="id2"
-                        placeholder="Địa chỉ giao hàng"
-                        required
-                        value={shippingAddress}
-                        onChange={(e) => setShippingAddress(e.target.value)}
-                      />
-                    </div>
-
-                    {/* số điện thoại */}
-                    <div className="w-full py-2">
-                      <TextInput
-                        icon={FaPhoneVolume}
-                        id="id3"
-                        placeholder="Số điện thoại"
-                        required
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
-                      />
-                    </div>
-                  </div>
-                </div>
-                {/* phần thanh toán */}
-                <div className="w-full border-2 border-orange-500">
-                  <div className="p-4">
-                    <h1 className="text-sm font-bold pb-3">ĐƠN HÀNG CỦA BẠN</h1>
-                    <div className="flex justify-between">
-                      <span className="text-xs">SẢN PHẨM</span>
-                      <span className="text-xs">TỔNG</span>
-                    </div>
-                    <div className="h-[2px] w-full bg-gray-200 my-2"></div>
-                    {cartItems.map((item: any) => (
-                      <div
-                        key={item.product.ID}
-                        className="flex justify-between"
-                      >
-                        <span className="text-xs py-1 pr-5">
-                          {item.product.name} x {item.quantity}
-                        </span>
-                        <span className="text-xs text-red-500 font-bold">
-                          {new Intl.NumberFormat(locale, options).format(
-                            item.product.realPrice * item.quantity
-                          )}
-                        </span>
-                      </div>
-                    ))}
-                    <div className="h-[1px] w-full bg-gray-200 my-2"></div>
-
-                    <div className="flex justify-between">
-                      <span className="text-xs">Tổng</span>
-                      <span className="text-sm text-red-500 font-bold">
-                        {new Intl.NumberFormat(locale, options).format(
-                          cartTotal
-                        )}
-                      </span>
-                    </div>
-                    <div className="flex justify-end items-end mt-6">
-                      <Button
-                        gradientDuoTone="purpleToPink"
-                        type="button"
-                        onClick={() => handlePlaceOrder(cartItems)}
-                      >
-                        Đặt Hàng
-                      </Button>
-
-                      {/* Hiển thị popup nếu isPopupVisible là true */}
-                      {isPopupVisible && (
-                        <Popup
-                          message="Vui lòng điền đầy đủ thông tin trước khi đặt hàng."
-                          onClose={closePopup}
-                        />
-                      )}
-                    </div>
-                  </div>
-                </div>
-              
-            </div>
-          )}
-        </div>
-      ) : (
-        <div className="max-w-[1150px] mx-auto px-4">
-          {/* phần menu */}
-          <div className="">
-            <Breadcrumb
-              aria-label="Solid background breadcrumb example"
-              className="bg-gray-50 px-5 py-3 dark:bg-gray-900"
-            >
-              <Breadcrumb.Item href="#" icon={HiHome}>
-                <p>Home</p>
-              </Breadcrumb.Item>
-              <Breadcrumb.Item href="#">Giỏ hàng</Breadcrumb.Item>
-            </Breadcrumb>
-
-            <h1 className="w-full items-center text-xl font-bold">
-              <div className="h-[3px] w-24 bg-gray-500 my-2"></div>
-              <span className="text-sky-400">GIỎ HÀNG CỦA TÔI</span>
-              <div className="h-[1px] w-full bg-gray-200 my-2"></div>
-            </h1>
-          </div>
-
-          <div className="flex text-sm font-bold mt-5">
+          <div className="flex text-sm font-bold mt-5 max-[430px]:hidden">
             <div className="flex w-5/12">Sản Phẩm</div>
             <div className="flex pl-12 w-1/5">Giá</div>
             <div className="flex pl-24">Số lượng</div>
@@ -330,17 +139,17 @@ export const CartView = () => {
                 <p className="text-orange-500">Tiếp tục xem sản phẩm</p>
               </Button>
 
-              <div className="flex my-5">
+              <div className="xl:flex xl:my-5">
                 {/* phần thông tin thanh toán */}
-                <div className="w-3/5 ">
-                  <div className="h-[2px] bg-gray-200 mb-2 mr-10"></div>
+                <div className="xl:w-3/5 max-[430px]:w-full">
+                  <div className="h-[2px] bg-gray-200 mb-2 xl:mr-10 max-[430px]:my-4"></div>
                   <h2 className="text-lg font-bold my-4">
                     Thông tin thanh toán
                   </h2>
 
                   <div>
                     {/* Họ và tên */}
-                    <div className="w-full pr-10 pb-2">
+                    <div className="w-full xl:pr-10 pb-2">
                       <TextInput
                         icon={HiMail}
                         id="id1"
@@ -352,7 +161,7 @@ export const CartView = () => {
                     </div>
 
                     {/* địa chỉ giao hàng */}
-                    <div className="w-full pr-10 py-2">
+                    <div className="w-full xl:pr-10 py-2">
                       <TextInput
                         icon={MdAddHomeWork}
                         id="id2"
@@ -364,7 +173,7 @@ export const CartView = () => {
                     </div>
 
                     {/* số điện thoại */}
-                    <div className="w-full pr-10 py-2">
+                    <div className="w-full xl:pr-10 py-2">
                       <TextInput
                         icon={FaPhoneVolume}
                         id="id3"
@@ -377,7 +186,7 @@ export const CartView = () => {
                   </div>
                 </div>
                 {/* phần thanh toán */}
-                <div className="w-2/5 border-2 border-orange-500">
+                <div className="xl:w-2/5 max-[430px]:w-full max-[430px]:mt-4 border-2 border-orange-500">
                   <div className="p-4">
                     <h1 className="text-sm font-bold pb-3">ĐƠN HÀNG CỦA BẠN</h1>
                     <div className="flex justify-between">
@@ -433,7 +242,7 @@ export const CartView = () => {
             </div>
           )}
         </div>
-      )}
+
     </div>
   );
 };
