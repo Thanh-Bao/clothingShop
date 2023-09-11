@@ -36,7 +36,6 @@ export const CartProvider = ({ children }: Props) => {
     const existingCartItemIndex = cartItems.findIndex(
       (item) => item.product.ID === product.ID
     );
-console.log(`Adding ${existingCartItemIndex}`)
 
     if (existingCartItemIndex !== -1) {
       const existingCartItem = cartItems[existingCartItemIndex];

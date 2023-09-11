@@ -8,7 +8,6 @@ export const Searchbar = () => {
     const onSearch = (event: React.FormEvent) => {
         event.preventDefault();
         const encodedSearchQuery = encodeURIComponent(searchQuery);
-        console.log('currentQuery',encodedSearchQuery);
     }
 
     return (

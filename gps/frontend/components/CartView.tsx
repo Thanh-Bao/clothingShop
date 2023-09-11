@@ -17,7 +17,7 @@ export const CartView = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isPopupVisible, setPopupVisible] = useState(false); // Thêm biến trạng thái cho hiển thị popup
   // const url = "http://localhost:4004/rest/api/SaleOrder";
-  const url = "https:/thanhconggps.com/rest/api/SaleOrder";
+  const url = "https://thanhconggps.com/rest/api/SaleOrder";
   
   const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth <= 768);
 
@@ -40,7 +40,6 @@ export const CartView = () => {
 
 
   const handleResize = () => {
-    console.log(window.innerWidth);
     if (window.innerWidth <= 768) {
       setIsMobile(true);
     } else {

@@ -20,7 +20,6 @@ export default function ListGroupWithLinks2({products}:Props) {
   const router = useRouter();
 
   const limitedProducts = products.slice(0, 5);
-  console.log(limitedProducts)
 
   const handleClickDetail = (filteredProduct:Product) => {
     router.push(`/product/${filteredProduct.ID}/Detail`)

@@ -48,28 +48,6 @@ export async function getDes() {
   return data.json();
 };
 
-// {
-//   "name"           : "Thanh Tung",
-//   "phone"          : "0934565431",
-//   "address"        : "Lô T2-1.2, Đường D1, Đ. D1, P.Tân Phú, TP.Thủ Đức, TP.Hồ Chí Minh.",
-//   "note"           : null,
-//   "SaleOrderItems" : [
-//        {
-//           "productID"    : "quan-short-nam-thun-co-dan",
-//           "quantity"     : 2,
-//           "color"        : "RED",
-//           "size"         : "XL" 
-//       },
-//       {
-//          "productID"    : "quan-short-nam-thun-co-dan",
-//           "quantity"     : 3,
-//           "color"        : "BLUE",
-//           "size"         : "S" 
-//       }
-//   ]
-// }
-
-
 // http://localhost:4004/rest/api/SaleOrder
 // {
 //  "phone"          : "0934565431",

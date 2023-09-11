@@ -16,8 +16,6 @@ export const Navibar = () => {
   const router = useRouter();
   const [isSticky, setIsSticky] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
-  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth <= 768);
 
   const handleScroll2 = () => {
     if (window.scrollY >= 120) {
@@ -27,27 +25,6 @@ export const Navibar = () => {
     }
   };
 
-  const handleResize = () => {
-    console.log(window.innerWidth);
-    if (window.innerWidth <= 768) {
-      setIsMobile(true);
-    } else {
-      setIsMobile(false);
-    }
-  };
-
-  useEffect(() => {
-	  window.addEventListener("resize", handleResize);
-  
-	  // Kiểm tra kích thước ban đầu khi trang web được tải
-	  if (window.innerWidth <= 768) {
-		setIsMobile(true);
-	  }
-  
-	  return () => {
-		window.removeEventListener("resize", handleResize);
-	  };
-	}, []);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll2);
@@ -64,45 +41,14 @@ export const Navibar = () => {
     
     // đây là phần logo và searchbar
     <header className="w-full bg-white relative">
-        {isMobile ? (
-          <div className="min-[768px]:max-w-[650px] min-[320px]:max-w-[280px] mx-auto flex justify-between items-center my-2">
+          {/* <div className="min-[768px]:max-w-[650px] min-[320px]:max-w-[280px] mx-auto flex justify-between items-center my-2"> */}
+            <div className="xl:max-w-[1120px] max-[430px]:max-w-[400px] mx-auto flex justify-between items-center py-4">
 
-            <div className="w-1/3">
-              <AiOutlineMenuUnfold className="w-8 h-8" onClick={toggleMenu}/>
-            </div>
-
-            {isMenuOpen && (
-              <div className="w-2/3 flex justify-end">
-                {/* Danh sách danh mục sản phẩm */}
-                <div className="menu-container">
-                </div>
+              <div className="max-[430px]:w-1/3 xl:hidden">
+                <AiOutlineMenuUnfold className="w-8 h-8" onClick={toggleMenu}/>
               </div>
-            )}
 
-            <div className="w-1/3 h-14 flex items-center">
-              <Image
-                src="/logo5.png"
-                alt="clothes shop logo"
-                width={650}
-                height={450}
-                className="h-[35px]"
-              />
-            </div>
-
-            <div className="w-1/3 flex justify-end">
-              <button className="relative" onClick={() => {router.push("/CartPage");}}>
-                <Badge badgeContent={cartCount} color="error">
-                  <BsCart4 className="w-8 h-8" />
-                </Badge>
-              </button>
-            </div>
-          </div>
-
-        ) : (
-          <div>
-            <div className="max-w-[1120px] mx-auto flex justify-between items-center py-4">
-
-              <div className="w-1/4" onClick={() => {router.push("/");}}>
+              <div className="xl:w-1/4 max-[430px]:w-1/3" onClick={() => {router.push("/");}}>
                 <Image
                   src="/logo5.png"
                   alt="clothes shop logo"
@@ -112,7 +58,7 @@ export const Navibar = () => {
                 />
               </div>
 
-              <div className="w-[55%] ml-5">
+              <div className="xl:w-[55%] xl:ml-5 max-[430px]:hidden">
                 <Searchbar />
                 <p className="text-xs text-gray-500 italic pt-1">
                   Để tìm kiếm sản phẩm mời quý khách nhập từ khóa vào ô bên trên sau
@@ -120,7 +66,7 @@ export const Navibar = () => {
                 </p>
               </div>
 
-              <div className="w-1/6 flex justify-center">
+              <div className="xl:w-1/6 max-[430px]:w-1/3 flex justify-end">
                 <button className="relative" onClick={() => {router.push("/CartPage");}}>
                   <Badge badgeContent={cartCount} color="error">
                     <BsCart4 className="w-10 h-10" />
@@ -129,7 +75,7 @@ export const Navibar = () => {
               </div>
             </div>
               
-              <div className={`bg-gray-800 ${isSticky ? "fixed top-0 w-full" : "sticky top-[60px]"}`}>
+              <div className={`bg-gray-800 ${isSticky ? "fixed top-0 w-full" : "sticky top-[60px]"}  max-[430px]:hidden`}>
                 <div className="max-w-[1250px] mx-auto flex px-16">
                   <div className="min-w-[270px]">
                     <Dropdown />
@@ -158,8 +104,8 @@ export const Navibar = () => {
                   </div>
                 </div>
               </div>
-          </div>
-        )}
+
+
     </header>
   );
 };

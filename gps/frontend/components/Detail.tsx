@@ -64,7 +64,6 @@ export const Detail = ({ product, id }: Props) => {
   const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth <= 768);
 
   const handleResize = () => {
-    console.log(window.innerWidth);
     if (window.innerWidth <= 768) {
       setIsMobile(true);
     } else {
