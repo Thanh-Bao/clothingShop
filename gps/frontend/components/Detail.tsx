@@ -297,7 +297,7 @@ export const Detail = ({ product, id }: Props) => {
               </Sidebar>
             </div>
           </div>
-          <div>
+          <div className="max-[430px]:mt-3">
             <Tabs.Group
               aria-label="Tabs with underline"
               style="underline"

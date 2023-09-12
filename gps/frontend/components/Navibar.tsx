@@ -36,7 +36,7 @@ export const Navibar = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-    
+      
   return (
     
     // đây là phần logo và searchbar
