@@ -7,7 +7,7 @@ const product: Product = await getProduct(params.id);
 
     return (
       <>
-        <Detail product={product as Product} id={params} />
+        <Detail product={product as Product} id={params.id} />
       </>
     );
   };

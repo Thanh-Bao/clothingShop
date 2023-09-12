@@ -63,7 +63,7 @@
 }
 
 .animate-custom-spin {
-  animation: custom-spin 0.5s linear infinite;
+  animation: custom-spin 0.7s linear infinite;
 }
 
 @keyframes blinking {

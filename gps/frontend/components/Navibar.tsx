@@ -41,7 +41,7 @@ export const Navibar = () => {
     
     // đây là phần logo và searchbar
     <header className="w-full bg-white relative">
-          {/* <div className="min-[768px]:max-w-[650px] min-[320px]:max-w-[280px] mx-auto flex justify-between items-center my-2"> */}
+
             <div className="xl:max-w-[1120px] max-[430px]:max-w-[390px] mx-auto flex justify-between items-center py-4">
 
               <div className="max-[430px]:w-1/3 xl:hidden">

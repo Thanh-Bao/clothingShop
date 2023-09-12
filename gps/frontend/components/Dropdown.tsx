@@ -74,7 +74,7 @@ export const Dropdown = () => {
           <Sidebar.CTA>
         <div className="mb-3 flex items-center">
           <Badge color="warning">
-            Beta
+            Thành Công
           </Badge>
           <button
             aria-label="Close"
@@ -86,8 +86,7 @@ export const Dropdown = () => {
         </div>
         <div className="mb-3 text-sm text-cyan-900 dark:text-gray-400">
           <p>
-            Preview the new Flowbite dashboard navigation! You can turn the new navigation off for a limited time in your
-            profile.
+            chuyên cung cấp thiết bị định vị ô tô xe gắng máy và phụ tùng linh kiện ô tô.
           </p>
         </div>
         <a
@@ -95,7 +94,7 @@ export const Dropdown = () => {
           href="#"
         >
           <p>
-            Turn new navigation off
+              
           </p>
         </a>
       </Sidebar.CTA>

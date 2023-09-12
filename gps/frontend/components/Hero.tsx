@@ -38,10 +38,10 @@ export const Hero = ({products,video}:Props) => {
                   products={products}/>
                 </div>
                 <div className="w-full mb-8">
-                  <ListGroupWithLinks3 />
+                  <ListGroupWithLinks3 MediaUrl={video} index ={2}/>
                 </div>
-                <div className="w-full ">
-                  <ListGroupWithLinks3 />
+                <div className="w-full mb-8">
+                  <ListGroupWithLinks3 MediaUrl={video} index ={3}/>
                 </div>
               </div>
             {/*===== phần nội dung bên phải =====*/}

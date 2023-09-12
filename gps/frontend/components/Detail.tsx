@@ -60,7 +60,7 @@ export const Detail = ({ product, id }: Props) => {
     style: "currency",
     currency: "VND",
   };
-
+ 
   useEffect(() => {
     const fetchAlbum = async () => {
       if (id) {
@@ -70,6 +70,7 @@ export const Detail = ({ product, id }: Props) => {
         const textdes: textdesItem[] = await getDes();
         const newUrlArray: string[] = [];
         // lọc ảnh
+        
         album.forEach((item: AlbumItem) => {
           if (item.productID == targetID) {
             newUrlArray.push(item.url);
@@ -89,6 +90,7 @@ export const Detail = ({ product, id }: Props) => {
         );
         setFilteredtxt(filteredtxt);
       }
+
     };
     fetchAlbum();
   }, [id]);
@@ -229,7 +231,7 @@ export const Detail = ({ product, id }: Props) => {
             </div>
 
             {/* Cột 3: Hiển thị ưu nhược điểm */}
-            <div className="xl:w-1/4 max-[430px]:hidden">
+            <div className="xl:w-1/4 xl:max-h-[600px] max-[430px]:hidden">
               <Sidebar
                 aria-label="Sidebar with logo branding example"
                 className="w-full"
@@ -314,7 +316,7 @@ export const Detail = ({ product, id }: Props) => {
                 ))}
               </Tabs.Item>
               <Tabs.Item icon={MdDashboard} title="THÔNG SỐ KỸ THUẬT">
-                <p className="  ">dfgf</p>
+                <p className="  "></p>
               </Tabs.Item>
             </Tabs.Group>
           </div>
