@@ -1,5 +1,6 @@
-    @open
-    type object : array of {};
+
+@open
+type object : array of {};
 
 using {
    sap.common.CodeList
