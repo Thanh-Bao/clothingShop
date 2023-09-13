@@ -24,20 +24,31 @@ module.exports = srv => {
 
     // NEW == POST (SaleOrder.drafts, syntax since 7.1.2 july 2023) 
     srv.before('CREATE', SaleOrder, async req => {
-        const { name, phone, address, SaleOrderItems } = req.data;
-        // fetch(
-        //     `https://discord.com/api/webhooks/1143749926489178133/R2JNL2cp7Es4XKf_3I1U20Qhm-t81GWWJMoLV6QSKaFJEl6QNNKfW3m9hzSaBL18mVuw`
-        //     , {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify({
-        //             "content": `SĐT: ${phone} - Tên: ${name} - Địa chỉ: ${address} vừa mua hàng. ${SaleOrderItems.map(item => item.ProductID)}`
-        //         })
-        //     }).then(r => console.log("@@@", r))
-        //     .catch(err => req.error("ERROR"))
-        //     ;
+        try {
+            const { name, phone, address, SaleOrderItems } = req.data;
+            const { name: productName1 } = await SELECT.one.from(Product).where({ ID: SaleOrderItems[0].productID });
+            const totalLineItem = SaleOrderItems.length;
+            let productName2 = null;
+            if (totalLineItem >= 2) {
+                const product = await SELECT.one.from(Product).where({ ID: SaleOrderItems[1].productID });
+                productName2 = product.name;
+            }
+            fetch(
+                `https://discord.com/api/webhooks/1143749926489178133/R2JNL2cp7Es4XKf_3I1U20Qhm-t81GWWJMoLV6QSKaFJEl6QNNKfW3m9hzSaBL18mVuw`
+                , {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "content": `SĐT: ${phone} - Tên: ${name} - Địa chỉ: ${address} vừa mua ${SaleOrderItems[0].quantity} ${productName1} ${productName2 ? ` và ${SaleOrderItems[1].quantity} ${productName2}` : ''} ${totalLineItem > 2 ? ` cùng ${totalLineItem - 2} sản phẩm khác!` : ''}`
+                    })
+                }).then()
+                .catch(err => req.error("ERROR"))
+                ;
+        } catch (error) {
+            console.log(error)
+        }
     });
 
     srv.after('CREATE', SaleOrder, async (result, req) => {
@@ -49,7 +60,7 @@ module.exports = srv => {
                 await UPDATE(SaleOrderItem).with({ realPrice }).where({ productID, and: { saleOrderID } });
                 totalMoney += realPrice * quantity;
             };
-            await UPDATE(SaleOrder).with({ total: totalMoney }).where({ ID : result.ID });
+            await UPDATE(SaleOrder).with({ total: totalMoney }).where({ ID: result.ID });
         } catch (error) {
             req.error(400, `Lỗi khi cập nhật giá sản phẩm ${error.toString()}`)
         }

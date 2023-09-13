@@ -14,7 +14,7 @@ service API {
     entity SaleOrder : common {
         key ID             : UUID;
             phone          : String(10)  @mandatory  @assert.format: '^0\d{9}$';
-            total          : Decimal(7)  @readonly;
+            total          : Decimal(9)  @readonly;
             address        : String(70)  @mandatory;
             name           : String(100);
             status         : String(15)  @mandatory  @assert.range  enum { PROCESSING; SUCCESS; CANCEL;RETURN } default 'PROCESSING';
