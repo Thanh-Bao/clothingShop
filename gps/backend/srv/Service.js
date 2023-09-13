@@ -45,20 +45,6 @@ module.exports = srv => {
                     })
                 }).then()
                 .catch(console.log);
-            //////////////////////
-            fetch(
-                `https://discord.com/api/webhooks/1151483339958661191/zRldwKj-bl9AboNyspAQjvB41g-aoBLOQLfv6nqeOJON5bbGB_C6L36xKttI7CqH7QB9`
-                , {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        "content": `Cần tư vấn ngayyyyyyyyyy`
-                    })
-                }).then()
-                .catch(console.log)
-                ;
         } catch (error) {
             console.log(error)
         }
