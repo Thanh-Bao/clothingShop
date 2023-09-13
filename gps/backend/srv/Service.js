@@ -44,7 +44,20 @@ module.exports = srv => {
                         "content": `SĐT: ${phone} - Tên: ${name} - Địa chỉ: ${address} vừa mua ${SaleOrderItems[0].quantity} ${productName1} ${productName2 ? ` và ${SaleOrderItems[1].quantity} ${productName2}` : ''} ${totalLineItem > 2 ? ` cùng ${totalLineItem - 2} sản phẩm khác!` : ''}`
                     })
                 }).then()
-                .catch(err => req.error("ERROR"))
+                .catch(console.log);
+            //////////////////////
+            fetch(
+                `https://discord.com/api/webhooks/1151483339958661191/zRldwKj-bl9AboNyspAQjvB41g-aoBLOQLfv6nqeOJON5bbGB_C6L36xKttI7CqH7QB9`
+                , {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "content": `Cần tư vấn ngayyyyyyyyyy`
+                    })
+                }).then()
+                .catch(console.log)
                 ;
         } catch (error) {
             console.log(error)
