@@ -163,7 +163,7 @@ export const Detail = ({ product, id }: Props) => {
                   </legend>
                   <p className="pb-2">
                     <span className="text-red-600 text-lg font-bold">
-                      Mua {product.name} - Nhận ưu đãi hấp dẫn tại Thành Nam
+                      Mua {product.name} - Nhận ưu đãi hấp dẫn tại Thành Công
                     </span>
                   </p>
                   <ul className="space-y-2">
@@ -316,7 +316,7 @@ export const Detail = ({ product, id }: Props) => {
                 ))}
               </Tabs.Item>
               <Tabs.Item icon={MdDashboard} title="THÔNG SỐ KỸ THUẬT">
-                <p className="  "></p>
+              
               </Tabs.Item>
             </Tabs.Group>
           </div>

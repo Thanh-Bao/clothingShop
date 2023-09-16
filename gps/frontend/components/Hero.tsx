@@ -8,6 +8,7 @@ import ListGroupWithLinks1 from "@/components/Listgroup1";
 import ListGroupWithLinks2 from "@/components/Listgroup2";
 import ListGroupWithLinks3 from "@/components/Listgroup3";
 import { Product, video } from "@/types";
+import { useState } from "react";
 import { AiFillCar } from "react-icons/ai";
 import { BsCameraFill } from "react-icons/bs";
 import { FaMotorcycle } from "react-icons/fa";
@@ -18,7 +19,17 @@ type Props={
   video : video[];
 }
 
+
 export const Hero = ({products,video}:Props) => {
+  const [selectedProduct, setSelectedProduct] = useState('NewDevice');
+
+  // Hàm xử lý sự kiện khi người dùng nhấn vào nút
+  const handleProductSelection = (productName: string) => {
+    setSelectedProduct(productName);
+    
+  };
+  console.log(selectedProduct)
+  
   return (
     <div className="relative -z-40 ">
 
@@ -55,15 +66,16 @@ export const Hero = ({products,video}:Props) => {
               {/* phần này là sản phẩm yêu thích */}
               <div className="w-full mt-5">
                 <div className="">
-                  <WithIcons />
+                  <WithIcons onProductSelect={handleProductSelection}/>
                 </div>
                 <div className="mt-3 rounded-md">
                       <ProductCard
                         products={products}
                         group={1}
-                        product_name='LikeDevice'
+                        product_name={selectedProduct}
                       />
                 </div>
+                
               </div>
 
               {/* phần này là thiết bị định vị xe máy */}
@@ -108,11 +120,26 @@ export const Hero = ({products,video}:Props) => {
           </div>
           
           <div className="">
-            {/* ---------phần nghị định 10------------- */}
-            <div className="w-full mt-5">
+            {/* ---------camera hành trình------------- */}
+            <div className="w-full mt-5" id="Camera">
               <div>
                 <div className="">
-                  <ListBar List_name="Camera Nghị Định 10" icon={BsCameraFill} />
+                  <ListBar List_name="Camera Hành Trình" icon={BsCameraFill} />
+                </div>
+                <div className="mt-3 rounded-md">
+                  <ProductCard
+                    products={products}
+                    group={2}
+                    product_name="Camera"
+                  />
+                </div>
+              </div>
+            </div>
+            {/* ---------Màn hình HUD------------- */}
+            <div className="w-full mt-5" id="Moniter">
+              <div>
+                <div className="">
+                  <ListBar List_name="MÀN HÌNH HUD VIETMAP" icon={BsCameraFill} />
                 </div>
                 <div className="mt-3 rounded-md">
                   <ProductCard

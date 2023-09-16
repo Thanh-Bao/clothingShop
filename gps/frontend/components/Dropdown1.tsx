@@ -19,7 +19,7 @@ export const Dropdown1 = () => {
         onMouseEnter={handleDropdownOpen} // Mở dropdown khi rê chuột vào
         onMouseLeave={handleDropdownClose} // Đóng dropdown khi chuột rời khỏi
       >
-        <h3 className="text-sm text-white ">Thiết Bị Định Vị</h3>
+        <h3 className=" text-xs text-white ">THIẾT BỊ ĐỊNH VỊ</h3>
     </button>
     {isDropdownOpen && ( // Hiển thị nội dung dropdown nếu mở
     <div className="absolute top-full min-w-full w-max bg-white shadow-md rounded"
@@ -34,7 +34,7 @@ export const Dropdown1 = () => {
           <a href="#GPSCar">Thiết Bị Định Vị Ô tô</a>
         </li>
         <li className="px-4 py-2 hover:bg-gray-100 bg-orange-400 ">
-          <a href="#GPSMoto">Thiết Bị Định Vị Xe Tải</a>
+          <a href="#GPSCar">Thiết Bị Định Vị Xe Tải</a>
         </li>
       </ul>
     </div>

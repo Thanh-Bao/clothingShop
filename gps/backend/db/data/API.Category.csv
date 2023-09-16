@@ -1,7 +1,8 @@
 ID;name
 NewDevice;thiết bị mới
-LikeDevice;thiết bị được yêu thích
+GoodDevice;thiết bị nổi bật
 DiscountDevice;thiết bị giảm giá
 GPSCar;thiết bị định vị xe hơi
-GPSMoto; thiết bị định vị xe máy
-Monitor; màn hình
+GPSMoto;thiết bị định vị xe máy
+Monitor;màn hình
+Camera; camera hành trình

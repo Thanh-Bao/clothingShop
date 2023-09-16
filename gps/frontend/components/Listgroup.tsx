@@ -9,11 +9,15 @@ export default function ListGroupWithLinks() {
     <h1 className="text-white font-bold">TƯ VẤN HỔ TRỢ TRỰC TIẾP</h1>
   </div>
   <div className="items-center px-4 bg-gray-100 py-4 space-y-2 rounded-b-lg">
-    <h1 className="font-bold text-2xl text-blue-600">MR.HOÀI</h1>
+    <h1 className="font-bold text-xl text-black">MR.HOÀI</h1>
     <span className="flex font-bold text-red-600">
-      <p className="font-bold px-1">ZALO :</p>
-      0950495866</span>
-    <span className="flex font-bold text-red-600"><p className="px-1">HOTLINE :</p> 0950495866</span>
+      <p className="px-1">ZALO :</p>
+      <p>0950495866</p>
+      </span>
+    <span className="flex font-bold text-red-600">
+      <p className="px-1">HOTLINE :</p>
+      <p>0950495866</p> 
+    </span>
   </div>
 
 </div>

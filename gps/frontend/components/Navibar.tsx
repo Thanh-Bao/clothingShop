@@ -4,10 +4,10 @@ import Badge from "@mui/material/Badge";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AiOutlineMenuUnfold } from "react-icons/ai";
 import { BsCart4 } from "react-icons/bs";
 import { TbHomeSignal } from "react-icons/tb";
 import { Dropdown, Dropdown1 } from ".";
+import Menubar from "./Menubar";
 import { Searchbar } from "./Searchbar";
 
 export const Navibar = () => {
@@ -45,7 +45,7 @@ export const Navibar = () => {
             <div className="xl:max-w-[1120px] max-[430px]:max-w-[390px] mx-auto flex justify-between items-center py-4">
 
               <div className="max-[430px]:w-1/3 xl:hidden">
-                <AiOutlineMenuUnfold className="w-8 h-8" onClick={toggleMenu}/>
+                <Menubar />
               </div>
 
               <div className="xl:w-1/4 max-[430px]:w-1/3" onClick={() => {router.push("/");}}>
@@ -82,24 +82,26 @@ export const Navibar = () => {
                   </div>
                   <div className="flex ml-9 w-[1000px] items-center ">
                     <div>
-                      <button className="h-10 px-5 bg-orange-400 text-white flex justify-between items-center text-sm" onClick={() => {router.push("/");}}>
+                      <button className="h-10 px-5 bg-orange-400 text-white flex justify-between items-center text-xs" onClick={() => {router.push("/");}}>
                         <span className="px-1">
                           <TbHomeSignal className="w-5 h-5" />
                         </span>
-                        Trang Chủ
+                        TRANG CHỦ
                       </button>
                     </div>
                     <div>
                       <Dropdown1 />
                     </div>
-                    <button className="h-10 px-5 bg-gray-800 text-white flex justify-between items-center text-sm hover:bg-orange-400">
-                      Camera Hành Trình
+                    <button className="h-10 px-5 bg-gray-800 text-white flex justify-between items-center text-xs hover:bg-orange-400" >
+                      <a href="#Camera">CAMERA HÀNH TRÌNH</a>
                     </button>
-                    <button className="h-10 px-5 bg-gray-800 text-white flex justify-between items-center text-sm hover:bg-orange-400">
-                      Màn hình HUD VIETMAP
+                    <button className="h-10 px-5 bg-gray-800 text-white flex justify-between items-center text-xs hover:bg-orange-400">
+                      
+                      <a href="#Moniter">MÀN HÌNH HUD VIETMAP</a>
                     </button>
-                    <button className="h-10 px-5 bg-gray-800 text-white flex justify-between items-center text-sm hover:bg-orange-400">
-                      Phim cách nhiệt 3M
+                    <button className="h-10 px-5 bg-gray-800 text-white flex justify-between items-center text-xs hover:bg-orange-400">
+                      
+                      <a href="#Pcn">PHIM CÁCH NHIỆT 3M</a>
                     </button>
                   </div>
                 </div>

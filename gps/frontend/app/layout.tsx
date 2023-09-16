@@ -21,6 +21,7 @@ export default function RootLayout({
       <head>
         <link rel='icon' href='/logo.png'/>
       </head>
+      
       <body className='relative -z-50'>
       <CartProvider>
         <Navibar/>

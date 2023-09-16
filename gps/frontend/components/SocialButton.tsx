@@ -44,9 +44,9 @@ const SocialButtons = () => {
         <div className="w-44 h-12 flex bg-black rounded-full">
   
             <a href="#" className="text-white bg-red-500 hover:bg-blue-600 px-3 py-3 rounded-full flex items-center animate-custom-spin" style={{
-      animationName: "ping",
-      animationDuration: "1s",
-      animationIterationCount: "infinite",
+              animationName: "ping",
+               animationDuration: "1s",
+               animationIterationCount: "infinite",
     }}>
               <FontAwesomeIcon
                 icon={faPhone}

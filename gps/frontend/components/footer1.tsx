@@ -55,7 +55,7 @@ export const FooterSitemapLinks = () => {
               <h1 className="text-xl font-bold my-3">Contact Us</h1>
               <div className="flex  items-center my-5 ">
                 <BsFillTelephoneInboundFill className="w-6 h-6 mr-2" />
-                +84373784746
+                <span>0373784746</span>
               </div>
               <div className="flex items-center my-3">
                 <MdOutgoingMail className="w-8 h-8 mr-2" />
