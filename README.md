@@ -12,6 +12,7 @@ npm i
 npm start
 ```
 
+
 # to deploy 
 
 ```
@@ -25,6 +26,15 @@ services:
     image: thanhbao/gps_shop
     ports:
       - "4004:4004"
+
+```
+
+# copy DB from container to host
+
+docker cp containerid:container_path host_path
+
+```
+docker cp e11158d9777b:/usr/home/app/db.sqlite /root/sap/gps/backup/16_9_2023
 
 ```
 
@@ -94,6 +104,13 @@ http {
     more_set_headers 'X-Powered-By: ASP.NET';
     # other config
 }
+```
+
+# to remember git account 
+
+```
+git config --global credential.helper store
+
 ```
 
 
