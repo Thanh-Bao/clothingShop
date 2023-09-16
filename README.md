@@ -43,6 +43,11 @@ docker cp containerid:container_path host_path
 docker cp e11158d9777b:/usr/home/app/db.sqlite /root/sap/gps/backup/16_9_2023
 
 ```
+# copy from host to container 
+
+```
+ docker cp /root/sap/gps/backend/db.sqlite  2bf2082c4aac:/usr/home/app/db.sqlite
+```
 
 #  To config reverse proxy
 
