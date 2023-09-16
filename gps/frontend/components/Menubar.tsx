@@ -3,12 +3,30 @@ import { IconContext } from "react-icons";
 import * as AiIcons from "react-icons/ai";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 
-// ROUTIN
-
-// DATA FILE
-import { SidebarData } from "./SlidebarData";
-
-// STYLES
+const SidebarData = [
+  {
+    title: "THIẾT BỊ ĐỊNH VỊ",
+    path: "/",
+    cName: "nav-text",
+    href :"#GPSCar"
+  },
+  {
+    title: "CAMERA HÀNH TRÌNH",
+    cName: "nav-text",
+    href :"#Camera"
+  },
+  {
+    title: "MÀN HÌNH HUD VIETMAP",
+    cName: "nav-text",
+    href :"#Moniter"
+  },
+  {
+    title: "PHIM CÁCH NHIỆT",
+    cName: "nav-text",
+    href :"Pcn"
+  },
+ 
+];
 
 export default function Navbar() {
   const [sidebar, setSidebar] = useState(false);
