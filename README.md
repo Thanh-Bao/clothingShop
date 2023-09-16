@@ -29,6 +29,12 @@ services:
 
 ```
 
+# to access container 
+
+```
+docker exec -it 2bf2082c4aac bash
+```
+
 # copy DB from container to host
 
 docker cp containerid:container_path host_path
