@@ -29,7 +29,7 @@ services:
 
 ```
 
-# to copy DB from container to host
+# copy DB from container to host
 
 docker cp containerid:container_path host_path
 
