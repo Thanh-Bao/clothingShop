@@ -69,7 +69,7 @@ const SocialButtons = () => {
              
             </a>
 
-          <span className="flex items-center pl-3 text-white font-bold">039955564</span>
+          <span className="flex items-center pl-3 text-white font-bold">0866844225</span>
         </div>
         
       </div>
@@ -108,14 +108,14 @@ const SocialButtons = () => {
                                           <BsFillPhoneVibrateFill className="w-5 h-5 mr-2"/>
                                           <span className="flex">
                                             <p className="font-bold text-red-500">HOTLINE </p>
-                                            <p className="font-bold text-red-500"> : 0938495767</p>
+                                            <p className="font-bold text-red-500"> : 0866844225</p>
                                           </span>
                                           
                                         </div>
 
                                         <div className="flex items-center">
                                           <MdLocationOn className="min-w-[20px] min-h-[20px] mr-2"/>
-                                          <p className="max-[430px]:text-left">Chi nhánh chính : 19 khu công nghiệp, đống đa thành phố thủ đưc</p>
+                                          <p className="max-[430px]:text-left">Chi nhánh chính : 14C Đường số 30, Phường Linhh Đông, Thành Phố Thủ Đức</p>
                                         </div>
                                         
                                       </div>
@@ -124,7 +124,7 @@ const SocialButtons = () => {
                                     <div className="h-[2px] w-full bg-gray-200 my-5"></div>
                                   </div>
                                   <div className="w-1/3 max-[430px]:w-full">
-                                    <Image  src="/logo.png" alt="" width={200}height={200} className="object-contain rounded-md mx-auto max-w-[200px] max-h-[200px] bg-amber-300" />
+                                    <Image  src="/zalo1.png" alt="" width={200}height={200} className="object-contain rounded-md mx-auto max-w-[200px] max-h-[200px] bg-amber-300" />
                                     <p className="text-xs mt-2">Mở Zalo, bấm quét QR để quét<br/>và xem trên điện thoại</p>
                                   </div>
                                   

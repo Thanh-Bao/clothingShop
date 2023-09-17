@@ -69,7 +69,7 @@ export const CartItemView = ({ item }: Props) => {
             <div className="max-w-[100px] max-h-[80px] overflow-hidden rounded-md w-1/3">
               <Image
                 src={item.product.img}
-                alt={item.product.name}
+                alt=""
                 width={150} // Đặt chiều rộng của ảnh
                 height={150} // Đặt chiều cao của ảnh
                 className="w-full h-full object-contain"

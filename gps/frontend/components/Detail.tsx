@@ -213,7 +213,7 @@ export const Detail = ({ product, id }: Props) => {
                       </span>
                       <span className="text-blue-600 text-xl font-bold">
                         {" "}
-                        0373784746
+                        0866844225
                       </span>
                     </li>
                   </ul>
@@ -290,7 +290,7 @@ export const Detail = ({ product, id }: Props) => {
                       <Button gradientMonochrome="success">
                         <div className="flex items-center">
                           <BsFillPhoneVibrateFill className="w-5 h-5 mr-2" />
-                          <p>HOTLINE : 0272784746</p>
+                          <p>HOTLINE : 0866844225</p>
                         </div>
                       </Button>
                     </Sidebar.Item>

@@ -7,7 +7,7 @@ export default function StaticCarousel() {
   return (
     <Carousel className="xl:h-[368px] max-[430px]:h-[180px]">
       <Image
-            src="/slider2.png"
+            src="/Picture3.png"
             alt="clothes shop logo"
             width={262}
             height={400}
@@ -15,7 +15,7 @@ export default function StaticCarousel() {
             className="object-contain"
           />
       <Image
-            src="/slider2.png"
+            src="/Picture4.png"
             alt="clothes shop logo"
             width={262}
             layout="responsive"
@@ -23,7 +23,7 @@ export default function StaticCarousel() {
             className="object-contain"
           />
       <Image
-            src="/slider2.png"
+            src="/Picture5.png"
             alt="clothes shop logo"
             layout="responsive"
             width={262}

@@ -65,8 +65,8 @@ export const Navibar = () => {
 
               <div className="xl:w-1/6 max-[430px]:w-1/3 flex justify-end">
                 <button className="relative" onClick={() => {router.push("/CartPage");}}>
-                  <Badge badgeContent={cartCount} color="error">
-                    <BsCart4 className="w-10 h-10" />
+                  <Badge badgeContent={cartCount} color="error" className="xl:mr-4">
+                    <BsCart4 className="w-14 h-14 text-orange-500" />
                   </Badge>
                 </button>
               </div>
