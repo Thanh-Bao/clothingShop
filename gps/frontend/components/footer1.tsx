@@ -37,7 +37,7 @@ export const FooterSitemapLinks = () => {
             <div className="">
               <h1 className="text-xl font-bold my-3">About Us</h1>
               <span className="py-3 font-inter text-sm">
-                Copyright @ Công Ty TNHH Dịch Vụ Và PT Công Nghệ HÀN PHONG
+                Copyright @ Công Ty TNHH TM DV KT HÀN PHONG
                 Chuyên phân phối, lắp đặt định vị ô tô xe máy, camera hành
                 trình, thiết bị dẫn đường, phụ kiện nội thất đồ chơi ô tô chính
                 hãng Lắp đặt, giao hàng tận nhà trên toàn quốc. Nhận hàng Thanh
