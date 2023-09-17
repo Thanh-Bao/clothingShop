@@ -9,10 +9,10 @@ import ListGroupWithLinks2 from "@/components/Listgroup2";
 import ListGroupWithLinks3 from "@/components/Listgroup3";
 import { Product, video } from "@/types";
 import { useState } from "react";
-import { FiMonitor } from "react-icons/Fi";
 import { AiFillCar } from "react-icons/ai";
 import { BsCameraFill } from "react-icons/bs";
 import { FaMotorcycle } from "react-icons/fa";
+import { MdScreenshotMonitor } from "react-icons/md";
 import { TbBrandYoutubeKids } from "react-icons/tb";
   
 type Props={
@@ -141,7 +141,7 @@ export const Hero = ({products,video}:Props) => {
             <div className="w-full mt-5" id="Moniter">
               <div>
                 <div className="">
-                  <ListBar List_name="Màn hình HUD VIETMAP" icon={FiMonitor} />
+                  <ListBar List_name="Màn hình HUD VIETMAP" icon={MdScreenshotMonitor} />
                 </div>
                 <div className="mt-3 rounded-md">
                   <ProductCard
