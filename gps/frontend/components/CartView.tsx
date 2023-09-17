@@ -276,7 +276,7 @@ export const CartView = () => {
                       {showSuccessPopup && (
                         <div className="popup z-20">
                           <div className="popup-content z-20">
-                            <p className="mb-4">Bạn đã đặt hàng thành công </p>
+                            <p className="mb-5">Bạn đã đặt hàng thành công <br/> chúng tôi sẽ liên hệ để xác nhận đơn hàng !</p>
                             <button
                               className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
                               onClick={closeSuccessPopup}
@@ -290,7 +290,7 @@ export const CartView = () => {
                       {showfaildPopup && (
                         <div className="popup z-20">
                           <div className="popup-content z-20">
-                              <p className="mb-4">Có lỗi xảy ra vui lòng thử lại</p>
+                              <p className="mb-5">Có lỗi xảy ra vui lòng thử lại</p>
                               <button
                                 className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
                                 onClick={closePopup}
