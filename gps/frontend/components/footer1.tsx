@@ -16,8 +16,7 @@ import { MdOutgoingMail } from "react-icons/md";
 export const FooterSitemapLinks = () => {
   
   return (
-    <div className="bg-black text-white">
-
+    <div className="bg-black text-white relative">
           <div className="grid xl:grid-cols-3 xl:max-w-[1200px] max-[430px]:max-w-[390px] mx-auto xl:space-x-6">
             <div className="">
               <h1 className="text-xl font-bold my-3">

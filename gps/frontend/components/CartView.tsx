@@ -6,7 +6,7 @@ import { useState } from "react";
 import { FaPhoneVolume } from "react-icons/fa";
 import { HiHome, HiMail } from "react-icons/hi";
 import { MdAddHomeWork, MdArrowBackIosNew } from "react-icons/md";
-import { CartItemView, Popup } from ".";
+import { CartItemView } from ".";
 import { useCart } from "../styles/CartContext";
 
 export const CartView = () => {
@@ -16,8 +16,11 @@ export const CartView = () => {
   const [shippingAddress, setShippingAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isPopupVisible, setPopupVisible] = useState(false); // Thêm biến trạng thái cho hiển thị popup
-  // const url = "http://localhost:4004/rest/api/SaleOrder";
   const url = "https://thanhconggps.com/rest/api/SaleOrder";
+  const [showSuccessPopup, setSuccessPopup] = useState(false);
+  const [showfaildPopup, setfaildPopup] = useState(false);
+  const [phoneNumberError, setPhoneNumberError] = useState(false);
+
 
 
   const data = {
@@ -36,6 +39,23 @@ export const CartView = () => {
     style: "currency",
     currency: "VND",
   };
+
+  const handleChangePhoneNumber = (e:any) => {
+    const inputValue = e.target.value;
+    const numericValue = inputValue.replace(/\D/g, ''); // Lọc bỏ tất cả ký tự không phải số
+    setPhoneNumber(numericValue);
+    setPhoneNumberError(false);
+   if (numericValue.length >= 10){
+    if (/^0\d{9}$/.test(numericValue)) {
+      // Kiểm tra nếu số điện thoại bắt đầu bằng số 0 và có đúng 9 chữ số
+      setPhoneNumber(numericValue);
+      setPhoneNumberError(false); // Đặt phoneNumberError thành false nếu hợp lệ.
+    } else {
+      setPhoneNumber(inputValue);
+      setPhoneNumberError(true); // Đặt phoneNumberError thành true nếu không hợp lệ.
+    }
+  }
+};
 
 
   const handlePlaceOrder = (cartItems: CartItem[]) => {
@@ -59,22 +79,28 @@ export const CartView = () => {
         return response.json(); // Đọc và xử lý phản hồi JSON nếu có
       })
       .then((data) => {
-        console.log(data);
+        setSuccessPopup(true);
       })
       .catch((error) => {
-        console.error("Có lỗi xảy ra:", error);
+        setfaildPopup(true);
       });
   };
-
+  const closeSuccessPopup = () => {
+    setTimeout(() => {
+          setSuccessPopup(false);
+          router.push("/");
+          }, 3000); // Đợi 3 giây (3000 ms) trước khi chuyển đổi đến trang mới
+          
+        };
 
   const closePopup = () => {
     setPopupVisible(false);
+    
+    setfaildPopup(false)
   };
 
-  return (
-    <div className="relative -z-10 mb-16">
-      
-        <div className="xl:max-w-[1150px] xl:px-4 max-[430px]:max-w-[390px] mx-auto ">
+  return (   
+        <div className="xl:max-w-[1150px] xl:px-4 max-[430px]:max-w-[390px] mx-auto relative -z-20 mb-16">
           {/* phần menu */}
           <div className="w-full">
             <Breadcrumb
@@ -173,15 +199,19 @@ export const CartView = () => {
                     </div>
 
                     {/* số điện thoại */}
-                    <div className="w-full xl:pr-10 py-2">
+                    <div className={`w-full xl:pr-10 py-2 ${phoneNumberError && "border-red-500"}`}>
                       <TextInput
                         icon={FaPhoneVolume}
                         id="id3"
                         placeholder="Số điện thoại"
                         required
                         value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        onChange={handleChangePhoneNumber}
+                        
                       />
+                      {phoneNumberError && (
+                        <p className="text-red-500 text-xs mt-2">Số điện thoại không hợp lệ, phải bắt đầu bằng số 0 và có 10 chữ số.</p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -230,10 +260,45 @@ export const CartView = () => {
 
                       {/* Hiển thị popup nếu isPopupVisible là true */}
                       {isPopupVisible && (
-                        <Popup
-                          message="Vui lòng điền đầy đủ thông tin trước khi đặt hàng."
-                          onClose={closePopup}
-                        />
+                        <div className="popup z-20">
+                        <div className="popup-content z-20">
+                          <p className="mb-4">Vui lòng điền đầy đủ thông tin để tiếp tục đặt hàng</p>
+                          <button
+                            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                            onClick={closePopup}
+                          >
+                            OK
+                          </button>
+                        </div>
+                      </div>
+                      )}
+
+                      {showSuccessPopup && (
+                        <div className="popup z-20">
+                          <div className="popup-content z-20">
+                            <p className="mb-4">Bạn đã đặt hàng thành công </p>
+                            <button
+                              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                              onClick={closeSuccessPopup}
+                            >
+                              OK
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      {showfaildPopup && (
+                        <div className="popup z-20">
+                          <div className="popup-content z-20">
+                              <p className="mb-4">Có lỗi xảy ra vui lòng thử lại</p>
+                              <button
+                                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+                                onClick={closePopup}
+                              >
+                                OK
+                              </button>
+                            </div>
+                        </div>
                       )}
                     </div>
                   </div>
@@ -243,6 +308,6 @@ export const CartView = () => {
           )}
         </div>
 
-    </div>
+
   );
 };

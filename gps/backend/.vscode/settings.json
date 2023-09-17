@@ -1,3 +1,13 @@
 {
-    "SAP HANA Database Explorer.displaySapWebAnalyticsStartupNotification": false
+    "SAP HANA Database Explorer.displaySapWebAnalyticsStartupNotification": false,
+    "sqltools.useNodeRuntime": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "ttt",
+            "group": "ttttt",
+            "database": "${workspaceFolder:backend}/db.sqlite"
+        }
+    ]
 }

@@ -1,7 +1,9 @@
 
 'use client'
+import { useRouter } from 'next/navigation';
 import { useState } from 'react'; // Import useState hook
 export const Dropdown1 = () => {
+  const router = useRouter();
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State để theo dõi trạng thái mở/đóng dropdown
 
@@ -28,13 +30,13 @@ export const Dropdown1 = () => {
           >
       <ul className="text-left font-medium">
         <li className="px-4 py-2 hover:bg-gray-100 bg-orange-400 ">
-          <a href="#GPSMoto">Thiết Bị Định Vị Xe Máy</a>
-          </li>
-        <li className="px-4 py-2 hover:bg-gray-100 bg-orange-400 ">
-          <a href="#GPSCar">Thiết Bị Định Vị Ô tô</a>
+          <a onClick={(e) => { e.preventDefault(); router.push("/#GPSMoto");}}>Thiết Bị Định Vị Xe Máy</a>
         </li>
         <li className="px-4 py-2 hover:bg-gray-100 bg-orange-400 ">
-          <a href="#GPSCar">Thiết Bị Định Vị Xe Tải</a>
+          <a onClick={(e) => { e.preventDefault(); router.push("/#GPSCar");}}>Thiết Bị Định Vị Ô tô</a>
+        </li>
+        <li className="px-4 py-2 hover:bg-gray-100 bg-orange-400 ">
+          <a onClick={(e) => { e.preventDefault(); router.push("/#GPSCar");}}>Thiết Bị Định Vị Xe Tải</a>
         </li>
       </ul>
     </div>

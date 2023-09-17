@@ -9,6 +9,7 @@ import ListGroupWithLinks2 from "@/components/Listgroup2";
 import ListGroupWithLinks3 from "@/components/Listgroup3";
 import { Product, video } from "@/types";
 import { useState } from "react";
+import { FiMonitor } from "react-icons/Fi";
 import { AiFillCar } from "react-icons/ai";
 import { BsCameraFill } from "react-icons/bs";
 import { FaMotorcycle } from "react-icons/fa";
@@ -28,7 +29,6 @@ export const Hero = ({products,video}:Props) => {
     setSelectedProduct(productName);
     
   };
-  console.log(selectedProduct)
   
   return (
     <div className="relative -z-40 ">
@@ -120,6 +120,7 @@ export const Hero = ({products,video}:Props) => {
           </div>
           
           <div className="">
+
             {/* ---------camera hành trình------------- */}
             <div className="w-full mt-5" id="Camera">
               <div>
@@ -135,11 +136,12 @@ export const Hero = ({products,video}:Props) => {
                 </div>
               </div>
             </div>
+
             {/* ---------Màn hình HUD------------- */}
             <div className="w-full mt-5" id="Moniter">
               <div>
                 <div className="">
-                  <ListBar List_name="MÀN HÌNH HUD VIETMAP" icon={BsCameraFill} />
+                  <ListBar List_name="Màn hình HUD VIETMAP" icon={FiMonitor} />
                 </div>
                 <div className="mt-3 rounded-md">
                   <ProductCard

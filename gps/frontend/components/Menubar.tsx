@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { IconContext } from "react-icons";
 import * as AiIcons from "react-icons/ai";
@@ -23,13 +24,14 @@ const SidebarData = [
   {
     title: "PHIM CÁCH NHIỆT",
     cName: "nav-text",
-    href :"Pcn"
+    href :"#Moniter"
   },
  
 ];
 
 export default function Navbar() {
   const [sidebar, setSidebar] = useState(false);
+  const router = useRouter();
 
   const showSidebar = () => setSidebar(!sidebar);
 
@@ -53,7 +55,7 @@ export default function Navbar() {
             {SidebarData.map((item, index) => {
               return (
                 <li key={index} className='text-[16px] flex justify-start items-center space-x-2 pt-4 pl-3' >
-                    <a href={item.href} >{item.title}</a> 
+                    <a onClick={(e) => { e.preventDefault(); router.push(`/${item.href}`);}} >{item.title}</a>
                 </li>
               );
             })}

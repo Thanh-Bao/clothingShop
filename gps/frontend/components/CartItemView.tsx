@@ -72,7 +72,7 @@ export const CartItemView = ({ item }: Props) => {
                 alt={item.product.name}
                 width={150} // Đặt chiều rộng của ảnh
                 height={150} // Đặt chiều cao của ảnh
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
             </div>
 

@@ -1,10 +1,14 @@
 "use client";
 import { Sidebar } from 'flowbite-react';
+import { useRouter } from 'next/navigation';
 import { useState } from "react"; // Import useState hook
 import { BsMenuUp } from "react-icons/bs";
 import { TbSquareRoundedChevronsDown } from "react-icons/tb";
 
 export const Dropdown = () => {
+
+  const router = useRouter();
+  
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State để theo dõi trạng thái mở/đóng dropdown
 
   const handleDropdownOpen = () => {
@@ -41,30 +45,30 @@ export const Dropdown = () => {
               <Sidebar.ItemGroup>
 
                 <Sidebar.Collapse label="THIẾT BỊ ĐỊNH VỊ">
-                  <Sidebar.Item href ="#GPSMoto">
-                    <p className="text-xs">THIẾT BỊ ĐỊNH VỊ XE MÁY</p>
+                  <Sidebar.Item >
+                    <p className="text-xs cursor-pointer" onClick={(e:any) => { e.preventDefault(); router.push("/#GPSMoto");}}>THIẾT BỊ ĐỊNH VỊ XE MÁY</p>
                   </Sidebar.Item>
-                  <Sidebar.Item href="#GPSCar">
-                    <p className='text-xs'>THIẾT BỊ ĐỊNH VỊ Ô TÔ</p>
+                  <Sidebar.Item>
+                    <p className='text-xs cursor-pointer' onClick={(e:any) => { e.preventDefault(); router.push("/#GPSCar");}}>THIẾT BỊ ĐỊNH VỊ Ô TÔ</p>
                     
                   </Sidebar.Item>
                 </Sidebar.Collapse>
 
-                <Sidebar.Item href="#Camera" >
-                  <p>
+                <Sidebar.Item  >
+                  <p className="cursor-pointer" onClick={(e:any) => { e.preventDefault(); router.push("/#Camera");}}>
                     CAMERA HÀNH TRÌNH
                   </p>
                 </Sidebar.Item>
                 
-                <Sidebar.Item href="#Moniter" >
-                  <p>
+                <Sidebar.Item >
+                  <p className="cursor-pointer" onClick={(e:any) => { e.preventDefault(); router.push("/#Moniter");}}>
                     MÀN HÌNH HUD VIETMAP
                   </p>
          
                 </Sidebar.Item>
 
-                <Sidebar.Item href="#PCN">
-                  <p>
+                <Sidebar.Item>
+                  <p className="cursor-pointer" onClick={(e:any) => { e.preventDefault(); router.push("/#Moniter");}}>
                     PHIM CÁCH NHIỆT 3M
                   </p>
           

@@ -1,7 +1,7 @@
 'use client';
 
 import { video } from "@/types";
-import { FcLike } from "react-icons/fc";
+import { GiOpenChest } from "react-icons/gi";
 
 
 type Props={
@@ -24,7 +24,7 @@ export default function ListGroupWithLinks3({ MediaUrl, index }: Props) {
     <div>
       
       <div className="flex items-center h-10 bg-sky-800 rounded-t-lg">
-        <FcLike className="w-5 h-5 mx-2 text-red-600"/>
+        <GiOpenChest className="w-5 h-5 mx-2 text-red-600"/>
         {index ===2 ? (
           <h1 className="text-white font-bold">UNBOX THIẾT BỊ ĐỊNH VỊ</h1>
         ):(

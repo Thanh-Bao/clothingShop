@@ -33,9 +33,6 @@ export const Navibar = () => {
     };
   }, []);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
       
   return (
     
@@ -93,15 +90,15 @@ export const Navibar = () => {
                       <Dropdown1 />
                     </div>
                     <button className="h-10 px-5 bg-gray-800 text-white flex justify-between items-center text-xs hover:bg-orange-400" >
-                      <a href="#Camera">CAMERA HÀNH TRÌNH</a>
+                      <a onClick={(e) => { e.preventDefault(); router.push("/#Camera");}}>CAMERA HÀNH TRÌNH</a>
                     </button>
                     <button className="h-10 px-5 bg-gray-800 text-white flex justify-between items-center text-xs hover:bg-orange-400">
                       
-                      <a href="#Moniter">MÀN HÌNH HUD VIETMAP</a>
+                      <a onClick={(e) => { e.preventDefault(); router.push("/#Moniter");}}>MÀN HÌNH HUD VIETMAP</a>
                     </button>
                     <button className="h-10 px-5 bg-gray-800 text-white flex justify-between items-center text-xs hover:bg-orange-400">
                       
-                      <a href="#Pcn">PHIM CÁCH NHIỆT 3M</a>
+                      <a onClick={(e) => { e.preventDefault(); router.push("/#Moniter");}}>PHIM CÁCH NHIỆT 3M</a>
                     </button>
                   </div>
                 </div>
