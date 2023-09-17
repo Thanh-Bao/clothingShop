@@ -81,9 +81,10 @@ const SocialButtons = () => {
         <div className="popup z-20">
           <div className="popup-content z-20">
             <div className="w-[800px] h-[480px] max-[430px]:w-[400px] max-[430px]:h-[90%] max-[430px]:p-5 ">
+
               <div className="xl:flex">
                 <div className="w-2/3 max-[430px]:w-full">
-                  <div className="flex space-x-4 max-[430px]:justify-center max-[430px]:w-full">
+                  <div className="flex space-x-4 max-[430px]:justify-start max-[430px]:w-full">
                     <Image
                       src="/logo.png"
                       alt=""
@@ -100,10 +101,10 @@ const SocialButtons = () => {
                     </div>
                   </div>
                   <div>
-                    <h1 className="text-2xl mt-6 flex justify-start font-bold">
+                    <h1 className="text-2xl mt-4 flex justify-start font-bold">
                       Hồ Sơ Kinh Doanh
                     </h1>
-                    <div className="space-y-2 mt-5">
+                    <div className="space-y-2 mt-3">
                       <div className="flex items-center">
                         <AiOutlineLink className="w-5 h-5 mr-2" />
                         <a
@@ -136,6 +137,7 @@ const SocialButtons = () => {
                   </div>
                   <div className="h-[2px] w-full bg-gray-200 my-5"></div>
                 </div>
+
                 <div className="w-1/3 max-[430px]:w-full">
                   <Image
                     src="/zalo1.png"
@@ -166,7 +168,7 @@ const SocialButtons = () => {
                 <span className="flex justify-start">- Màn Hình Android</span>
                 <span className="flex justify-start">- film cách nhiệt</span>
               </div>
-              <div className="flex justify-end">
+              <div className="flex xl:justify-end max-[430px]:justify-center">
                 <button className="" onClick={closePopup}>OK</button>
               </div>
             </div>
