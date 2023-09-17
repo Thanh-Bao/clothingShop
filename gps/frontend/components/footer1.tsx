@@ -55,8 +55,9 @@ export const FooterSitemapLinks = () => {
                 <MdOutgoingMail className="w-8 h-8 mr-2" />
                 thanh.tran@hanphong.com
               </div>
-              <div className="flex items-center">
-                <div className="w-72 py-3">
+              <div className="flex items-center space-x-3 mx-auto">
+                
+                <div className="w-72 py-3 max-[430px]:w-2/3">
                   <TextInput
                     icon={HiMail}
                     id="email4"
@@ -67,7 +68,7 @@ export const FooterSitemapLinks = () => {
                 </div>
                 <Button
                   variant="contained"
-                  className="h-[42px] bg-orange-500 mx-4 rounded-md"
+                  className="h-[42px] bg-orange-500 mx-4 rounded-md max-[430px]:w-1/3"
                 >
                   <GrSend className="w-7 h-7 text-white" />
                 </Button>
