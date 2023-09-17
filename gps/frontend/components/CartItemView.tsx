@@ -16,7 +16,6 @@ export const CartItemView = ({ item }: Props) => {
     typeof window !== "undefined" && window.innerWidth <= 768
   );
 
-  console.log(item)
 
   const handleResize = () => {
     if (window.innerWidth <= 768) {
