@@ -131,7 +131,7 @@ const SocialButtons = () => {
                                 </div>
 
                                 <div>
-                                  <span className="flex justify-start max-[430px]:text-left">THÀNH NAM GPS chuyên gia giải pháp trong lĩnh vực Nội Thất Ôtô:</span>
+                                  <span className="flex justify-start max-[430px]:text-left">THÀNH CÔNG GPS chuyên gia giải pháp trong lĩnh vực Nội Thất Ôtô:</span>
                                   <span className="flex justify-start">- Thiết bị định vị ô tô, xe máy.</span>
                                   <span className="flex justify-start">- Camera hành trình ô tô.</span>
                                   <span className="flex justify-start">- Màn Hình Android</span>
