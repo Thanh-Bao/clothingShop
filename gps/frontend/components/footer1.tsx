@@ -17,7 +17,7 @@ export const FooterSitemapLinks = () => {
   
   return (
     <div className="bg-black text-white relative -z-10 ">
-          <div className="grid xl:grid-cols-3 xl:max-w-[1200px] max-[430px]:max-w-[390px] mx-auto xl:space-x-6 h-[270px] pt-4">
+          <div className="grid xl:grid-cols-3 xl:max-w-[1200px] max-[430px]:max-w-[390px] mx-auto xl:space-x-6 xl:h-[270px] pt-4">
             <div className="">
               <h1 className="text-xl font-bold my-3">
                 Công Ty TNHH TMDV Thành Công
