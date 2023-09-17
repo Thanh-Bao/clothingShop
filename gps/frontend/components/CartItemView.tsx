@@ -16,6 +16,8 @@ export const CartItemView = ({ item }: Props) => {
     typeof window !== "undefined" && window.innerWidth <= 768
   );
 
+  console.log(item)
+
   const handleResize = () => {
     if (window.innerWidth <= 768) {
       setIsMobile(true);
@@ -70,8 +72,8 @@ export const CartItemView = ({ item }: Props) => {
               <Image
                 src={item.product.img}
                 alt=""
-                width={150} // Đặt chiều rộng của ảnh
-                height={150} // Đặt chiều cao của ảnh
+                width={500} // Đặt chiều rộng của ảnh
+                height={500} // Đặt chiều cao của ảnh
                 className="w-full h-full object-contain"
               />
             </div>
@@ -122,8 +124,8 @@ export const CartItemView = ({ item }: Props) => {
                 <Image
                   src={item.product.img}
                   alt={item.product.name}
-                  width={150} // Đặt chiều rộng của ảnh
-                  height={150} // Đặt chiều cao của ảnh
+                  width={500} // Đặt chiều rộng của ảnh
+                  height={500} // Đặt chiều cao của ảnh
                   className="w-full h-full object-cover"
                 />
               </div>
