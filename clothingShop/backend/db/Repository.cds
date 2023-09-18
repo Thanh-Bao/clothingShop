@@ -23,7 +23,7 @@ entity SaleOrderItem {
         price        : Decimal(6) @readonly;
         color        : String(15);
         size         : String(4);
-        SaleOrder    : Association to one SaleOrder; 
+        SaleOrder    : Association to one SaleOrder on SaleOrder.ID = $self.saleOrderID; 
         Product      : Association to one Product   on Product.ID   = $self.productID;
 }
 
@@ -47,6 +47,7 @@ entity Product : common {
         Colors         : Composition of many ProductColor on Colors.productID = $self.ID;
         Sizes          : Composition of many ProductSize  on Sizes.productID  = $self.ID;
         Album          : Composition of many Album        on Album.productID  = $self.ID;
+        SaleOrderItem  : Association to many SaleOrderItem on SaleOrderItem.productID = $self.ID;
 }
 
 entity ProductSize {

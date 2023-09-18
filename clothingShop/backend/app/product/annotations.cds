@@ -66,6 +66,7 @@ annotate service.Product with @(
         isActive,
         material,
         price,
+        
     ]
 );
 
