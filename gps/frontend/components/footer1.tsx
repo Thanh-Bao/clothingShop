@@ -20,13 +20,13 @@ export const FooterSitemapLinks = () => {
           <div className="grid xl:grid-cols-3 xl:max-w-[1200px] max-[430px]:max-w-[390px] mx-auto xl:space-x-6 xl:h-[270px] pt-4">
             <div className="">
               <h1 className="text-xl font-bold my-3">
-                Công Ty TNHH TMDV Thành Công
+                Công Ty thiết bị định vị và camera hành trình Thành Công
               </h1>
               <h2 className="font-bold">Trụ sở chính:</h2>
               <div className="flex items-center">
                 <LuLocateFixed className="w-5 h-5 m-2" />
                 <span className="font-inter text-sm my-1">
-                  14C Đường số 30, Phường Linhh Đông, Thành Phố Thủ Đức
+                  14C Đường số 30, Phường Linh Đông, Thành Phố Thủ Đức
                 </span>
               </div>
               <h2 className="font-bold">HOTLINE1 : 0866844225</h2>
