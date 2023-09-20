@@ -46,7 +46,7 @@ annotate service.SaleOrder with @(
         {
             $Type: 'UI.DataField',
             Label: 'note',
-            Value: note,
+            Value: note, 
         },
         {
             $Type: 'UI.DataField',
@@ -62,6 +62,7 @@ annotate service.SaleOrder with @(
         phone,
         status,
         address,
+        SaleOrderItems.productID
     ]
 );
 
