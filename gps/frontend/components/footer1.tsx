@@ -20,7 +20,7 @@ export const FooterSitemapLinks = () => {
           <div className="grid xl:grid-cols-3 xl:max-w-[1200px] max-[430px]:max-w-[390px] mx-auto xl:space-x-6 xl:h-[270px] pt-4">
             <div className="">
               <h1 className="text-xl font-bold my-3">
-                Công Ty thiết bị định vị và camera hành trình Thành Công
+                Thiết bị định vị và camera hành trình Thành Công
               </h1>
               <h2 className="font-bold">Trụ sở chính:</h2>
               <div className="flex items-center">

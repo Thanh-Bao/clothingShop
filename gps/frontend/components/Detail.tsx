@@ -134,8 +134,8 @@ export const Detail = ({ product, id }: Props) => {
                     key={index}
                     src={thumbnail}
                     alt={`Thumbnail ${index}`}
-                    width={100}
-                    height={100}
+                    width={500}
+                    height={500}
                     className="w-1/4 cursor-pointer mb-2"
                     onClick={() => handleThumbnailClick(thumbnail)}
                   />
