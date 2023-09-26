@@ -3,15 +3,18 @@ import { getAlbum, getDes, getOffer } from "@/app/products-service";
 import { useCart } from "@/styles/CartContext";
 import { Product } from "@/types";
 import { Breadcrumb, Button, Sidebar } from "flowbite-react";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { BsFillPhoneVibrateFill } from "react-icons/bs";
 import { FaShippingFast } from "react-icons/fa";
 import { GiCardExchange, GiRotaryPhone } from "react-icons/gi";
 
 import { Tabs } from "flowbite-react";
+import Image from "next/image";
 import { BsTicketDetailed } from "react-icons/bs";
 import { MdDashboard } from "react-icons/md";
+
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
 
 import {
   HiChartPie,
@@ -24,90 +27,88 @@ import {
   HiViewBoards,
 } from "react-icons/hi";
 
+
+
 type Props = {
   product: Product;
-  id: String;
+  id: number;
 };
 
 interface AlbumItem {
-  productID: string;
+  productID: number;
   url: string;
   // ... Các thuộc tính khác
 }
 
 interface OfferItem {
-  productID: string;
+  productID: number;
   ID: number;
   des: String;
   // Các thuộc tính khác của OfferItem
 }
 
 interface textdesItem {
-  productID: string;
+  productID: number;
   ID: number;
   txt: String;
 }
 
 export const Detail = ({ product, id }: Props) => {
-  const { addToCart } = useCart();
-  const [urlArray, setUrlArray] = useState<string[]>([]);
-  const [filteredOffers, setFilteredOffers] = useState<OfferItem[]>([]);
-  const [filteredtxt, setFilteredtxt] = useState<textdesItem[]>([]);
-  const [selectedImage, setSelectedImage] = useState<string>(`${product.img}`);
+  
+  const [album, setalbum] = useState<AlbumItem[]>([]);
+  const [offers, setoffers] = useState<OfferItem[]>([]);
+  const [textdes, settextdes] = useState<textdesItem[]>([]);
 
+
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [currentImage, setCurrentImage] = useState(0);
+
+  const settings = {
+    infinite: false,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+  };
+
+  const handleImageClick = (index:any) => {
+    setIsFullScreen(!isFullScreen);
+    setCurrentImage(index);
+  };
+
+  const handleFullScreenClose = () => {
+    setIsFullScreen(false);
+  };
+
+ 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { addToCart } = useCart();
   const locale = "vi-VN";
   const options = {
     style: "currency",
     currency: "VND",
   };
- 
+
   useEffect(() => {
     const fetchAlbum = async () => {
-      if (id) {
-        const targetID = `${id}`;
-        const album: AlbumItem[] = await getAlbum();
-        const offers: OfferItem[] = await getOffer();
-        const textdes: textdesItem[] = await getDes();
-        const newUrlArray: string[] = [];
-        // lọc ảnh
+        const album: AlbumItem[] = await getAlbum(id);
         
-        album.forEach((item: AlbumItem) => {
-          if (item.productID == targetID) {
-            newUrlArray.push(item.url);
-          }
-        });
-        setUrlArray([product.img, ...newUrlArray]);
-
-        // Lọc các phần tử từ offers có thuộc tính ID bằng id và đặt vào filteredOffers
-        const filteredOffers = offers.filter(
-          (offer) => offer.productID == targetID
-        );
-        setFilteredOffers(filteredOffers);
-
-        // Lọc các phần tử từ mô tả có thuộc tính ID bằng id
-        const filteredtxt = textdes.filter(
-          (text) => text.productID == targetID
-        );
-        setFilteredtxt(filteredtxt);
-      }
-
+        setalbum(album)
+        const offers: OfferItem[] = await getOffer(id);
+        setoffers(offers)
+        const textdes: textdesItem[] = await getDes(id);
+        settextdes(textdes)
     };
     fetchAlbum();
-  }, [id]);
+  },[id]);
 
-  const handleThumbnailClick = (image: string) => {
-    setSelectedImage(image);
-  };
 
+        
   const handleAddToCartClick = (product: Product) => {
     addToCart(product);
   };
-
-
+  console.log(album);
   return (
     <div className="relative -z-10 mb-16">
-
-        <div className="xl:max-w-[1250px] xl:px-16 max-[430px]:max-w-[390px] mx-auto">
+      <div className="xl:max-w-[1250px] xl:px-16 max-[430px]:max-w-[390px] mx-auto">
           <Breadcrumb
             aria-label="Solid background breadcrumb example"
             className="bg-gray-50 px-5 py-3 dark:bg-gray-900"
@@ -122,24 +123,45 @@ export const Detail = ({ product, id }: Props) => {
           <div className="xl:flex xl:space-x-5 xl:my-6">
             {/* Cột 1: Hiển thị ảnh */}
             <div className="xl:w-1/4 max-[430px]:w-full max-[430px]:py-3">
-              <Image
-                src={selectedImage}
-                alt="Product"
-                width={500}
-                height={500}
-              />
-              <div className="mt-4 space-x-2 flex flex-wrap">
-                {urlArray.map((thumbnail, index) => (
+              {isFullScreen ? (
+                <div className="popup z-20 pt-28 pb-28 ">
+                  
+                  <div className="bg-white w-8 h-8 absolute top-40 right-20 cursor-pointer" onClick={handleFullScreenClose}>
+                    <span className="text-black">x</span>
+                  </div>
+
                   <Image
-                    key={index}
-                    src={thumbnail}
-                    alt={`Thumbnail ${index}`}
+                    src={product.img}
+                    alt="Product"
                     width={500}
                     height={500}
-                    className="w-1/4 cursor-pointer mb-2"
-                    onClick={() => handleThumbnailClick(thumbnail)}
-                  />
-                ))}
+                    className="max-h-screen max-w-screen"
+                      />
+                  </div>
+                  ) : (
+                    <Image
+                      src={product.img}
+                      alt="Product"
+                      width={500}
+                      height={500}
+                      onClick={() => handleImageClick(0)}
+                    />
+                  )}
+
+                <div className="mt-4 grid grid-cols-4 gap-2 overflow-hidden">
+                  {/* <Slider {...settings}> */}
+                    {album.map((thumbnail, index) => (
+                      <div key={index} onClick={() => handleImageClick(index)}>
+                        <Image
+                          src={thumbnail.url}
+                          alt={`anh${index}`}
+                          width={200}
+                          height={200}
+                          className="cursor-pointer mb-2"
+                        />
+                      </div>
+                  ))}
+                {/* </Slider> */}
               </div>
             </div>
 
@@ -199,7 +221,7 @@ export const Detail = ({ product, id }: Props) => {
                       </span>
                     </li>
                     {/* phần genaral ra các offer khuyến mãi */}
-                    {filteredOffers.map((offer) => (
+                    {offers.map((offer) => (
                       <li className="flex items-center" key={offer.ID}>
                         <HiOutlineFire className="w-5 h-5 mx-2 text-orange-500" />
                         <span className="text-blue-600">{offer.des}</span>
@@ -306,7 +328,7 @@ export const Detail = ({ product, id }: Props) => {
               className=""
             >
               <Tabs.Item active icon={BsTicketDetailed} title="MÔ TẢ">
-                {filteredtxt.map((txtItem) => (
+                {textdes.map((txtItem) => (
                   <div className="" key={txtItem.ID}>
                     <div
                       className="px-4 py-2 "
@@ -321,6 +343,8 @@ export const Detail = ({ product, id }: Props) => {
             </Tabs.Group>
           </div>
         </div>
+
+        
     </div>
   );
 };
