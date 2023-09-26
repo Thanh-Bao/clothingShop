@@ -13,9 +13,6 @@ import Image from "next/image";
 import { BsTicketDetailed } from "react-icons/bs";
 import { MdDashboard } from "react-icons/md";
 
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
-
 import {
   HiChartPie,
   HiHome,
@@ -59,26 +56,6 @@ export const Detail = ({ product, id }: Props) => {
   const [offers, setoffers] = useState<OfferItem[]>([]);
   const [textdes, settextdes] = useState<textdesItem[]>([]);
 
-
-  const [isFullScreen, setIsFullScreen] = useState(false);
-  const [currentImage, setCurrentImage] = useState(0);
-
-  const settings = {
-    infinite: false,
-    slidesToShow: 3,
-    slidesToScroll: 3,
-  };
-
-  const handleImageClick = (index:any) => {
-    setIsFullScreen(!isFullScreen);
-    setCurrentImage(index);
-  };
-
-  const handleFullScreenClose = () => {
-    setIsFullScreen(false);
-  };
-
- 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { addToCart } = useCart();
   const locale = "vi-VN";
@@ -123,35 +100,18 @@ export const Detail = ({ product, id }: Props) => {
           <div className="xl:flex xl:space-x-5 xl:my-6">
             {/* Cột 1: Hiển thị ảnh */}
             <div className="xl:w-1/4 max-[430px]:w-full max-[430px]:py-3">
-              {isFullScreen ? (
-                <div className="popup z-20 pt-28 pb-28 ">
-                  
-                  <div className="bg-white w-8 h-8 absolute top-40 right-20 cursor-pointer" onClick={handleFullScreenClose}>
-                    <span className="text-black">x</span>
-                  </div>
-
-                  <Image
-                    src={product.img}
-                    alt="Product"
-                    width={500}
-                    height={500}
-                    className="max-h-screen max-w-screen"
-                      />
-                  </div>
-                  ) : (
+              
                     <Image
                       src={product.img}
                       alt="Product"
                       width={500}
                       height={500}
-                      onClick={() => handleImageClick(0)}
                     />
-                  )}
-
+                  
                 <div className="mt-4 grid grid-cols-4 gap-2 overflow-hidden">
-                  {/* <Slider {...settings}> */}
+                  
                     {album.map((thumbnail, index) => (
-                      <div key={index} onClick={() => handleImageClick(index)}>
+                      <div key={index}>
                         <Image
                           src={thumbnail.url}
                           alt={`anh${index}`}
