@@ -14,7 +14,7 @@ export default function ListGroupWithLinks3({ MediaUrl, index }: Props) {
  // Tạo mảng con chỉ chứa 2 phần tử đầu tiên
  const firstTwoMedia = MediaUrl[index];
 
- const modifiedUrls = firstTwoMedia.url.replace(
+ const modifiedUrls = firstTwoMedia?.url?.replace(
   "https://www.youtube.com/watch?v=",
   "https://www.youtube.com/embed/"
 );
@@ -22,7 +22,6 @@ export default function ListGroupWithLinks3({ MediaUrl, index }: Props) {
  
   return (
     <div>
-      
       <div className="flex items-center h-10 bg-sky-800 rounded-t-lg">
         <GiOpenChest className="w-5 h-5 mx-2 text-red-600"/>
         {index ===2 ? (

@@ -48,12 +48,17 @@ export const Hero = ({products,video}:Props) => {
                   <ListGroupWithLinks2 
                   products={products}/>
                 </div>
+                {
+              video.length > 2 ? 
+              <>
                 <div className="w-full mb-8">
                   <ListGroupWithLinks3 MediaUrl={video} index ={2}/>
                 </div>
                 <div className="w-full mb-8">
                   <ListGroupWithLinks3 MediaUrl={video} index ={3}/>
                 </div>
+                </> : null}
+                
               </div>
             {/*===== phần nội dung bên phải =====*/}
 
@@ -154,12 +159,18 @@ export const Hero = ({products,video}:Props) => {
             </div>
             {/* ---------media------------- */}
             <div className="w-full mt-5 mb-16">
-              <div className="">
+              
+            {
+              video.length > 0 ? 
+              <>
+                <div className="">
                 <ListBar List_name="Video công nghệ" icon={TbBrandYoutubeKids} />
               </div>
               <div className="my-4 w-full rounded-md  overflow-hidden">
                 <Media MediaUrl={video} />
               </div>
+              </> : null
+            }
             </div>
           </div>
 
