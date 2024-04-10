@@ -108,7 +108,7 @@ const SocialButtons = () => {
                       <div className="flex items-center">
                         <AiOutlineLink className="w-5 h-5 mr-2" />
                         <a
-                          href="http://Thanhconggps.com"
+                          href="https://Thanhconggps.com"
                           className="text-blue-500"
                         >
                           Thanhconggps.com
@@ -129,8 +129,7 @@ const SocialButtons = () => {
                       <div className="flex items-center">
                         <MdLocationOn className="min-w-[20px] min-h-[20px] mr-2" />
                         <p className="text-left">
-                          Chi nhánh chính: 14C Đường số 30, Phường Linh Đông,
-                          Thành Phố Thủ Đức
+                          Chi nhánh chính: Số 4B Đường 48, Phường Hiệp Bình Chánh, Thành Phố Thủ Đức, Thành Phố Hồ Chí Minh
                         </p>
                       </div>
                     </div>

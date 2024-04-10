@@ -17,7 +17,7 @@ export default function ListGroupWithLinks() {
 
     <span className="flex font-bold text-red-600">
       <p className="px-1">HOTLINE2 :</p>
-      <p>0867874371</p> 
+      <p>0961003471</p> 
     </span>
 
     <span className="flex font-bold text-red-600">

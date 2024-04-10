@@ -26,18 +26,18 @@ export const FooterSitemapLinks = () => {
               <div className="flex items-center">
                 <LuLocateFixed className="w-5 h-5 m-2" />
                 <span className="font-inter text-sm my-1">
-                  14C Đường số 30, Phường Linh Đông, Thành Phố Thủ Đức
+                  Số 4B Đường 48, Phường Hiệp Bình Chánh, Thành Phố Thủ Đức, Thành Phố Hồ Chí Minh
                 </span>
               </div>
               <h2 className="font-bold">HOTLINE1 : 0866844225</h2>
-              <h2 className="font-bold mt-2">HOTLINE2 : 0867874371</h2>
+              <h2 className="font-bold mt-2">HOTLINE2 : 0961003471</h2>
               
             </div>
 
             <div className="">
               <h1 className="text-xl font-bold my-3">About Us</h1>
               <span className="py-3 font-inter text-sm">
-                Copyright @ Công Ty TNHH TM DV KT HÀN PHONG
+                Copyright @ Công Ty TNHH PHÁT TRIỂN THIẾT BỊ CÔNG NGHỆ THÀNH CÔNG
                 Chuyên phân phối, lắp đặt định vị ô tô xe máy, camera hành
                 trình, thiết bị dẫn đường, phụ kiện nội thất đồ chơi ô tô chính
                 hãng Lắp đặt, giao hàng tận nhà trên toàn quốc. Nhận hàng Thanh
@@ -53,7 +53,8 @@ export const FooterSitemapLinks = () => {
               </div>
               <div className="flex items-center my-3">
                 <MdOutgoingMail className="w-8 h-8 mr-2" />
-                thanh.tran@hanphong.com
+                cskh@thanhconggps.com<br/>
+                kd@thanhconggps.com
               </div>
               <div className="flex items-center space-x-3 mx-auto">
                 
