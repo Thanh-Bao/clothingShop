@@ -1,5 +1,15 @@
 // const API_URL = "http://localhost:4004/rest/api";
 const API_URL = "https://thanhconggps.com/rest/api";
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+// fetch(API_URL)
+//   .then(response => {
+//     if (!response.ok) {
+//       throw new Error('Network response was not ok');
+//     }
+//     return response.json();
+//   })
+//   .then(data => console.log(data))
+//   .catch(error => console.error('Fetch error:', error));
 
 // Getting all products from fake store API
 export async function getProducts() {
